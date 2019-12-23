@@ -25,6 +25,9 @@ jobs:
         command: |
           docker tag nodefactory/hactar-backend:${CIRCLE_SHA1} nodefactory/hactar-backend:latest
     - run:
+        name: Run code linter
+        command: docker-compose run --rm --no-deps backend yarn run lint
+    - run:
         name: Set coveralls variables
         command: |
           touch .coveralls.env
@@ -39,7 +42,10 @@ jobs:
     - run:
         name: Send test results to Coveralls
         command: |
-          docker run --env-file .coveralls.env nodefactory/hactar-backend:${CIRCLE_SHA1} sh -c "npm run coverage && npm run coveralls"
+          docker run --env-file .coveralls.env nodefactory/hactar-backend:${CIRCLE_SHA1} sh -c "yarn run coverage && yarn run coveralls"
+    - run:
+        name: Run e2e tests
+        command: docker-compose run -e NODE_ENV=test --rm backend yarn run test:e2e
     - run:
         name: Save docker layers cache
         command: |
