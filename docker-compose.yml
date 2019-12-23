@@ -3,8 +3,8 @@ services:
   backend:
     build: .
     command: sh -c "yarn run dev"
-    image: nodefactory/nodejs-ts-starter:${IMAGE_TAG:-latest}
-    container_name: "${BACKEND_CONTAINER_NAME:-nodejs-backend}"
+    image: nodefactory/hactar-backend:${IMAGE_TAG:-latest}
+    container_name: "${BACKEND_CONTAINER_NAME:-hactar-backend}"
     depends_on:
       - db
     volumes:
@@ -17,7 +17,7 @@ services:
     image: postgres:9.6-alpine
     volumes:
     - postgres:/var/lib/postgresql/data
-    container_name: "${DB_CONTAINER_NAME:-nodejs-db}"
+    container_name: "${DB_CONTAINER_NAME:-hactar-db}"
     environment:
     - POSTGRES_USER=${DB_USER:-nodefactory}
     - POSTGRES_PASSWORD=${DB_PASSWORD:-nodefactory}
