@@ -1,12 +1,13 @@
 import path from "path";
-import {DataTypes, InitOptions, ModelAttributes, Options, Sequelize} from "sequelize";
+import { DataTypes, InitOptions, ModelAttributes, Options, Sequelize } from "sequelize";
 import Umzug from "umzug";
 import { Umzug as UmzugInterface } from "umzug";
 import config from "../Config/Config";
 import Example from "../Models/Example";
+import { Node } from "../Models/Node";
 import logger from "../Services/Logger";
 
-class Database {
+export class Database {
 
     public sequelize: Sequelize;
 
@@ -20,7 +21,7 @@ class Database {
                 password: config.db.password,
                 dialect: config.db.dialect,
                 host: config.db.host,
-                logging: logger.debug,
+                logging: sql => logger.debug(sql),
                 native: false,
                 pool: {
                     acquire: 30000,
@@ -47,6 +48,8 @@ class Database {
                 path: path.join(__dirname, "../Migrations"),
             },
         });
+
+        console.log(this.migrations)
 
     }
 
@@ -75,9 +78,13 @@ class Database {
     private async runMigrations(): Promise<void> {
         // Run migrations if not testing
         if (config.env !== "test") {
-            logger.info("Running migrations...");
-            await this.migrations.up();
-            logger.info("Migrations executed successfully");
+            try {
+                logger.info("Running migrations...");
+                console.log("executed migrations: ", await this.migrations.up());
+                logger.info("Migrations executed successfully");
+            } catch (err) {
+                console.log('error', err)
+            }
         }
     }
 
@@ -88,16 +95,8 @@ class Database {
     }
 
     private initModels(): void {
-        Example.init({
-            help: {
-                type: DataTypes.STRING(128),
-                allowNull: true,
-            },
-        } as ModelAttributes,
-        {
-            sequelize: this.sequelize,
-            tableName: "Examples",
-        } as InitOptions);
+        Example.initialize(this.sequelize);
+        Node.initialize(this.sequelize);
     }
 }
 

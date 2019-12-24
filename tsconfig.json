@@ -1,26 +1,31 @@
 {
-  "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "sourceMap": true,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "esModuleInterop": true,
-    "emitDecoratorMetadata": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "typeRoots": [
-      "node_modules/@types",
-      "types"
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "sourceMap": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "esModuleInterop": true,
+        "emitDecoratorMetadata": true,
+        "strict": true,
+        "skipLibCheck": true,
+        "typeRoots": [
+            "node_modules/@types",
+            "types"
+        ],
+        "strictPropertyInitialization": false
+    },
+    "include": [
+        "src/**/*.ts",
+        "test/**/*.ts",
+        "src/Migrations/20191224091606-create-node.js",
+        "src/Migrations/20180827100753-create-example.js",
+        "src/Migrations/20191224091606-create-node.js",
+        "src/Migrations/20180827100753-create-example.js"
+    ],
+    "exclude": [
+        "node_modules",
+        "src/Migrations"
     ]
-  },
-  "include": [
-    "src/**/*.ts",
-    "test/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "src/Migrations"
-  ]
 }
