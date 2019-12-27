@@ -3,7 +3,6 @@ import { DataTypes, InitOptions, ModelAttributes, Options, Sequelize } from "seq
 import Umzug from "umzug";
 import { Umzug as UmzugInterface } from "umzug";
 import config from "../Config/Config";
-import Example from "../Models/Example";
 import { Node } from "../Models/Node";
 import logger from "../Services/Logger";
 
@@ -48,9 +47,6 @@ export class Database {
                 path: path.join(__dirname, "../Migrations"),
             },
         });
-
-        console.log(this.migrations)
-
     }
 
     public async init(): Promise<Sequelize> {
@@ -80,7 +76,6 @@ export class Database {
         if (config.env !== "test") {
             try {
                 logger.info("Running migrations...");
-                console.log("executed migrations: ", await this.migrations.up());
                 logger.info("Migrations executed successfully");
             } catch (err) {
                 console.log('error', err)
@@ -95,7 +90,6 @@ export class Database {
     }
 
     private initModels(): void {
-        Example.initialize(this.sequelize);
         Node.initialize(this.sequelize);
     }
 }

@@ -11,5 +11,9 @@ export function createApiRoutes(
         "/user/node", //validate(nodesController.createNodesValidation),
         nodesController.createNode.bind(nodesController));
 
+    router.delete(
+        "/user/node/:nodeId",
+        nodesController.deleteNode.bind(nodesController));
+
     return router;
 }

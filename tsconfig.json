@@ -19,13 +19,9 @@
     "include": [
         "src/**/*.ts",
         "test/**/*.ts",
-        "src/Migrations/20191224091606-create-node.js",
-        "src/Migrations/20180827100753-create-example.js",
-        "src/Migrations/20191224091606-create-node.js",
-        "src/Migrations/20180827100753-create-example.js"
+        "src/Migrations/*.js",
     ],
     "exclude": [
         "node_modules",
-        "src/Migrations"
     ]
 }
