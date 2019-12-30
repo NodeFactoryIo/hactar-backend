@@ -1600,11 +1600,10 @@ express-async-errors@3.1.1:
   resolved "https://registry.yarnpkg.com/express-async-errors/-/express-async-errors-3.1.1.tgz#6053236d61d21ddef4892d6bd1d736889fc9da41"
   integrity sha512-h6aK1da4tpqWSbyCa3FxB/V6Ehd4EEB15zyQq9qe75OZBp0krinNKuH4rAY+S/U/2I36vdLAUFSjQJ+TFmODng==
 
-express-validation@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/express-validation/-/express-validation-1.0.2.tgz#7d589dd3b257c55b3e004665b6c69cb12cc2b142"
-  dependencies:
-    lodash "^4.9.0"
+express-joi-validation@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/express-joi-validation/-/express-joi-validation-4.0.3.tgz#835a382780cdc207daf572098b2baad76802e7c0"
+  integrity sha512-XnEyhlllurczZDx1vLPWnaohTAQzxlvaP7ifEbvRf2zvYC5C5ZZrgFH75g0/XcL7OuaZ0XlVtB0J0E/R0O1L4A==
 
 express@^4.17.1:
   version "4.17.1"
@@ -2774,7 +2773,7 @@ lodash@4.17.4:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
-lodash@^4.17.0, lodash@^4.17.10, lodash@^4.17.5, lodash@^4.9.0:
+lodash@^4.17.0, lodash@^4.17.10, lodash@^4.17.5:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 

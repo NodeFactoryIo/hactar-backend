@@ -4,6 +4,7 @@ import { Application, Request, Response, Router, RequestHandler } from "express"
 import helmet from "helmet";
 import http from "http";
 import morgan from "morgan";
+import { createValidator } from "express-joi-validation";
 
 import config from "./Config/Config";
 import { NodeController } from "./Controller/Api/NodeController";
@@ -69,7 +70,9 @@ export class App implements Service {
     }
 
     private addApiRoutes(): void {
+        const validator = createValidator();
         this.express.use("/api", createApiRoutes(
+            validator,
             this.nodeController
         ));
     }

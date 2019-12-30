@@ -1,14 +1,18 @@
 import express from "express";
+import { createValidator } from "express-joi-validation";
 import { NodeController } from "../Controller/Api/NodeController";
+import { CreateNodeValidationSchema } from "../Controller/Api/NodeControllerValidation";
 // import validate from 'express-validation'
 
 export function createApiRoutes(
+    validator: ReturnType<typeof createValidator>,
     nodesController: NodeController,
 ): express.Router {
     const router = express.Router();
 
     router.post(
-        "/user/node", //validate(nodesController.createNodesValidation),
+        "/user/node",
+        validator.body(CreateNodeValidationSchema),
         nodesController.createNode.bind(nodesController));
 
     router.delete(
