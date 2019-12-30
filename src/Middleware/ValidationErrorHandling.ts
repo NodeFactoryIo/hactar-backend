@@ -1,6 +1,6 @@
-import { ExpressJoiError } from 'express-joi-validation'
+import {ExpressJoiError} from 'express-joi-validation'
 import express from "express";
-import { ValidationErrorItem } from "@hapi/joi";
+import {ValidationErrorItem} from "@hapi/joi";
 
 export function validateJoiError(
     err: any|ExpressJoiError,

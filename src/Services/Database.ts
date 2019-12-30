@@ -1,10 +1,10 @@
 import path from "path";
-import { Options, Sequelize } from "sequelize";
+import {Options, Sequelize} from "sequelize";
 import Umzug from "umzug";
-import { Umzug as UmzugInterface } from "umzug";
+import {Umzug as UmzugInterface} from "umzug";
 
 import config from "../Config/Config";
-import { Node } from "../Models/Node";
+import {Node} from "../Models/Node";
 import logger from "../Services/Logger";
 
 export class Database {

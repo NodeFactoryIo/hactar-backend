@@ -1,4 +1,4 @@
-import { ContainerTypes, ValidatedRequestSchema } from "express-joi-validation";
+import {ContainerTypes, ValidatedRequestSchema} from "express-joi-validation";
 import * as Joi from "@hapi/joi";
 
 export interface CreateNodeRequestSchema extends ValidatedRequestSchema {

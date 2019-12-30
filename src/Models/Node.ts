@@ -1,4 +1,4 @@
-import { Model, InitOptions, ModelAttributes, DataTypes, Sequelize, NOW } from "sequelize";
+import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequelize";
 
 export class Node extends Model {
 

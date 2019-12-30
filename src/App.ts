@@ -1,18 +1,18 @@
 import bodyParser from "body-parser";
 import express from "express";
-import { Application, Request, Response, Router, RequestHandler } from "express";
+import {Application, Request, RequestHandler, Response, Router} from "express";
 import helmet from "helmet";
 import http from "http";
 import morgan from "morgan";
-import { createValidator } from "express-joi-validation";
+import {createValidator} from "express-joi-validation";
 
 import config from "./Config/Config";
-import { NodeController } from "./Controller/Api/NodeController";
-import { createApiRoutes } from "./Routes/Api";
-import { Service } from "./Services/interface";
-import logger, { morganLogger } from "./Services/Logger";
-import { NodeService } from "./Services/NodeService";
-import { validateJoiError } from "./Middleware/ValidationErrorHandling";
+import {NodeController} from "./Controller/Api/NodeController";
+import {createApiRoutes} from "./Routes/Api";
+import {Service} from "./Services/interface";
+import logger, {morganLogger} from "./Services/Logger";
+import {NodeService} from "./Services/NodeService";
+import {validateJoiError} from "./Middleware/ValidationErrorHandling";
 
 export class App implements Service {
 
@@ -25,7 +25,7 @@ export class App implements Service {
     constructor() {
         this.express = express();
         // add before route middleware's here
-        this.express.use(morgan("short", { stream: morganLogger }) as RequestHandler);
+        this.express.use(morgan("short", {stream: morganLogger}) as RequestHandler);
         this.express.use(bodyParser.json());
         this.express.use(helmet() as RequestHandler);
         // add after route middleware's here
@@ -71,7 +71,7 @@ export class App implements Service {
     }
 
     private addApiRoutes(): void {
-        const validator = createValidator({ passError: true });
+        const validator = createValidator({passError: true});
         this.express.use("/api", createApiRoutes(
             validator,
             this.nodeController

@@ -23,6 +23,7 @@
     "coverage": "nyc --reporter=text --all --include \"src/**/*.js\" yarn test:unit",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint --color --ext .ts src/ && tsc --noEmit",
+    "lint:fix": "eslint --color --ext .ts src/ --fix",
     "start": "node --inspect=0.0.0.0:56745 -r ts-node/register -r dotenv/config src/index.ts",
     "dev": "./node_modules/nodemon/bin/nodemon.js",
     "task": "ts-node ./tasksfile.ts"
@@ -71,8 +72,7 @@
     "tap-spec": "^5.0.0",
     "tasksfile": "^5.1.0",
     "ts-node": "^8.5.4",
-    "typescript": "^3.7.3",
-    "typescript-eslint-parser": "^18.0.0"
+    "typescript": "^3.7.3"
   },
   "resolutions": {
     "set-value": "^2.0.1"
