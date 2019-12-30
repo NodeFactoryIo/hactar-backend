@@ -12,6 +12,7 @@ import { createApiRoutes } from "./Routes/Api";
 import { Service } from "./Services/interface";
 import logger, { morganLogger } from "./Services/Logger";
 import { NodeService } from "./Services/NodeService";
+import { validateJoiError } from "./Middleware/ValidationErrorHandling";
 
 export class App implements Service {
 
@@ -70,10 +71,12 @@ export class App implements Service {
     }
 
     private addApiRoutes(): void {
-        const validator = createValidator();
+        const validator = createValidator({ passError: true });
         this.express.use("/api", createApiRoutes(
             validator,
             this.nodeController
         ));
+
+        this.express.use(validateJoiError);
     }
 }
