@@ -28,17 +28,16 @@ export class NodeController {
     public async deleteNode(req: Request, res: Response): Promise<any> {
         try {
             const {nodeId} = req.params;
-            const result = await this.nodeService.deleteNode(nodeId);
-            if (result !== 0) {
-                res.status(200).json({message: "Deleted successfully."});
-            }
-            else {
-                res.status(404).json({message: "Record not found."});
+            const node = await this.nodeService.getNode(nodeId);
+            if (node) {
+                await this.nodeService.deleteNode(nodeId);
+                res.status(200).json(node);
+            } else {
+                res.status(404).json({ error: "Node not found." });
             }
         } catch (e) {
             logger.error(`Error occurred on deleting node in controller: ${e.message}`);
-            res.status(500).json({error: "An unknown error occurred."});
+            res.status(500).json({ error: "An unknown error occurred." });
         }
     }
-
 }
