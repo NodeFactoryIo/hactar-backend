@@ -1,7 +1,7 @@
-import {expect} from "chai";
-import {describe} from "mocha";
+import { expect } from "chai";
+import { describe } from "mocha";
 import request from "supertest";
-import {app} from "./index.test";
+import { app } from "./index.test";
 
 describe("Assert server is running", () => {
 

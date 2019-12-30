@@ -1,31 +1,34 @@
 import bodyParser from "body-parser";
 import express from "express";
-import {Application, Request, Response, Router, RequestHandler} from "express";
+import { Application, Request, Response, Router, RequestHandler } from "express";
 import helmet from "helmet";
 import http from "http";
 import morgan from "morgan";
 
 import config from "./Config/Config";
-import {HelpController} from "./Controller/Api/HelpController";
-import {createApiRoutes} from "./Routes/Api";
-import {Service} from "./Services/interface";
-import logger, {morganLogger} from "./Services/Logger";
+import { NodeController } from "./Controller/Api/NodeController";
+import { createApiRoutes } from "./Routes/Api";
+import { Service } from "./Services/interface";
+import logger, { morganLogger } from "./Services/Logger";
+import { NodeService } from "./Services/NodeService";
 
 export class App implements Service {
 
     public express: Application;
     public server?: http.Server;
 
-    private helpController?: HelpController;
+    private nodeController: NodeController;
+    private nodeService: NodeService;
 
     constructor() {
         this.express = express();
         // add before route middleware's here
-        this.express.use(morgan("short", {stream: morganLogger}) as RequestHandler);
+        this.express.use(morgan("short", { stream: morganLogger }) as RequestHandler);
         this.express.use(bodyParser.json());
         this.express.use(helmet() as RequestHandler);
         // add after route middleware's here
         this.addInitialRoutes();
+        this.nodeService = new NodeService();
     }
 
     public async start(): Promise<void> {
@@ -47,7 +50,7 @@ export class App implements Service {
     }
 
     private initControllers(): void {
-        this.helpController = new HelpController();
+        this.nodeController = new NodeController(this.nodeService);
     }
 
     private addInitialRoutes(): void {
@@ -66,12 +69,8 @@ export class App implements Service {
     }
 
     private addApiRoutes(): void {
-        if (!this.helpController) {
-            throw new Error("Help Controller not initialized.");
-        }
-
         this.express.use("/api", createApiRoutes(
-            this.helpController,
+            this.nodeController
         ));
     }
 }
