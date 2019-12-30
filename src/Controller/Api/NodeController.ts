@@ -33,11 +33,11 @@ export class NodeController {
                 await this.nodeService.deleteNode(nodeId);
                 res.status(200).json(node);
             } else {
-                res.status(404).json({ error: "Node not found." });
+                res.status(404).json({error: "Node not found."});
             }
         } catch (e) {
             logger.error(`Error occurred on deleting node in controller: ${e.message}`);
-            res.status(500).json({ error: "An unknown error occurred." });
+            res.status(500).json({error: "An unknown error occurred."});
         }
     }
 }
