@@ -1,32 +1,34 @@
+import { QueryInterface, DataTypes } from 'sequelize';
+
 module.exports = {
-    up: (queryInterface, Sequelize) => {
+    up: (queryInterface: QueryInterface) => {
         return queryInterface.createTable('Nodes', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER
+                type: DataTypes.INTEGER
             },
             url: {
-                type: Sequelize.STRING
+                type: DataTypes.STRING
             },
             token: {
-                type: Sequelize.STRING
+                type: DataTypes.STRING
             },
             address: {
-                type: Sequelize.STRING
+                type: DataTypes.STRING
             },
             createdAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             },
             updatedAt: {
                 allowNull: false,
-                type: Sequelize.DATE
+                type: DataTypes.DATE
             }
         });
     },
-    down: (queryInterface, Sequelize) => {
+    down: (queryInterface: QueryInterface) => {
         return queryInterface.dropTable('Nodes');
     }
 };

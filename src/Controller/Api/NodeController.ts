@@ -1,16 +1,12 @@
-import { Request, Response } from "express";
-import * as Joi from "@hapi/joi";
-import { NodeService } from "../../Services/NodeService";
-import logger from "../../Services/Logger";
-export class NodeController {
+import {Request, Response} from "express";
+import {ValidatedRequest} from "express-joi-validation";
 
-    public createNodesValidation = {
-        body: {
-            url: Joi.string().required(),
-            token: Joi.string().required(),
-            address: Joi.string().required()
-        }
-    };
+import {NodeService} from "../../Services/NodeService";
+import logger from "../../Services/Logger";
+import {CreateNodeRequestSchema} from "./NodeControllerValidation";
+
+
+export class NodeController {
 
     private nodeService: NodeService
 
@@ -18,33 +14,30 @@ export class NodeController {
         this.nodeService = nodeService;
     }
 
-    public async createNode(req: Request, res: Response): Promise<any> {
+    public async createNode(req: ValidatedRequest<CreateNodeRequestSchema>, res: Response): Promise<any> {
         try {
-            const { url, token, address } = req.body;
+            const {url, token, address} = req.body;
             const result = await this.nodeService.createNode(url, token, address);
             res.status(201).json(result);
         } catch (e) {
-            logger.error(`Error occurred on CreateNode in controller: ${e.message}`);
-            res.status(500).json({ error: "An unknown error occurred." });
+            logger.error(`Error occurred on creating node in controller: ${e}`);
+            res.status(500).json({error: "An unknown error occurred."});
         }
     }
 
     public async deleteNode(req: Request, res: Response): Promise<any> {
         try {
-            const { nodeId } = req.params;
+            const {nodeId} = req.params;
             const node = await this.nodeService.getNode(nodeId);
             if (node) {
                 await this.nodeService.deleteNode(nodeId);
                 res.status(200).json(node);
             } else {
-                res.status(404).json({ error: "Node not found." });
+                res.status(404).json({error: "Node not found."});
             }
         } catch (e) {
-            console.log(e)
-
-            logger.error(`Error occured on DeleteNode in contoller: ${e.message}`);
-            res.status(500).json({ error: "An unknown error occurred." });
+            logger.error(`Error occurred on deleting node in controller: ${e.message}`);
+            res.status(500).json({error: "An unknown error occurred."});
         }
     }
-
 }

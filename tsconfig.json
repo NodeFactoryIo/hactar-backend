@@ -18,10 +18,9 @@
     },
     "include": [
         "src/**/*.ts",
-        "test/**/*.ts",
-        "src/Migrations/*.js",
+        "test/**/*.ts"
     ],
     "exclude": [
-        "node_modules",
+        "node_modules"
     ]
 }

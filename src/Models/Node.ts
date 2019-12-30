@@ -1,4 +1,4 @@
-import { Model, InitOptions, ModelAttributes, DataTypes, Sequelize } from "sequelize";
+import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequelize";
 
 export class Node extends Model {
 
@@ -24,8 +24,7 @@ export class Node extends Model {
             },
             updatedAt: {
                 type: DataTypes.DATE,
-                defaultValue: null,
-                allowNull: true,
+                allowNull: false,
             },
             createdAt: {
                 type: DataTypes.DATE,
