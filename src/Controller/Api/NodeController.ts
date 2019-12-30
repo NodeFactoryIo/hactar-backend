@@ -1,8 +1,7 @@
-import { Request, Response, NextFunction, response } from "express";
+import { Request, Response } from "express";
 import * as Joi from "@hapi/joi";
 import { NodeService } from "../../Services/NodeService";
 import logger from "../../Services/Logger";
-
 export class NodeController {
 
     public createNodesValidation = {
@@ -33,14 +32,16 @@ export class NodeController {
     public async deleteNode(req: Request, res: Response): Promise<any> {
         try {
             const { nodeId } = req.params;
-            const result = await this.nodeService.deleteNode(nodeId);
-            if (result !== 0) {
-                res.status(200).json({ deleted: result, message: 'Deleted successfully' });
-            }
-            else {
-                res.status(404).json({ deleted: 0, message: "Record not found." });
+            const node = await this.nodeService.getNode(nodeId);
+            if (node) {
+                await this.nodeService.deleteNode(nodeId);
+                res.status(200).json(node);
+            } else {
+                res.status(404).json({ error: "Node not found." });
             }
         } catch (e) {
+            console.log(e)
+
             logger.error(`Error occured on DeleteNode in contoller: ${e.message}`);
             res.status(500).json({ error: "An unknown error occurred." });
         }

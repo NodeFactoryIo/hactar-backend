@@ -11,4 +11,8 @@ export class NodeService {
             where: { id: nodeId }
         });
     }
+
+    public async getNode(nodeId: number) {
+        return await Node.findByPk(nodeId);
+    }
 }

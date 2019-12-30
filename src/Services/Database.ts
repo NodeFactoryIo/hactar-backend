@@ -1,5 +1,5 @@
 import path from "path";
-import { DataTypes, InitOptions, ModelAttributes, Options, Sequelize } from "sequelize";
+import { Options, Sequelize } from "sequelize";
 import Umzug from "umzug";
 import { Umzug as UmzugInterface } from "umzug";
 import config from "../Config/Config";
@@ -76,9 +76,10 @@ export class Database {
         if (config.env !== "test") {
             try {
                 logger.info("Running migrations...");
+                await this.migrations.up();
                 logger.info("Migrations executed successfully");
             } catch (err) {
-                console.log('error', err)
+                logger.error('Error while trying to run migrations');
             }
         }
     }

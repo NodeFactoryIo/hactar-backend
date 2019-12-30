@@ -7,7 +7,8 @@ import logger from "../../../src/Services/Logger";
 
 describe("NodeController", function () {
     describe('POST /user/node', () => {
-        const nodeServiceStub = sinon.createStubInstance(NodeController);
+        const nodeServiceStub = sinon.createStubInstance(NodeService);
+        // @ts-ignore
         nodeServiceStub.createNode.resolves({ url: 'some url', token: 'some token', address: 'some address' });
 
         it('should add new node to the database', async function () {
@@ -36,32 +37,25 @@ describe("NodeController", function () {
     });
 
     describe('DELETE /user/node/:nodeId', () => {
-        const nodeServiceStub = sinon.createStubInstance(NodeController);
-        nodeServiceStub.deleteNode.resolves({ nodeId: 5 });
+        const nodeServiceStub = sinon.createStubInstance(NodeService);
+        nodeServiceStub.deleteNode.resolves(1);
+        // @ts-ignore
+        nodeServiceStub.getNode.resolves({ id: 5, url: "url", address: "address", token: "token" });
 
         it('should delete a node', async function () {
             try {
                 const nodeController = new NodeController(nodeServiceStub as unknown as NodeService);
                 const response = {} as Response;
                 response.json = sinon.spy((result) => {
-                    if (result.deleted !== 0) {
-                        expect(result.deleted.nodeId).to.be.equal(5)
+                    if (result) {
+                        expect(result.id).to.be.equal(5)
                         return response;
-                    }
-                    else {
-                        expect(result.deleted.nodeId).to.be.equal(0)
-                        return response;
-
                     }
                 }) as any;
 
                 response.status = sinon.spy((result) => {
-                    if (result.deleted !== 0) {
+                    if (result) {
                         expect(result).to.equal(200)
-                        return response;
-                    }
-                    else {
-                        expect(result).to.equal(404)
                         return response;
                     }
                 }) as any;
