@@ -43,10 +43,20 @@ describe("NodeController", function () {
             try {
                 const nodeController = new NodeController(nodeServiceStub as unknown as NodeService);
                 const response = {} as Response;
-                response.json = sinon.spy((result) => expect(result.nodeId).to.be.equal(1)) as any;
+                response.json = sinon.spy((result) => {
+                    if (result.deleted !== 0) {
+                        expect(result.deleted.nodeId).to.be.equal(5)
+                        return response;
+                    }
+                    else {
+                        expect(result.deleted.nodeId).to.be.equal(0)
+                        return response;
+
+                    }
+                }) as any;
 
                 response.status = sinon.spy((result) => {
-                    if (result !== 0) {
+                    if (result.deleted !== 0) {
                         expect(result).to.equal(200)
                         return response;
                     }

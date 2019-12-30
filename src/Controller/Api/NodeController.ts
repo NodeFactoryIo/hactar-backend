@@ -35,10 +35,10 @@ export class NodeController {
             const { nodeId } = req.params;
             const result = await this.nodeService.deleteNode(nodeId);
             if (result !== 0) {
-                res.status(200).json({ message: "Deleted successfully." });
+                res.status(200).json({ deleted: result, message: 'Deleted successfully' });
             }
             else {
-                res.status(404).json({ message: "Record not found." });
+                res.status(404).json({ deleted: 0, message: "Record not found." });
             }
         } catch (e) {
             logger.error(`Error occured on DeleteNode in contoller: ${e.message}`);
