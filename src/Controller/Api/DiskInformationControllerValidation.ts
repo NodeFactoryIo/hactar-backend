@@ -1,7 +1,7 @@
 import {ContainerTypes, ValidatedRequestSchema} from "express-joi-validation";
 import * as Joi from "@hapi/joi";
 
-export interface CreateDiskInforamtionRequestSchema extends ValidatedRequestSchema {
+export interface CreateDiskInformationRequestSchema extends ValidatedRequestSchema {
     [ContainerTypes.Body]: {
         freeSpace: number;
         takenSpace: number;

@@ -3,7 +3,7 @@ import {ValidatedRequest} from "express-joi-validation";
 
 import {DiskInformationService} from "../../Services/DiskInformationService";
 import logger from "../../Services/Logger";
-import {CreateDiskInforamtionRequestSchema} from "./DiskInformationControllerValidation";
+import {CreateDiskInformationRequestSchema} from "./DiskInformationControllerValidation";
 
 
 export class DiskInformationController {
@@ -17,7 +17,7 @@ export class DiskInformationController {
     }
 
     public async createDiskData(
-        req: ValidatedRequest<CreateDiskInforamtionRequestSchema>,
+        req: ValidatedRequest<CreateDiskInformationRequestSchema>,
         res: Response): Promise<any> {
         try {
             const {freeSpace, takenSpace} = req.body;
