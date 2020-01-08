@@ -5,8 +5,7 @@ export class Node extends Model {
     private url: string;
     private token: string;
     private address: string;
-    private updatedAt: Date;
-    private createdAt: Date;
+    private diskInformationId: number;
 
     public static initialize(sequelize: Sequelize) {
         this.init({
@@ -22,15 +21,6 @@ export class Node extends Model {
                 type: DataTypes.STRING(128),
                 allowNull: false,
             },
-            updatedAt: {
-                type: DataTypes.DATE,
-                allowNull: false,
-            },
-            createdAt: {
-                type: DataTypes.DATE,
-                defaultValue: () => new Date(),
-                allowNull: false
-            }
         } as ModelAttributes,
             {
                 sequelize: sequelize,
