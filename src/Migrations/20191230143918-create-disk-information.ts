@@ -2,7 +2,7 @@ import {QueryInterface, DataTypes} from 'sequelize';
 
 module.exports = {
     up: (queryInterface: QueryInterface) => {
-        return queryInterface.createTable('DiskInformations', {
+        return queryInterface.createTable('DiskInformation', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -10,13 +10,13 @@ module.exports = {
                 type: DataTypes.INTEGER
             },
             freeSpace: {
-                type: DataTypes.STRING
+                type: DataTypes.BIGINT
             },
             takenSpace: {
-                type: DataTypes.STRING
+                type: DataTypes.BIGINT
             },
             nodeId: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.INTEGER,
                 allowNull: false,
                 references: {
                     model: 'Nodes',
@@ -34,6 +34,6 @@ module.exports = {
         });
     },
     down: (queryInterface: QueryInterface) => {
-        return queryInterface.dropTable('DiskInformations');
+        return queryInterface.dropTable('DiskInformation');
     }
 };
