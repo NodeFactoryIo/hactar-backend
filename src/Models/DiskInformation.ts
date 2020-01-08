@@ -9,11 +9,11 @@ export class DiskInformation extends Model {
     public static initialize(sequelize: Sequelize) {
         this.init({
             freeSpace: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.BIGINT,
                 allowNull: false,
             },
             takenSpace: {
-                type: DataTypes.NUMBER,
+                type: DataTypes.BIGINT,
                 allowNull: false,
             },
         } as ModelAttributes,
@@ -22,6 +22,5 @@ export class DiskInformation extends Model {
                 tableName: "DiskInformations",
             } as InitOptions);
         this.belongsTo(Node, {foreignKey: "nodeId"});
-
     }
 }
