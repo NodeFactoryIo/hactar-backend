@@ -1,15 +1,15 @@
 import sinon from "sinon";
-import { expect } from "chai";
-import { Request, Response } from "express";
-import { NodeService } from "../../../src/Services/NodeService";
-import { NodeController } from "../../../src/Controller/Api/NodeController";
+import {expect} from "chai";
+import {Request, Response} from "express";
+import {NodeService} from "../../../src/Services/NodeService";
+import {NodeController} from "../../../src/Controller/Api/NodeController";
 import logger from "../../../src/Services/Logger";
 
 describe("NodeController", function () {
     describe('POST /user/node', () => {
         const nodeServiceStub = sinon.createStubInstance(NodeService);
         // @ts-ignore
-        nodeServiceStub.createNode.resolves({ url: 'some url', token: 'some token', address: 'some address' });
+        nodeServiceStub.createNode.resolves({url: 'some url', token: 'some token', address: 'some address'});
 
         it('should add new node to the database', async function () {
             try {
@@ -40,7 +40,7 @@ describe("NodeController", function () {
         const nodeServiceStub = sinon.createStubInstance(NodeService);
         nodeServiceStub.deleteNode.resolves(1);
         // @ts-ignore
-        nodeServiceStub.getNode.resolves({ id: 5, url: "url", address: "address", token: "token" });
+        nodeServiceStub.getNodeByPk.resolves({id: 5, url: "url", address: "address", token: "token"});
 
         it('should delete a node', async function () {
             try {

@@ -2,21 +2,26 @@ import {QueryInterface, DataTypes} from 'sequelize';
 
 module.exports = {
     up: (queryInterface: QueryInterface) => {
-        return queryInterface.createTable('Nodes', {
+        return queryInterface.createTable('DiskInformation', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: DataTypes.INTEGER
             },
-            url: {
-                type: DataTypes.STRING
+            freeSpace: {
+                type: DataTypes.BIGINT
             },
-            token: {
-                type: DataTypes.STRING
+            takenSpace: {
+                type: DataTypes.BIGINT
             },
-            address: {
-                type: DataTypes.STRING
+            nodeId: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'Nodes',
+                    key: 'id'
+                }
             },
             createdAt: {
                 allowNull: false,
@@ -29,6 +34,6 @@ module.exports = {
         });
     },
     down: (queryInterface: QueryInterface) => {
-        return queryInterface.dropTable('Nodes');
+        return queryInterface.dropTable('DiskInformation');
     }
 };

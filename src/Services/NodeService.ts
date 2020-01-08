@@ -12,7 +12,19 @@ export class NodeService {
         });
     }
 
-    public async getNode(nodeId: number) {
+    public async getNodeByPk(nodeId: number) {
         return await Node.findByPk(nodeId);
     }
+
+    public static async getNodeByData(url: string, address: string) {
+        return await Node.findOne({
+            raw: true,
+            where: {
+                url: url,
+                address: address
+            }
+        })
+    }
 }
+
+exports.getNodeByData;

@@ -4,8 +4,9 @@ import Umzug from "umzug";
 import {Umzug as UmzugInterface} from "umzug";
 
 import config from "../Config/Config";
-import {Node} from "../Models/Node";
 import logger from "../Services/Logger";
+import {Node} from "../Models/Node";
+import {DiskInformation} from "../Models/DiskInformation";
 
 export class Database {
 
@@ -93,6 +94,7 @@ export class Database {
 
     private initModels(): void {
         Node.initialize(this.sequelize);
+        DiskInformation.initialize(this.sequelize);
     }
 }
 
