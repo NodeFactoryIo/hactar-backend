@@ -5,7 +5,6 @@ import {NodeService} from "../../Services/NodeService";
 import logger from "../../Services/Logger";
 import {CreateNodeRequestSchema} from "./NodeControllerValidation";
 
-
 export class NodeController {
 
     private nodeService: NodeService
@@ -28,7 +27,7 @@ export class NodeController {
     public async deleteNode(req: Request, res: Response): Promise<any> {
         try {
             const {nodeId} = req.params;
-            const node = await this.nodeService.getNode(nodeId);
+            const node = await this.nodeService.getNodeByPk(nodeId);
             if (node) {
                 await this.nodeService.deleteNode(nodeId);
                 res.status(200).json(node);
