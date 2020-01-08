@@ -95,7 +95,6 @@ export class Database {
     private initModels(): void {
         Node.initialize(this.sequelize);
         DiskInformation.initialize(this.sequelize);
-        Node.hasMany(DiskInformation);
     }
 }
 
