@@ -19,7 +19,8 @@ export class DiskInformation extends Model {
         } as ModelAttributes,
             {
                 sequelize: sequelize,
-                tableName: "DiskInformations",
+                tableName: "DiskInformation",
+                freezeTableName: true,
             } as InitOptions);
         this.belongsTo(Node, {foreignKey: "nodeId"});
     }
