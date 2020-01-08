@@ -8,10 +8,12 @@ import {createValidator} from "express-joi-validation";
 
 import config from "./Config/Config";
 import {NodeController} from "./Controller/Api/NodeController";
+import {DiskInformationController} from "./Controller/Api/DiskInformationController";
 import {createApiRoutes} from "./Routes/Api";
 import {Service} from "./Services/interface";
 import logger, {morganLogger} from "./Services/Logger";
 import {NodeService} from "./Services/NodeService";
+import {DiskInformationService} from "./Services/DiskInformationService";
 import {validateJoiError} from "./Middleware/ValidationErrorHandling";
 
 export class App implements Service {
@@ -22,6 +24,9 @@ export class App implements Service {
     private nodeController: NodeController;
     private nodeService: NodeService;
 
+    private diskInformationController: DiskInformationController;
+    private diskInformationService: DiskInformationService;
+
     constructor() {
         this.express = express();
         // add before route middleware's here
@@ -31,6 +36,7 @@ export class App implements Service {
         // add after route middleware's here
         this.addInitialRoutes();
         this.nodeService = new NodeService();
+        this.diskInformationService = new DiskInformationService();
     }
 
     public async start(): Promise<void> {
@@ -53,6 +59,7 @@ export class App implements Service {
 
     private initControllers(): void {
         this.nodeController = new NodeController(this.nodeService);
+        this.diskInformationController = new DiskInformationController(this.diskInformationService);
     }
 
     private addInitialRoutes(): void {
@@ -74,7 +81,8 @@ export class App implements Service {
         const validator = createValidator({passError: true});
         this.express.use("/api", createApiRoutes(
             validator,
-            this.nodeController
+            this.nodeController,
+            this.diskInformationController
         ));
 
         this.express.use(validateJoiError);
