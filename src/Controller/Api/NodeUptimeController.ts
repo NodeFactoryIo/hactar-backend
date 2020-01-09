@@ -27,12 +27,9 @@ export class NodeUptimeController {
     public async getNodeUptime(req: Request, res: Response): Promise<any> {
         try {
             const nodeId = res.locals.node.id;
-            console.log('controller', nodeId)
             const result = await this.nodeUptimeService.getNodeUpTimeByData(nodeId);
-            console.log('controller', result)
             res.status(200).json(result);
         } catch (e) {
-            console.log(e)
             logger.error(`Error occured on fetching node in controller: ${e}`);
             res.status(500).json({error: "An unknown error occured."})
         }
