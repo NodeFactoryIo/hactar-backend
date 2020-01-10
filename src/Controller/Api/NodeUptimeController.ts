@@ -28,7 +28,11 @@ export class NodeUptimeController {
         try {
             const nodeId = req.params.nodeId;
             const result = await this.nodeUptimeService.getNodeUpTimeByPk(nodeId);
-            res.status(200).json(result);
+            if (result) {
+                res.status(200).json(result);
+            } else {
+                res.status(404).json({error: "Node not found."});
+            }
         } catch (e) {
             logger.error(`Error occured on fetching node in controller: ${e}`);
             res.status(500).json({error: "An unknown error occured."})
