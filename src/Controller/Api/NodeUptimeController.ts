@@ -26,8 +26,8 @@ export class NodeUptimeController {
 
     public async getNodeUptime(req: Request, res: Response): Promise<any> {
         try {
-            const nodeId = res.locals.node.id;
-            const result = await this.nodeUptimeService.getNodeUpTimeByData(nodeId);
+            const nodeId = req.params.nodeId;
+            const result = await this.nodeUptimeService.getNodeUpTimeByPk(nodeId);
             res.status(200).json(result);
         } catch (e) {
             logger.error(`Error occured on fetching node in controller: ${e}`);

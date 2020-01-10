@@ -40,8 +40,7 @@ export function createApiRoutes(
         nodeUptimeController.storeNodeUptime.bind(nodeUptimeController));
 
     router.get(
-        "/node/uptime",
-        passNodeData,
+        "/node/uptime/:nodeId",
         nodeUptimeController.getNodeUptime.bind(nodeUptimeController));
     return router;
 }

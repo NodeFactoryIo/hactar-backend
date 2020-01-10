@@ -9,7 +9,7 @@ export class NodeUptimeService {
             nodeId
         });
     }
-    public async getNodeUpTimeByData(nodeId: number) {
+    public async getNodeUpTimeByPk(nodeId: number) {
         return await Node.findByPk(nodeId, {raw: true, include: [{model: NodeUptime}]});
     }
 }
