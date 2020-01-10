@@ -35,17 +35,16 @@ describe("NodeUptimeController", function () {
             }
         });
     });
-    describe('GET /node/uptime', () => {
+    describe('GET /node/uptime/:nodeId', () => {
         const nodeUptimeStub = sinon.createStubInstance(NodeUptimeService);
         // @ts-ignore
-        nodeUptimeStub.getNodeUpTimeByData.resolves({url: 'some url', address: 'some address'});
+        nodeUptimeStub.getNodeUpTimeByPk.resolves({url: 'some url', address: 'some address'});
 
         it('should return node with its uptime status', async function () {
             try {
                 const nodeUptimeController = new NodeUptimeController(
                     nodeUptimeStub as unknown as NodeUptimeService);
                 const response = {} as Response;
-                response.locals = {node: {id: 4}};
                 response.json = sinon.spy((result) => expect(result.url).to.be.equal('some url')) as any;
                 response.status = sinon.spy((result) => {
                     expect(result).to.equal(200)
@@ -53,7 +52,7 @@ describe("NodeUptimeController", function () {
                 }) as any;
 
                 await nodeUptimeController.getNodeUptime({
-                    body: {
+                    params: {
                         nodeId: 4
                     }
                 } as Request, response)
