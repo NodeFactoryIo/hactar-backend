@@ -7,6 +7,7 @@ import config from "../Config/Config";
 import logger from "../Services/Logger";
 import {Node} from "../Models/Node";
 import {DiskInformation} from "../Models/DiskInformation";
+import {NodeUptime} from "../Models/NodeUptime";
 
 export class Database {
 
@@ -95,6 +96,7 @@ export class Database {
     private initModels(): void {
         Node.initialize(this.sequelize);
         DiskInformation.initialize(this.sequelize);
+        NodeUptime.initialize(this.sequelize);
     }
 }
 

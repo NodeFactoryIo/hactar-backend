@@ -9,11 +9,13 @@ import {createValidator} from "express-joi-validation";
 import config from "./Config/Config";
 import {NodeController} from "./Controller/Api/NodeController";
 import {DiskInformationController} from "./Controller/Api/DiskInformationController";
+import {NodeUptimeController} from "./Controller/Api/NodeUptimeController";
 import {createApiRoutes} from "./Routes/Api";
 import {Service} from "./Services/interface";
 import logger, {morganLogger} from "./Services/Logger";
 import {NodeService} from "./Services/NodeService";
 import {DiskInformationService} from "./Services/DiskInformationService";
+import {NodeUptimeService} from "./Services/NodeUptimeService";
 import {validateJoiError} from "./Middleware/ValidationErrorHandling";
 
 export class App implements Service {
@@ -23,9 +25,11 @@ export class App implements Service {
 
     private nodeController: NodeController;
     private nodeService: NodeService;
+    private nodeUptimeController: NodeUptimeController;
 
     private diskInformationController: DiskInformationController;
     private diskInformationService: DiskInformationService;
+    private nodeUptimeService: NodeUptimeService;
 
     constructor() {
         this.express = express();
@@ -37,6 +41,7 @@ export class App implements Service {
         this.addInitialRoutes();
         this.nodeService = new NodeService();
         this.diskInformationService = new DiskInformationService();
+        this.nodeUptimeService = new NodeUptimeService();
     }
 
     public async start(): Promise<void> {
@@ -60,6 +65,7 @@ export class App implements Service {
     private initControllers(): void {
         this.nodeController = new NodeController(this.nodeService);
         this.diskInformationController = new DiskInformationController(this.diskInformationService);
+        this.nodeUptimeController = new NodeUptimeController(this.nodeUptimeService);
     }
 
     private addInitialRoutes(): void {
@@ -82,7 +88,8 @@ export class App implements Service {
         this.express.use("/api", createApiRoutes(
             validator,
             this.nodeController,
-            this.diskInformationController
+            this.diskInformationController,
+            this.nodeUptimeController
         ));
 
         this.express.use(validateJoiError);
