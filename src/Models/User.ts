@@ -3,13 +3,14 @@ import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequeli
 export class User extends Model {
 
     private email: string;
-    private hashPassword: string;
+    private hash_password: string;
 
     public static initialize(sequelize: Sequelize) {
         this.init({
             email: {
-                type: DataTypes.STRING(128),
+                type: DataTypes.STRING(),
                 allowNull: false,
+                unique: true,
             },
             // eslint-disable-next-line
             hash_password: {
