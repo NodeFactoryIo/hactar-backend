@@ -11,7 +11,7 @@ export class UserService {
         return await User.findOne({
             raw: true,
             where: {
-                email: email,
+                email,
             }
         })
     }
