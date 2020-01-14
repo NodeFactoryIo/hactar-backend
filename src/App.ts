@@ -10,12 +10,14 @@ import config from "./Config/Config";
 import {NodeController} from "./Controller/Api/NodeController";
 import {DiskInformationController} from "./Controller/Api/DiskInformationController";
 import {NodeUptimeController} from "./Controller/Api/NodeUptimeController";
+import {UserController} from "./Controller/Api/UserController";
 import {createApiRoutes} from "./Routes/Api";
 import {Service} from "./Services/interface";
 import logger, {morganLogger} from "./Services/Logger";
 import {NodeService} from "./Services/NodeService";
 import {DiskInformationService} from "./Services/DiskInformationService";
 import {NodeUptimeService} from "./Services/NodeUptimeService";
+import {UserService} from "./Services/UserService";
 import {validateJoiError} from "./Middleware/ValidationErrorHandling";
 
 export class App implements Service {
@@ -25,11 +27,15 @@ export class App implements Service {
 
     private nodeController: NodeController;
     private nodeService: NodeService;
+
     private nodeUptimeController: NodeUptimeController;
+    private nodeUptimeService: NodeUptimeService;
 
     private diskInformationController: DiskInformationController;
     private diskInformationService: DiskInformationService;
-    private nodeUptimeService: NodeUptimeService;
+
+    private userController: UserController;
+    private userService: UserService;
 
     constructor() {
         this.express = express();
@@ -42,6 +48,7 @@ export class App implements Service {
         this.nodeService = new NodeService();
         this.diskInformationService = new DiskInformationService();
         this.nodeUptimeService = new NodeUptimeService();
+        this.userService = new UserService();
     }
 
     public async start(): Promise<void> {
@@ -66,6 +73,7 @@ export class App implements Service {
         this.nodeController = new NodeController(this.nodeService);
         this.diskInformationController = new DiskInformationController(this.diskInformationService);
         this.nodeUptimeController = new NodeUptimeController(this.nodeUptimeService);
+        this.userController = new UserController(this.userService);
     }
 
     private addInitialRoutes(): void {
@@ -89,7 +97,8 @@ export class App implements Service {
             validator,
             this.nodeController,
             this.diskInformationController,
-            this.nodeUptimeController
+            this.nodeUptimeController,
+            this.userController
         ));
 
         this.express.use(validateJoiError);

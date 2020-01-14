@@ -10,13 +10,17 @@ import {CreateDiskInforamtionValidationSchema} from "../Controller/Api/DiskInfor
 import {NodeUptimeController} from "../Controller/Api/NodeUptimeController";
 import {CreateNodeUptimeValidationSchema} from "../Controller/Api/NodeUptimeControllerValidation";
 
+import {UserController} from "../Controller/Api/UserController";
+import {CreateUserValidationSchema} from "../Controller/Api/UserControllerValidation";
+
 import {passNodeData} from "../Middleware/passingNodeData";
 
 export function createApiRoutes(
     validator: ReturnType<typeof createValidator>,
     nodesController: NodeController,
     diskInformationController: DiskInformationController,
-    nodeUptimeController: NodeUptimeController
+    nodeUptimeController: NodeUptimeController,
+    userController: UserController
 ): express.Router {
     const router = express.Router();
 
@@ -42,5 +46,10 @@ export function createApiRoutes(
     router.get(
         "/node/uptime/:nodeId",
         nodeUptimeController.getNodeUptime.bind(nodeUptimeController));
+
+    router.post(
+        "/user/register",
+        validator.body(CreateUserValidationSchema),
+        userController.registerUser.bind(userController));
     return router;
 }
