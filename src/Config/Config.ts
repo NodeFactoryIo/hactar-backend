@@ -17,6 +17,7 @@ const config = Object.freeze({
     },
     env: process.env.NODE_ENV || "dev",
     port: env.SERVER_PORT || 3000,
+    jwtKey: process.env.JWT_KEY || "nodefactory"
 });
 
 export default config;
