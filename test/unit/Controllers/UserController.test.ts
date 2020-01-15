@@ -35,4 +35,38 @@ describe("UserController", function () {
             }
         });
     });
+
+    describe('POST /user/login', () => {
+        const userServiceStub = sinon.createStubInstance(UserService);
+        // @ts-ignore
+        userServiceStub.getUserByEmail.resolves({
+            email: 'example@example.com',
+            // eslint-disable-next-line
+            hash_password: '$2a$10$/ZUT2CX0acd/ZgCHT8apxOB1yxYhzTkx3bzi5YKzKFn78vm2RQhxi'
+        });
+
+        it('should return JWT on existing valid email and password input', async function () {
+            try {
+                const userController = new UserController(userServiceStub as unknown as UserService);
+                const response = {} as Response;
+                response.json = sinon.spy((result) =>
+                    expect(result).have.property('token')) as any;
+
+                response.status = sinon.spy((result) => {
+                    expect(result).to.equal(200)
+                    return response;
+                }) as any;
+
+                await userController.loginUser({
+                    body: {
+                        email: 'example@example.com',
+                        password: 'super secret password'
+                    }
+                } as Request, response)
+            } catch (err) {
+                logger.error('Unexpected error occured: ${err.message}');
+                expect.fail(err);
+            }
+        });
+    });
 });
