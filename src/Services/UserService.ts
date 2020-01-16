@@ -1,3 +1,6 @@
+import * as bcrypt from "bcryptjs";
+import logger from "./Logger";
+
 import {User} from "../Models/User";
 
 export class UserService {
@@ -7,12 +10,20 @@ export class UserService {
         return await User.create({email, hash_password});
     }
 
-    public async getUserByEmail(email: string) {
-        return await User.findOne({
-            raw: true,
-            where: {
-                email,
+    public async isAuthenticatedUser(email: string, password: string) {
+        try {
+            const user = await User.findOne({
+                raw: true,
+                where: {
+                    email,
+                }
+            })
+            if (user) {
+                return bcrypt.compareSync(password, user['hash_password']);
             }
-        })
+            return false;
+        } catch (e) {
+            logger.error(`Error while searching for user: ${e.message}`);
+        }
     }
 }
