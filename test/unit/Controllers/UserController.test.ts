@@ -39,11 +39,7 @@ describe("UserController", function () {
     describe('POST /user/login', () => {
         const userServiceStub = sinon.createStubInstance(UserService);
         // @ts-ignore
-        userServiceStub.getUserByEmail.resolves({
-            email: 'example@example.com',
-            // eslint-disable-next-line
-            hash_password: '$2a$10$/ZUT2CX0acd/ZgCHT8apxOB1yxYhzTkx3bzi5YKzKFn78vm2RQhxi'
-        });
+        userServiceStub.isAuthenticatedUser.resolves(true);
 
         it('should return JWT on existing valid email and password input', async function () {
             try {
