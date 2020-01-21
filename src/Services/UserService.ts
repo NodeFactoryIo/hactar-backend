@@ -5,7 +5,7 @@ import config from "../Config/Config";
 import {User} from "../Models/User";
 import {ServiceError} from "./ServiceError";
 
-export class UserService extends ServiceError {
+export class UserService {
     // eslint-disable-next-line
     public async registerUser(email: string, password: string) {
         const user = await User.findOne({
@@ -18,10 +18,8 @@ export class UserService extends ServiceError {
         if (user) {
             throw new ServiceError(409, "There is already a user with this email address.");
         }
-        // eslint-disable-next-line
-        const hash_password = bcrypt.hashSync(password, 10);
-        // eslint-disable-next-line
-        return await User.create({email, hash_password});
+        const hashPassword = bcrypt.hashSync(password, 10);
+        return await User.create({email, 'hash_password': hashPassword});
     }
 
     public async authenticateUser(email: string, password: string) {
