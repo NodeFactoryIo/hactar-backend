@@ -11,12 +11,10 @@ describe("UserService", function () {
     let sandbox: SinonSandbox;
     let userService: UserService;
     let userFindStub: any;
-    let status: number;
-    let message: string
 
     beforeEach(function () {
         sandbox = createSandbox();
-        userService = new UserService(status, message);
+        userService = new UserService();
         userFindStub = sinon.stub(User, "findOne");
     });
 
