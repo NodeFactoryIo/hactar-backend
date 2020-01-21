@@ -11,7 +11,7 @@ import {NodeUptimeController} from "../Controller/Api/NodeUptimeController";
 import {CreateNodeUptimeValidationSchema} from "../Controller/Api/NodeUptimeControllerValidation";
 
 import {UserController} from "../Controller/Api/UserController";
-import {CreateUserValidationSchema} from "../Controller/Api/UserControllerValidation";
+import {UserValidationSchema} from "../Controller/Api/UserControllerValidation";
 
 import {passNodeData} from "../Middleware/passingNodeData";
 
@@ -49,7 +49,13 @@ export function createApiRoutes(
 
     router.post(
         "/user/register",
-        validator.body(CreateUserValidationSchema),
+        validator.body(UserValidationSchema),
         userController.registerUser.bind(userController));
+
+    router.post(
+        "/user/login",
+        validator.body(UserValidationSchema),
+        userController.loginUser.bind(userController));
+
     return router;
 }

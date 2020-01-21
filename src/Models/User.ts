@@ -2,6 +2,7 @@ import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequeli
 
 export class User extends Model {
 
+    private id: number;
     private email: string;
     private hash_password: string;
 
