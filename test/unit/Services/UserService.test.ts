@@ -4,16 +4,19 @@ import {UserService} from "../../../src/Services/UserService";
 import logger from "../../../src/Services/Logger";
 import {User} from "../../../src/Models/User";
 import sinon from "sinon";
+// import {ServiceError} from "../../../src/Services/ServiceError";
 
 describe("UserService", function () {
 
     let sandbox: SinonSandbox;
     let userService: UserService;
     let userFindStub: any;
+    let status: number;
+    let message: string
 
     beforeEach(function () {
         sandbox = createSandbox();
-        userService = new UserService();
+        userService = new UserService(status, message);
         userFindStub = sinon.stub(User, "findOne");
     });
 
@@ -23,35 +26,33 @@ describe("UserService", function () {
         userFindStub.restore();
     });
 
-    it("should be true provided email and password are valid", async () => {
+    it("should successfully authenticate user", async () => {
         userFindStub.returns({
             email: 'example@example.com',
             // eslint-disable-next-line
             hash_password: '$2a$10$/cF6NuqvsX8/J7WbU1REEeO4xWafYrh6CmZiQkl0bij436fz/oRaS'
         })
         try {
-            const authenticatedUser = await userService.isAuthenticatedUser(
+            const authenticatedUser = await userService.authenticateUser(
                 'example@example.com',
                 'super secret password'
             );
-            expect(authenticatedUser).to.be.equal(true);
+            expect(authenticatedUser).to.be.a('string');
         } catch (err) {
             logger.error('Unexpected error occured: ${err.message}');
             expect.fail(err);
         }
     })
 
-    it("should be false if provided email and password are not valid", async () => {
+    it("should fail to authenticate user", async () => {
         userFindStub.returns(null);
         try {
-            const authenticatedUser = await userService.isAuthenticatedUser(
-                'example@example.com',
-                'super secret password'
+            await userService.authenticateUser(
+                'example123@example.com',
+                'wrong password'
             );
-            expect(authenticatedUser).to.be.equal(false);
         } catch (err) {
-            logger.error('Unexpected error occured: ${err.message}');
-            expect.fail(err);
+            expect(err.status).to.be.equal(404)
         }
     })
 });

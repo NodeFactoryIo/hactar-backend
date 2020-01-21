@@ -39,14 +39,14 @@ describe("UserController", function () {
     describe('POST /user/login', () => {
         const userServiceStub = sinon.createStubInstance(UserService);
         // @ts-ignore
-        userServiceStub.isAuthenticatedUser.resolves(true);
+        userServiceStub.authenticateUser.resolves({"token": "test token"});
 
         it('should return JWT on existing valid email and password input', async function () {
             try {
                 const userController = new UserController(userServiceStub as unknown as UserService);
                 const response = {} as Response;
                 response.json = sinon.spy((result) =>
-                    expect(result).have.property('token')) as any;
+                    expect(result).to.have.property('token')) as any;
 
                 response.status = sinon.spy((result) => {
                     expect(result).to.equal(200)
@@ -56,7 +56,7 @@ describe("UserController", function () {
                 await userController.loginUser({
                     body: {
                         email: 'example@example.com',
-                        password: 'super secret password'
+                        password: 'secret password'
                     }
                 } as Request, response)
             } catch (err) {
