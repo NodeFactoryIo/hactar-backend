@@ -39,7 +39,6 @@ export class UserController {
                 res.status(200).json(result)
             }
         } catch (e) {
-            console.log(e)
             if (e instanceof ServiceError) {
                 res.status(e.status).json({error: e.message});
             } else {
