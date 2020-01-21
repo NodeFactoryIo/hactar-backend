@@ -24,6 +24,8 @@ export class App implements Service {
 
     public express: Application;
     public server?: http.Server;
+    public status: number;
+    public message: string;
 
     private nodeController: NodeController;
     private nodeService: NodeService;
@@ -48,7 +50,7 @@ export class App implements Service {
         this.nodeService = new NodeService();
         this.diskInformationService = new DiskInformationService();
         this.nodeUptimeService = new NodeUptimeService();
-        this.userService = new UserService();
+        this.userService = new UserService(this.status, this.message);
     }
 
     public async start(): Promise<void> {
