@@ -26,7 +26,7 @@ export class NodeService {
         })
     }
 
-    public static async getAllNodes(userId: number) {
+    public async getAllNodes(userId: number) {
         return await Node.findAll({
             raw: true,
             where: {
