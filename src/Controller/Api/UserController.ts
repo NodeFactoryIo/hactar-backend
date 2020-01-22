@@ -5,16 +5,16 @@ import logger from "../../Services/Logger";
 import {UserService} from "../../Services/UserService";
 import {UserRequestSchema} from "./UserControllerValidation";
 import {ServiceError} from "../../Services/ServiceError";
-import {AuthService} from "../../Services/AuthService";
+import {NodeService} from "../../Services/NodeService";
 
 export class UserController {
 
     private userService: UserService;
-    private authService: AuthService;
+    private nodeService: NodeService;
 
-    constructor(userService: UserService, authService: AuthService) {
+    constructor(userService: UserService, nodeService: NodeService) {
         this.userService = userService;
-        this.authService = authService;
+        this.nodeService = nodeService;
     }
 
     public async registerUser(req: ValidatedRequest<UserRequestSchema>, res: Response) {
@@ -53,10 +53,10 @@ export class UserController {
 
     public async getAllUserNodes(req: Request, res: Response) {
         try {
-            const token = req.headers.authorization;
-            if (token) {
-                const userNodes = await this.authService.authorizerUser(token);
-                res.status(200).json(userNodes)
+            const userId = res.locals.userId;
+            const result = await this.nodeService.getAllNodes(userId);
+            if (result) {
+                res.status(200).json(result)
             }
         } catch (e) {
             if (e instanceof ServiceError) {
