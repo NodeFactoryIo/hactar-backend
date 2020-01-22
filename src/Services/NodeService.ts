@@ -25,6 +25,15 @@ export class NodeService {
             }
         })
     }
+
+    public static async getAllNodes(userId: number) {
+        return await Node.findAll({
+            raw: true,
+            where: {
+                userId
+            }
+        })
+    }
 }
 
 exports.getNodeByData;
