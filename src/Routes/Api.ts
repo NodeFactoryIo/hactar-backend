@@ -57,5 +57,10 @@ export function createApiRoutes(
         validator.body(UserValidationSchema),
         userController.loginUser.bind(userController));
 
+    router.get(
+        "/node/user",
+        userController.getAllUserNodes.bind(userController));
+
     return router;
+
 }
