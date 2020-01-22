@@ -12,10 +12,8 @@ describe("UserController", function () {
     const userServiceStub = sinon.createStubInstance(UserService);
     const nodeServiceStub = sinon.createStubInstance(NodeService);
 
-
     const userController = new UserController(
-        userServiceStub as unknown as UserService,
-        nodeServiceStub as unknown as NodeService);
+        userServiceStub as unknown as UserService);
 
     const response = {} as Response;
 
@@ -88,27 +86,5 @@ describe("UserController", function () {
                 "address": "address222",
             } as unknown as Node
         ]);
-
-        it('should return array of nodes belonging to the user', async function () {
-            try {
-                response.locals = {userId: {id: 1}};
-                response.json = sinon.spy((result) =>
-                    expect(result).to.be.an('Array')) as any;
-
-                response.status = sinon.spy((result) => {
-                    expect(result).to.equal(200)
-                    return response;
-                }) as any;
-
-                await userController.getAllUserNodes({
-                    body: {
-                        userId: 1
-                    }
-                } as Request, response)
-            } catch (err) {
-                logger.error('Unexpected error occured: ${err.message}');
-                expect.fail(err);
-            }
-        });
     });
 });
