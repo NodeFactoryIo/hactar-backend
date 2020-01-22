@@ -2,18 +2,20 @@ import sinon from "sinon";
 import {expect} from "chai";
 import {Request, Response} from "express";
 import {UserService} from "../../../src/Services/UserService";
-import {AuthService} from "../../../src/Services/AuthService";
+import {NodeService} from "../../../src/Services/NodeService";
 import {UserController} from "../../../src/Controller/Api/UserController";
 import logger from "../../../src/Services/Logger";
+import {Node} from "../../../src/Models/Node";
 
 describe("UserController", function () {
 
     const userServiceStub = sinon.createStubInstance(UserService);
-    const authServiceStub = sinon.createStubInstance(AuthService);
+    const nodeServiceStub = sinon.createStubInstance(NodeService);
+
 
     const userController = new UserController(
         userServiceStub as unknown as UserService,
-        authServiceStub as unknown as AuthService);
+        nodeServiceStub as unknown as NodeService);
 
     const response = {} as Response;
 
@@ -74,17 +76,22 @@ describe("UserController", function () {
     });
 
     describe('GET /node/user', () => {
-        // @ts-ignore
-        authServiceStub.authorizerUser.resolves([
+        nodeServiceStub.getAllNodes.resolves([
             {
                 "url": "url111",
                 "token": "token111",
                 "address": "address111",
-            }
+            } as unknown as Node,
+            {
+                "url": "url222",
+                "token": "token222",
+                "address": "address222",
+            } as unknown as Node
         ]);
 
         it('should return array of nodes belonging to the user', async function () {
             try {
+                response.locals = {userId: {id: 1}};
                 response.json = sinon.spy((result) =>
                     expect(result).to.be.an('Array')) as any;
 
@@ -94,10 +101,8 @@ describe("UserController", function () {
                 }) as any;
 
                 await userController.getAllUserNodes({
-                    headers: {
-                        "authorization": `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.
-                        eyJpZCI6MSwiaWF0IjoxNTc5NjE0MTgxLCJleHAiOjE1Nzk3MDA1ODF9.
-                        7b334R6HLjlPuhnfZOzmoOROzlnAUm_ZBqu-XGA4YI`
+                    body: {
+                        userId: 1
                     }
                 } as Request, response)
             } catch (err) {
