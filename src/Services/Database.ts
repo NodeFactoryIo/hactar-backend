@@ -95,10 +95,10 @@ export class Database {
     }
 
     private initModels(): void {
+        User.initialize(this.sequelize);
         Node.initialize(this.sequelize);
         DiskInformation.initialize(this.sequelize);
         NodeUptime.initialize(this.sequelize);
-        User.initialize(this.sequelize);
     }
 }
 
