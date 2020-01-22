@@ -14,6 +14,7 @@ import {UserController} from "../Controller/Api/UserController";
 import {UserValidationSchema} from "../Controller/Api/UserControllerValidation";
 
 import {passNodeData} from "../Middleware/passingNodeData";
+import {Authorize} from "../Middleware/Authorization";
 
 export function createApiRoutes(
     validator: ReturnType<typeof createValidator>,
@@ -59,6 +60,7 @@ export function createApiRoutes(
 
     router.get(
         "/node/user",
+        Authorize,
         userController.getAllUserNodes.bind(userController));
 
     return router;
