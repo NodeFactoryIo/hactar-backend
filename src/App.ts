@@ -18,7 +18,6 @@ import {NodeService} from "./Services/NodeService";
 import {DiskInformationService} from "./Services/DiskInformationService";
 import {NodeUptimeService} from "./Services/NodeUptimeService";
 import {UserService} from "./Services/UserService";
-import {AuthService} from "./Services/AuthService";
 import {validateJoiError} from "./Middleware/ValidationErrorHandling";
 
 export class App implements Service {
@@ -38,7 +37,6 @@ export class App implements Service {
     private userController: UserController;
     private userService: UserService;
 
-    private authService: AuthService;
 
     constructor() {
         this.express = express();
@@ -52,7 +50,6 @@ export class App implements Service {
         this.diskInformationService = new DiskInformationService();
         this.nodeUptimeService = new NodeUptimeService();
         this.userService = new UserService();
-        this.authService = new AuthService();
     }
 
     public async start(): Promise<void> {
@@ -77,7 +74,7 @@ export class App implements Service {
         this.nodeController = new NodeController(this.nodeService);
         this.diskInformationController = new DiskInformationController(this.diskInformationService);
         this.nodeUptimeController = new NodeUptimeController(this.nodeUptimeService);
-        this.userController = new UserController(this.userService, this.authService);
+        this.userController = new UserController(this.userService, this.nodeService);
     }
 
     private addInitialRoutes(): void {
