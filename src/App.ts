@@ -74,7 +74,7 @@ export class App implements Service {
         this.nodeController = new NodeController(this.nodeService);
         this.diskInformationController = new DiskInformationController(this.diskInformationService);
         this.nodeUptimeController = new NodeUptimeController(this.nodeUptimeService);
-        this.userController = new UserController(this.userService, this.nodeService);
+        this.userController = new UserController(this.userService);
     }
 
     private addInitialRoutes(): void {
