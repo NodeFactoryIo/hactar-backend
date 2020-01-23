@@ -7,13 +7,13 @@ module.exports = {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: sequelize.DataTypes.INTEGER
+                type: sequelize.INTEGER
             },
             isWorking: {
-                type: sequelize.DataTypes.BOOLEAN
+                type: sequelize.BOOLEAN
             },
             nodeId: {
-                type: sequelize.DataTypes.INTEGER,
+                type: sequelize.INTEGER,
                 allowNull: false,
                 references: {
                     model: 'Nodes',
@@ -22,11 +22,11 @@ module.exports = {
             },
             createdAt: {
                 allowNull: false,
-                type: sequelize.DataTypes.DATE
+                type: sequelize.DATE
             },
             updatedAt: {
                 allowNull: false,
-                type: sequelize.DataTypes.DATE
+                type: sequelize.DATE
             }
         });
     },

@@ -7,21 +7,21 @@ module.exports = {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: sequelize.DataTypes.INTEGER
+                type: sequelize.INTEGER
             },
             email: {
-                type: sequelize.DataTypes.STRING
+                type: sequelize.STRING
             },
             hash_password: {
-                type: sequelize.DataTypes.STRING
+                type: sequelize.STRING
             },
             createdAt: {
                 allowNull: false,
-                type: sequelize.DataTypes.DATE
+                type: sequelize.DATE
             },
             updatedAt: {
                 allowNull: false,
-                type: sequelize.DataTypes.DATE
+                type: sequelize.DATE
             }
         });
     },

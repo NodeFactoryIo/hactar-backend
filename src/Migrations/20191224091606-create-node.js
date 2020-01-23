@@ -7,19 +7,19 @@ module.exports = {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: sequelize.DataTypes.INTEGER
+                type: sequelize.INTEGER
             },
             url: {
-                type: sequelize.DataTypes.STRING
+                type: sequelize.STRING
             },
             token: {
-                type: sequelize.DataTypes.STRING
+                type: sequelize.STRING
             },
             address: {
-                type: sequelize.DataTypes.STRING
+                type: sequelize.STRING
             },
             userId: {
-                type: DataTypes.INTEGER,
+                type: sequelize.INTEGER,
                 allowNull: false,
                 references: {
                     model: 'Users',
@@ -28,11 +28,11 @@ module.exports = {
             },
             createdAt: {
                 allowNull: false,
-                type: sequelize.DataTypes.DATE
+                type: sequelize.DATE
             },
             updatedAt: {
                 allowNull: false,
-                type: sequelize.DataTypes.DATE
+                type: sequelize.DATE
             }
         });
     },

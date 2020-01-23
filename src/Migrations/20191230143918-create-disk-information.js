@@ -7,16 +7,16 @@ module.exports = {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: sequelize.DataTypes.INTEGER
+                type: sequelize.INTEGER
             },
             freeSpace: {
-                type: sequelize.DataTypes.BIGINT
+                type: sequelize.BIGINT
             },
             takenSpace: {
-                type: sequelize.DataTypes.BIGINT
+                type: sequelize.BIGINT
             },
             nodeId: {
-                type: sequelize.DataTypes.INTEGER,
+                type: sequelize.INTEGER,
                 allowNull: false,
                 references: {
                     model: 'Nodes',
