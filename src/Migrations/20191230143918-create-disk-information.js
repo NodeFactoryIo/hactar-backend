@@ -1,4 +1,4 @@
-import sequelize from "sequelize";
+var sequelize = require("sequelize");
 
 module.exports = {
     up: function (queryInterface) {
