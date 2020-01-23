@@ -33,7 +33,7 @@ export class UserService {
             const authenticatedUser = bcrypt.compareSync(password, user['hash_password']);
             if (authenticatedUser) {
                 const token = jwt.sign({id: user['id']}, config.jwtKey, {expiresIn: config.jwtExpiry});
-                return token;
+                return {token: token};
             }
             throw new ServiceError(401, "Unauthorized user.");
         }
