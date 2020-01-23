@@ -14,6 +14,7 @@ import {UserController} from "../Controller/Api/UserController";
 import {UserValidationSchema} from "../Controller/Api/UserControllerValidation";
 
 import {passNodeData} from "../Middleware/passingNodeData";
+import {AuthorizeUser} from "../Middleware/Authorization";
 
 export function createApiRoutes(
     validator: ReturnType<typeof createValidator>,
@@ -28,6 +29,11 @@ export function createApiRoutes(
         "/user/node",
         validator.body(CreateNodeValidationSchema),
         nodesController.createNode.bind(nodesController));
+
+    router.get(
+        "/user/node",
+        AuthorizeUser,
+        nodesController.getAllUserNodes.bind(nodesController));
 
     router.delete(
         "/user/node/:nodeId",
@@ -58,4 +64,5 @@ export function createApiRoutes(
         userController.loginUser.bind(userController));
 
     return router;
+
 }

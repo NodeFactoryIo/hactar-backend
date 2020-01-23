@@ -2,19 +2,29 @@ import sinon from "sinon";
 import {expect} from "chai";
 import {Request, Response} from "express";
 import {UserService} from "../../../src/Services/UserService";
+import {NodeService} from "../../../src/Services/NodeService";
 import {UserController} from "../../../src/Controller/Api/UserController";
 import logger from "../../../src/Services/Logger";
+import {Node} from "../../../src/Models/Node";
 
 describe("UserController", function () {
+
+    const userServiceStub = sinon.createStubInstance(UserService);
+    const nodeServiceStub = sinon.createStubInstance(NodeService);
+
+    const userController = new UserController(
+        userServiceStub as unknown as UserService);
+
+    const response = {} as Response;
+
+
     describe('POST /user/register', () => {
-        const userServiceStub = sinon.createStubInstance(UserService);
+
         // @ts-ignore
         userServiceStub.registerUser.resolves({email: 'example@example.com', password: 'super secret password'});
 
         it('should add new user to the database', async function () {
             try {
-                const userController = new UserController(userServiceStub as unknown as UserService);
-                const response = {} as Response;
                 response.json = sinon.spy((result) =>
                     expect(result.password).to.be.equal('super secret password')) as any;
 
@@ -37,14 +47,11 @@ describe("UserController", function () {
     });
 
     describe('POST /user/login', () => {
-        const userServiceStub = sinon.createStubInstance(UserService);
         // @ts-ignore
         userServiceStub.authenticateUser.resolves({"token": "test token"});
 
         it('should return JWT on existing valid email and password input', async function () {
             try {
-                const userController = new UserController(userServiceStub as unknown as UserService);
-                const response = {} as Response;
                 response.json = sinon.spy((result) =>
                     expect(result).to.have.property('token')) as any;
 
@@ -64,5 +71,20 @@ describe("UserController", function () {
                 expect.fail(err);
             }
         });
+    });
+
+    describe('GET /node/user', () => {
+        nodeServiceStub.getAllNodes.resolves([
+            {
+                "url": "url111",
+                "token": "token111",
+                "address": "address111",
+            } as unknown as Node,
+            {
+                "url": "url222",
+                "token": "token222",
+                "address": "address222",
+            } as unknown as Node
+        ]);
     });
 });

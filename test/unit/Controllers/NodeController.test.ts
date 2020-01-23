@@ -71,5 +71,29 @@ describe("NodeController", function () {
                 expect.fail(err);
             }
         })
+
+        it('should return array of nodes belonging to the user', async function () {
+            try {
+                const nodeController = new NodeController(nodeServiceStub as unknown as NodeService);
+                const response = {} as Response;
+                response.locals = {userId: {id: 1}};
+                response.json = sinon.spy((result) =>
+                    expect(result).to.be.an('Array')) as any;
+
+                response.status = sinon.spy((result) => {
+                    expect(result).to.equal(200)
+                    return response;
+                }) as any;
+
+                await nodeController.getAllUserNodes({
+                    body: {
+                        userId: 1
+                    }
+                } as Request, response)
+            } catch (err) {
+                logger.error('Unexpected error occured: ${err.message}');
+                expect.fail(err);
+            }
+        });
     })
 });
