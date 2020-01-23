@@ -35,7 +35,7 @@ describe("UserService", function () {
                 'example@example.com',
                 'super secret password'
             );
-            expect(authenticatedUser).to.be.a('string');
+            expect(authenticatedUser).to.haveOwnProperty('token');
         } catch (err) {
             logger.error('Unexpected error occured: ${err.message}');
             expect.fail(err);
