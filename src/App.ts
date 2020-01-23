@@ -8,14 +8,14 @@ import {createValidator} from "express-joi-validation";
 
 import config from "./Config/Config";
 import {NodeController} from "./Controller/Api/NodeController";
-import {DiskInformationController} from "./Controller/Api/DiskInformationController";
+import {NodeDiskInformationController} from "./Controller/Api/NodeDiskInformationController";
 import {NodeUptimeController} from "./Controller/Api/NodeUptimeController";
 import {UserController} from "./Controller/Api/UserController";
 import {createApiRoutes} from "./Routes/Api";
 import {Service} from "./Services/interface";
 import logger, {morganLogger} from "./Services/Logger";
 import {NodeService} from "./Services/NodeService";
-import {DiskInformationService} from "./Services/DiskInformationService";
+import {NodeDiskInformationService} from "./Services/NodeDiskInformationService";
 import {NodeUptimeService} from "./Services/NodeUptimeService";
 import {UserService} from "./Services/UserService";
 import {validateJoiError} from "./Middleware/ValidationErrorHandling";
@@ -31,8 +31,8 @@ export class App implements Service {
     private nodeUptimeController: NodeUptimeController;
     private nodeUptimeService: NodeUptimeService;
 
-    private diskInformationController: DiskInformationController;
-    private diskInformationService: DiskInformationService;
+    private nodeDiskInformationController: NodeDiskInformationController;
+    private nodeDiskInformationService: NodeDiskInformationService;
 
     private userController: UserController;
     private userService: UserService;
@@ -47,7 +47,7 @@ export class App implements Service {
         // add after route middleware's here
         this.addInitialRoutes();
         this.nodeService = new NodeService();
-        this.diskInformationService = new DiskInformationService();
+        this.nodeDiskInformationService = new NodeDiskInformationService();
         this.nodeUptimeService = new NodeUptimeService();
         this.userService = new UserService();
     }
@@ -72,7 +72,7 @@ export class App implements Service {
 
     private initControllers(): void {
         this.nodeController = new NodeController(this.nodeService);
-        this.diskInformationController = new DiskInformationController(this.diskInformationService);
+        this.nodeDiskInformationController = new NodeDiskInformationController(this.nodeDiskInformationService);
         this.nodeUptimeController = new NodeUptimeController(this.nodeUptimeService);
         this.userController = new UserController(this.userService);
     }
@@ -97,7 +97,7 @@ export class App implements Service {
         this.express.use("/api", createApiRoutes(
             validator,
             this.nodeController,
-            this.diskInformationController,
+            this.nodeDiskInformationController,
             this.nodeUptimeController,
             this.userController
         ));

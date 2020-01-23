@@ -7,13 +7,13 @@ import logger from "../../../src/Services/Logger";
 
 describe("NodeUptimeController", function () {
     describe('POST /node/uptime', () => {
-        const nodeServiceStub = sinon.createStubInstance(NodeUptimeService);
+        const nodeUptimeStub = sinon.createStubInstance(NodeUptimeService);
         // @ts-ignore
-        nodeServiceStub.createNodeUptime.resolves({isWorking: true, nodeId: 4});
+        nodeUptimeStub.createNodeUptime.resolves({isWorking: true, nodeId: 4});
 
         it('should add new node uptime to the database', async function () {
             try {
-                const nodeUptimeController = new NodeUptimeController(nodeServiceStub as unknown as NodeUptimeService);
+                const nodeUptimeController = new NodeUptimeController(nodeUptimeStub as unknown as NodeUptimeService);
                 const response = {} as Response;
                 response.locals = {node: {id: 4}};
                 response.json = sinon.spy((result) => expect(result.nodeId).to.be.equal(4)) as any;

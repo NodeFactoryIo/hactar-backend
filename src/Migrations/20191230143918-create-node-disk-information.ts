@@ -2,7 +2,7 @@ import {QueryInterface, DataTypes} from 'sequelize';
 
 module.exports = {
     up: (queryInterface: QueryInterface) => {
-        return queryInterface.createTable('DiskInformation', {
+        return queryInterface.createTable('NodeDiskInformation', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -34,6 +34,6 @@ module.exports = {
         });
     },
     down: (queryInterface: QueryInterface) => {
-        return queryInterface.dropTable('DiskInformation');
+        return queryInterface.dropTable('NodeDiskInformation');
     }
 };

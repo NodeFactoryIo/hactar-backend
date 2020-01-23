@@ -1,7 +1,7 @@
 import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequelize";
-import {Node} from "../Models/Node";
+import {Node} from "./Node";
 
-export class DiskInformation extends Model {
+export class NodeDiskInformation extends Model {
 
     private freeSpace: number;
     private takenSpace: number;
@@ -19,7 +19,7 @@ export class DiskInformation extends Model {
         } as ModelAttributes,
             {
                 sequelize: sequelize,
-                tableName: "DiskInformation",
+                tableName: "NodeDiskInformation",
                 freezeTableName: true,
             } as InitOptions);
         this.belongsTo(Node, {foreignKey: "nodeId"});

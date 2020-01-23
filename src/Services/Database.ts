@@ -6,7 +6,7 @@ import {Umzug as UmzugInterface} from "umzug";
 import config from "../Config/Config";
 import logger from "../Services/Logger";
 import {Node} from "../Models/Node";
-import {DiskInformation} from "../Models/DiskInformation";
+import {NodeDiskInformation} from "../Models/NodeDiskInformation";
 import {NodeUptime} from "../Models/NodeUptime";
 import {User} from "../Models/User";
 
@@ -97,7 +97,7 @@ export class Database {
     private initModels(): void {
         User.initialize(this.sequelize);
         Node.initialize(this.sequelize);
-        DiskInformation.initialize(this.sequelize);
+        NodeDiskInformation.initialize(this.sequelize);
         NodeUptime.initialize(this.sequelize);
     }
 }

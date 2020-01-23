@@ -1,9 +1,9 @@
-import {DiskInformation} from "../Models/DiskInformation";
+import {NodeDiskInformation} from "../Models/NodeDiskInformation";
 
-export class DiskInformationService {
+export class NodeDiskInformationService {
 
     public async createDiskData(freeSpace: number, takenSpace: number, nodeId: number) {
-        return await DiskInformation.create({
+        return await NodeDiskInformation.create({
             freeSpace,
             takenSpace,
             nodeId
