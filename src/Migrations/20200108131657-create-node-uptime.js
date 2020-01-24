@@ -1,19 +1,19 @@
-import {QueryInterface, DataTypes} from 'sequelize';
+var sequelize = require("sequelize");
 
 module.exports = {
-    up: (queryInterface: QueryInterface) => {
+    up: function (queryInterface) {
         return queryInterface.createTable('NodeUptime', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: DataTypes.INTEGER
+                type: sequelize.INTEGER
             },
             isWorking: {
-                type: DataTypes.BOOLEAN
+                type: sequelize.BOOLEAN
             },
             nodeId: {
-                type: DataTypes.INTEGER,
+                type: sequelize.INTEGER,
                 allowNull: false,
                 references: {
                     model: 'Nodes',
@@ -22,15 +22,15 @@ module.exports = {
             },
             createdAt: {
                 allowNull: false,
-                type: DataTypes.DATE
+                type: sequelize.DATE
             },
             updatedAt: {
                 allowNull: false,
-                type: DataTypes.DATE
+                type: sequelize.DATE
             }
         });
     },
-    down: (queryInterface: QueryInterface) => {
+    down: function (queryInterface) {
         return queryInterface.dropTable('NodeUptime');
     }
 };
