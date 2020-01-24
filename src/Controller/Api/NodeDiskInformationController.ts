@@ -38,7 +38,6 @@ export class NodeDiskInformationController {
                 res.status(200).json(result)
             }
         } catch (e) {
-            console.log(e)
             logger.error(`Error occurred on fetching node disk information in controller: ${e.message}`);
             res.status(500).json({error: "An unknown error occurred."});
         }
