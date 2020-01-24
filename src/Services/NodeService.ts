@@ -20,8 +20,8 @@ export class NodeService {
         return await Node.findOne({
             raw: true,
             where: {
-                url: url,
-                address: address
+                url,
+                address
             }
         })
     }

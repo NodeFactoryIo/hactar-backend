@@ -1,20 +1,20 @@
 import sinon from "sinon";
 import {expect} from "chai";
 import {Request, Response} from "express";
-import {DiskInformationService} from "../../../src/Services/DiskInformationService";
-import {DiskInformationController} from "../../../src/Controller/Api/DiskInformationController";
+import {NodeDiskInformationService} from "../../../src/Services/NodeDiskInformationService";
+import {NodeDiskInformationController} from "../../../src/Controller/Api/NodeDiskInformationController";
 import logger from "../../../src/Services/Logger";
 
-describe("DiskInformationController", function () {
+describe("NodeDiskInformation Controller", function () {
     describe('POST /diskinfo', () => {
-        const diskInfoStub = sinon.createStubInstance(DiskInformationService);
+        const nodeDiskInfoStub = sinon.createStubInstance(NodeDiskInformationService);
         // @ts-ignore
-        diskInfoStub.createDiskData.resolves({freeSpace: 150, takenSpace: 50, nodeId: 4});
+        nodeDiskInfoStub.createDiskData.resolves({freeSpace: 150, takenSpace: 50, nodeId: 4});
 
         it('should store new disk space in the database', async function () {
             try {
-                const diskInfoController = new DiskInformationController(
-                    diskInfoStub as unknown as DiskInformationService);
+                const nodeDiskInfoController = new NodeDiskInformationController(
+                    nodeDiskInfoStub as unknown as NodeDiskInformationService);
                 const response = {} as Response;
                 response.locals = {node: {id: 4}};
                 response.json = sinon.spy((result) => expect(result.freeSpace).to.be.equal(150)) as any;
@@ -23,7 +23,7 @@ describe("DiskInformationController", function () {
                     return response;
                 }) as any;
 
-                await diskInfoController.createDiskData({
+                await nodeDiskInfoController.createDiskData({
                     body: {
                         freeSpace: 150,
                         takenSpace: 50,
