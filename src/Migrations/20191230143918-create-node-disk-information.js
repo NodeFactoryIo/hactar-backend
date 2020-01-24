@@ -1,22 +1,22 @@
-import {QueryInterface, DataTypes} from 'sequelize';
+var sequelize = require("sequelize");
 
 module.exports = {
-    up: (queryInterface: QueryInterface) => {
-        return queryInterface.createTable('NodeDiskInformation', {
+    up: function (queryInterface) {
+        return queryInterface.createTable('DiskInformation', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: DataTypes.INTEGER
+                type: sequelize.INTEGER
             },
             freeSpace: {
-                type: DataTypes.BIGINT
+                type: sequelize.BIGINT
             },
             takenSpace: {
-                type: DataTypes.BIGINT
+                type: sequelize.BIGINT
             },
             nodeId: {
-                type: DataTypes.INTEGER,
+                type: sequelize.INTEGER,
                 allowNull: false,
                 references: {
                     model: 'Nodes',
@@ -25,15 +25,15 @@ module.exports = {
             },
             createdAt: {
                 allowNull: false,
-                type: DataTypes.DATE
+                type: sequelize.DataTypes.DATE
             },
             updatedAt: {
                 allowNull: false,
-                type: DataTypes.DATE
+                type: sequelize.DataTypes.DATE
             }
         });
     },
-    down: (queryInterface: QueryInterface) => {
-        return queryInterface.dropTable('NodeDiskInformation');
+    down: function (queryInterface) {
+        return queryInterface.dropTable('DiskInformation');
     }
 };

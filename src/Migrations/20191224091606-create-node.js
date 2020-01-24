@@ -1,25 +1,25 @@
-import {QueryInterface, DataTypes} from 'sequelize';
+var sequelize = require("sequelize");
 
 module.exports = {
-    up: (queryInterface: QueryInterface) => {
+    up: function (queryInterface) {
         return queryInterface.createTable('Nodes', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: DataTypes.INTEGER
+                type: sequelize.INTEGER
             },
             url: {
-                type: DataTypes.STRING
+                type: sequelize.STRING
             },
             token: {
-                type: DataTypes.STRING
+                type: sequelize.STRING
             },
             address: {
-                type: DataTypes.STRING
+                type: sequelize.STRING
             },
             userId: {
-                type: DataTypes.INTEGER,
+                type: sequelize.INTEGER,
                 allowNull: false,
                 references: {
                     model: 'Users',
@@ -28,15 +28,15 @@ module.exports = {
             },
             createdAt: {
                 allowNull: false,
-                type: DataTypes.DATE
+                type: sequelize.DATE
             },
             updatedAt: {
                 allowNull: false,
-                type: DataTypes.DATE
+                type: sequelize.DATE
             }
         });
     },
-    down: (queryInterface: QueryInterface) => {
+    down: function (queryInterface) {
         return queryInterface.dropTable('Nodes');
     }
 };
