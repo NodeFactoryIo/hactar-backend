@@ -9,4 +9,13 @@ export class NodeDiskInformationService {
             nodeId
         });
     }
+
+    public async fetchDiskInfo(nodeId: number) {
+        return await NodeDiskInformation.findAll({
+            raw: true,
+            where: {
+                nodeId
+            }
+        });
+    }
 }

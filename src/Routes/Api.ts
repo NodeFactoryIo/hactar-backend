@@ -44,6 +44,11 @@ export function createApiRoutes(
         [validator.body(CreateNodeDiskInforamtionValidationSchema), passNodeData],
         nodeDiskInformationController.createDiskData.bind(nodeDiskInformationController));
 
+    router.get(
+        "/user/node/diskinformation/:nodeId",
+        AuthorizeUser,
+        nodeDiskInformationController.fetchNodeDiskInfo.bind(nodeDiskInformationController));
+
     router.post(
         "/user/node/uptime",
         [validator.body(CreateNodeUptimeValidationSchema), passNodeData],

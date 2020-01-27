@@ -2,7 +2,7 @@ var sequelize = require("sequelize");
 
 module.exports = {
     up: function (queryInterface) {
-        return queryInterface.createTable('DiskInformation', {
+        return queryInterface.createTable('NodeDiskInformation', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -34,6 +34,6 @@ module.exports = {
         });
     },
     down: function (queryInterface) {
-        return queryInterface.dropTable('DiskInformation');
+        return queryInterface.dropTable('NodeDiskInformation');
     }
 };
