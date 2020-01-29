@@ -4,6 +4,7 @@ import {Request, Response} from "express";
 import {NodeService} from "../../../src/Services/NodeService";
 import {NodeController} from "../../../src/Controller/Api/NodeController";
 import logger from "../../../src/Services/Logger";
+import {Node} from "../../../src/Models/Node";
 
 describe("NodeController", function () {
     describe('POST /user/node', () => {
@@ -15,6 +16,7 @@ describe("NodeController", function () {
             try {
                 const nodeController = new NodeController(nodeServiceStub as unknown as NodeService);
                 const response = {} as Response;
+                response.locals = {userId: 100}
                 response.json = sinon.spy((result) => expect(result.token).to.be.equal("some token")) as any;
 
                 response.status = sinon.spy((result) => {
@@ -71,7 +73,22 @@ describe("NodeController", function () {
                 expect.fail(err);
             }
         })
+    });
 
+    describe('GET /node/user', () => {
+        const nodeServiceStub = sinon.createStubInstance(NodeService);
+        nodeServiceStub.getAllNodes.resolves([
+            {
+                "url": "url111",
+                "token": "token111",
+                "address": "address111",
+            } as unknown as Node,
+            {
+                "url": "url222",
+                "token": "token222",
+                "address": "address222",
+            } as unknown as Node
+        ]);
         it('should return array of nodes belonging to the user', async function () {
             try {
                 const nodeController = new NodeController(nodeServiceStub as unknown as NodeService);
@@ -95,5 +112,5 @@ describe("NodeController", function () {
                 expect.fail(err);
             }
         });
-    })
+    });
 });
