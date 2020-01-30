@@ -7,12 +7,14 @@ import * as jwt from "jsonwebtoken";
 import config from "../../../src/Config/Config";
 import {Node} from "../../../src/Models/Node";
 import {User} from "../../../src/Models/User";
+import * as bcrypt from "bcryptjs";
 
 describe("Authorization middleware tests", async () => {
 
     before(function () {
+        const password = bcrypt.hashSync('password', 10);
         // eslint-disable-next-line
-        User.create({id: 100, email: 'test@test.com', hash_password: 'password'})
+        User.create({id: 100, email: 'test@test.com', hash_password: `${password}`})
         Node.create({
             url: 'url111',
             token: 'token111',
