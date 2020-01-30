@@ -5,18 +5,13 @@ import * as jwt from "jsonwebtoken";
 import config from "../../../src/Config/Config";
 import {Request, Response} from "express";
 import {AuthorizeUser} from "../../../src/Middleware/Authorization";
-// import {NodeService} from "../../../src/Services/NodeService";
-// import {Node} from "../../../src/Models/Node";
 
 describe("Authorization middleware", function () {
 
     it("should successfully authorize user", async () => {
-        const token = jwt.sign({id: 200}, config.jwtKey);
-        // const nodeServiceStub = sinon.createStubInstance(NodeService);
-        // nodeServiceStub.getNodeByPk.resolves(null);
+        const token = jwt.sign({id: 100}, config.jwtKey, {expiresIn: '24h'});
 
         try {
-
             const response = {} as Response;
             response.locals = {
                 node: {
@@ -24,13 +19,12 @@ describe("Authorization middleware", function () {
                     url: "url11",
                     token: "token111",
                     address: "address111",
-                    userId: 200
+                    userId: 100
                 }
             }
-            // response.locals = {userId: 200}
             response.json = sinon.spy((result) => {
                 if (result) {
-                    expect(result).to.be.equal(200)
+                    expect(result.userId).to.be.equal(100)
                     return response;
                 }
             }) as any;
@@ -45,23 +39,22 @@ describe("Authorization middleware", function () {
 
             await AuthorizeUser({
                 headers: {
-                    // eslint-disable-next-line
-                    authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjAwLCJpYXQiOjE1ODAzMTIxNjUsImV4cCI6MTU4MDM5ODU2NX0.eWd_tH3pNaNXDQw8UPsQ_VjP-x4-JOm7vTCCqFRy9HQ`
+                    authorization: token
                 },
+                params: {},
                 body: {
                     url: 'url111',
                     address: 'address111'
                 }
             } as Request, response, next);
         } catch (err) {
-            console.log(err)
             logger.error('Unexpected error occured: ${err.message}');
             expect.fail(err);
         }
     });
 
     it("should fail to authorize user with expired token", async () => {
-        const token = jwt.sign({id: 200}, config.jwtKey, {expiresIn: '0s'})
+        const token = jwt.sign({id: 100}, config.jwtKey, {expiresIn: '0s'})
 
         try {
             const response = {} as Response;
@@ -84,9 +77,11 @@ describe("Authorization middleware", function () {
                 headers: {
                     authorization: token
                 },
+                params: {},
                 body: {
                     url: 'url111',
-                    address: 'address111'
+                    address: 'address111',
+                    userId: 100
                 }
             } as Request, response, next);
         } catch (err) {
@@ -119,10 +114,11 @@ describe("Authorization middleware", function () {
                 headers: {
                     authorization: token
                 },
+                params: {},
                 body: {
                     url: 'url111',
                     address: 'address111',
-                    userId: 200
+                    userId: 100
                 }
             } as Request, response, next);
         } catch (err) {
