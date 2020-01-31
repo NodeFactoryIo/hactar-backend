@@ -9,11 +9,11 @@ export async function passNodeData(
     next: express.NextFunction
 ) {
     try {
-        const node = await Node.findByPk(req.params.nodeId)
-        const {url, address} = req.body;
-        if (node) {
+        if (req.params && req.params.nodeId) {
+            const node = await Node.findByPk(req.params.nodeId)
             res.locals.node = node;
         } else {
+            const {url, address} = req.body;
             const node = await NodeService.getNodeByData(url, address);
             if (node) {
                 res.locals.node = node;
