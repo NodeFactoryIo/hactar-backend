@@ -17,7 +17,6 @@ describe("UserController", function () {
 
     const response = {} as Response;
 
-
     describe('POST /user/register', () => {
 
         // @ts-ignore
@@ -61,6 +60,33 @@ describe("UserController", function () {
                 }) as any;
 
                 await userController.loginUser({
+                    body: {
+                        email: 'example@example.com',
+                        password: 'secret password'
+                    }
+                } as Request, response)
+            } catch (err) {
+                logger.error('Unexpected error occured: ${err.message}');
+                expect.fail(err);
+            }
+        });
+    });
+
+    describe('POST /user/deamon/login', () => {
+        // @ts-ignore
+        userServiceStub.authenticateUserDeamonApp.resolves({"token": "test token"});
+
+        it('should return JWT on existing valid email and password input', async function () {
+            try {
+                response.json = sinon.spy((result) =>
+                    expect(result).to.have.property('token')) as any;
+
+                response.status = sinon.spy((result) => {
+                    expect(result).to.equal(200)
+                    return response;
+                }) as any;
+
+                await userController.loginUserDeamonApp({
                     body: {
                         email: 'example@example.com',
                         password: 'secret password'

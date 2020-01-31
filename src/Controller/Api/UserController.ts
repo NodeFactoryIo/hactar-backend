@@ -51,7 +51,7 @@ export class UserController {
     public async loginUserDeamonApp(req: ValidatedRequest<UserRequestSchema>, res: Response) {
         try {
             const {email, password} = req.body;
-            const result = await this.userService.authenticateUser(email, password);
+            const result = await this.userService.authenticateUserDeamonApp(email, password);
             if (result) {
                 res.status(200).json(result)
             }
@@ -59,7 +59,7 @@ export class UserController {
             if (e instanceof ServiceError) {
                 res.status(e.status).json({error: e.message});
             } else {
-                logger.error(`Error occurred on authorizing user in controller: ${e.message}`);
+                logger.error(`Error occurred on authorizing user deamon app in controller: ${e.message}`);
                 res.status(500).json({error: "An uknown error occurred."});
             }
         }
