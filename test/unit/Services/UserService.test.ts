@@ -29,7 +29,7 @@ describe("UserService", function () {
             email: 'example@example.com',
             // eslint-disable-next-line
             hash_password: '$2a$10$/cF6NuqvsX8/J7WbU1REEeO4xWafYrh6CmZiQkl0bij436fz/oRaS'
-        })
+        });
         try {
             const authenticatedUser = await userService.authenticateUser(
                 'example@example.com',
@@ -37,7 +37,7 @@ describe("UserService", function () {
             );
             expect(authenticatedUser).to.haveOwnProperty('token');
         } catch (err) {
-            logger.error('Unexpected error occured: ${err.message}');
+            logger.error(`Unexpected error occured: ${err.message}`);
             expect.fail(err);
         }
     })
