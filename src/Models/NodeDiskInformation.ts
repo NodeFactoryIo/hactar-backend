@@ -23,5 +23,6 @@ export class NodeDiskInformation extends Model {
                 freezeTableName: true,
             } as InitOptions);
         this.belongsTo(Node, {foreignKey: "nodeId"});
+        Node.hasMany(NodeDiskInformation, {foreignKey: "nodeId"});
     }
 }

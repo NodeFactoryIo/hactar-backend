@@ -5,7 +5,6 @@ import {NodeDiskInformationService} from "../../Services/NodeDiskInformationServ
 import logger from "../../Services/Logger";
 import {CreateNodeDiskInformationRequestSchema} from "./NodeDiskInformationControllerValidation";
 
-
 export class NodeDiskInformationController {
 
     private nodeDiskInformationService: NodeDiskInformationService;
