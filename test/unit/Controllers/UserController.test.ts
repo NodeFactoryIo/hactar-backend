@@ -72,19 +72,4 @@ describe("UserController", function () {
             }
         });
     });
-
-    describe('GET /node/user', () => {
-        nodeServiceStub.getAllNodes.resolves([
-            {
-                "url": "url111",
-                "token": "token111",
-                "address": "address111",
-            } as unknown as Node,
-            {
-                "url": "url222",
-                "token": "token222",
-                "address": "address222",
-            } as unknown as Node
-        ]);
-    });
 });

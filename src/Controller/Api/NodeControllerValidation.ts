@@ -6,7 +6,6 @@ export interface CreateNodeRequestSchema extends ValidatedRequestSchema {
         url: string;
         token: string;
         address: string;
-        userId: number;
     };
 }
 
@@ -14,5 +13,4 @@ export const CreateNodeValidationSchema = Joi.object({
     url: Joi.string().required(),
     token: Joi.string().required(),
     address: Joi.string().required(),
-    userId: Joi.number().required(),
 });

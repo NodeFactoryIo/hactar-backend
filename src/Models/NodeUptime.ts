@@ -4,6 +4,7 @@ import {Node} from "../Models/Node";
 export class NodeUptime extends Model {
 
     private isWorking: boolean;
+    private nodeId: number;
 
     public static initialize(sequelize: Sequelize) {
         this.init({

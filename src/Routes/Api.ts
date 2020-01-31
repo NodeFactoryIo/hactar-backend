@@ -27,35 +27,37 @@ export function createApiRoutes(
 
     router.post(
         "/user/node",
-        validator.body(CreateNodeValidationSchema),
+        [validator.body(CreateNodeValidationSchema), passNodeData, AuthorizeUser],
         nodesController.createNode.bind(nodesController));
 
     router.get(
         "/user/node",
-        AuthorizeUser,
+        [passNodeData, AuthorizeUser],
         nodesController.getAllUserNodes.bind(nodesController));
 
     router.delete(
         "/user/node/:nodeId",
+        [passNodeData, AuthorizeUser],
         nodesController.deleteNode.bind(nodesController));
 
     router.post(
         "/user/node/diskinformation",
-        [validator.body(CreateNodeDiskInforamtionValidationSchema), passNodeData],
+        [validator.body(CreateNodeDiskInforamtionValidationSchema), passNodeData, AuthorizeUser],
         nodeDiskInformationController.createDiskData.bind(nodeDiskInformationController));
 
     router.get(
         "/user/node/diskinformation/:nodeId",
-        AuthorizeUser,
+        [passNodeData, AuthorizeUser],
         nodeDiskInformationController.fetchNodeDiskInfo.bind(nodeDiskInformationController));
 
     router.post(
         "/user/node/uptime",
-        [validator.body(CreateNodeUptimeValidationSchema), passNodeData],
+        [validator.body(CreateNodeUptimeValidationSchema), passNodeData, AuthorizeUser],
         nodeUptimeController.storeNodeUptime.bind(nodeUptimeController));
 
     router.get(
         "/user/node/uptime/:nodeId",
+        [passNodeData, AuthorizeUser],
         nodeUptimeController.getNodeUptime.bind(nodeUptimeController));
 
     router.post(
