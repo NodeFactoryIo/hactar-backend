@@ -13,32 +13,31 @@ export class NodeGeneralInfoController {
         this.nodeGeneralInfoService = nodeGeneralInfoService;
     }
 
-    public async updateOrCreateNodeGenralInfo(
+    public async updateOrCreateNodeGeneralInfo(
         req: ValidatedRequest<CreateNodeGeneralInfoRequestSchema>,
         res: Response) {
         try {
             const {version, sectorSize, minerPower, totalPower} = req.body;
             const nodeId = res.locals.node.id;
-            const result = await this.nodeGeneralInfoService.updateOrCreateNodeGenralInfo(
+            const result = await this.nodeGeneralInfoService.updateOrCreateNodeGeneralInfo(
                 version, sectorSize, minerPower, totalPower, nodeId);
-            if (result) {
-                res.status(200).json(result)
-            }
+            res.status(200).json(result)
         } catch (e) {
             logger.error(`Error occurred on storing general info in controller: ${e.message}`);
             res.status(500).json({error: "An unknown error occurred."});
         }
     }
 
-    public async fetchNodeGenralInfo(req: Request, res: Response) {
+    public async fetchNodeGeneralInfo(req: Request, res: Response) {
         try {
             const nodeId = res.locals.node.id;
-            const result = await this.nodeGeneralInfoService.fetchNodeGenralInfo(nodeId);
+            const result = await this.nodeGeneralInfoService.fetchNodeGeneralInfo(nodeId);
             if (result) {
                 res.status(200).json(result)
+            } else {
+                res.status(404).json({error: "Node not found."});
             }
         } catch (e) {
-            console.log(e)
             logger.error(`Error occurred on storing general info in controller: ${e.message}`);
             res.status(500).json({error: "An unknown error occurred."});
         }
