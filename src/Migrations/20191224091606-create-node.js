@@ -35,7 +35,14 @@ module.exports = {
                 allowNull: false,
                 type: sequelize.DATE
             }
-        });
+        },
+            {
+                uniqueKeys: {
+                    actions_unique: {
+                        fields: ['url', 'token', 'address']
+                    }
+                }
+            })
     },
     down: function (queryInterface) {
         return queryInterface.dropTable('Nodes');
