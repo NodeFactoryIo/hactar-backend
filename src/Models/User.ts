@@ -2,9 +2,9 @@ import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequeli
 
 export class User extends Model {
 
-    private id: number;
-    private email: string;
-    private hash_password: string;
+    public id: number;
+    public email: string;
+    public hash_password: string;
 
     public static initialize(sequelize: Sequelize) {
         this.init({

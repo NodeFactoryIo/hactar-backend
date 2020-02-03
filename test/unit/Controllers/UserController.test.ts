@@ -17,7 +17,6 @@ describe("UserController", function () {
 
     const response = {} as Response;
 
-
     describe('POST /user/register', () => {
 
         // @ts-ignore
@@ -40,7 +39,7 @@ describe("UserController", function () {
                     }
                 } as Request, response)
             } catch (err) {
-                logger.error('Unexpected error occured: ${err.message}');
+                logger.error('Unexpected error occurred: ${err.message}');
                 expect.fail(err);
             }
         });
@@ -67,9 +66,51 @@ describe("UserController", function () {
                     }
                 } as Request, response)
             } catch (err) {
-                logger.error('Unexpected error occured: ${err.message}');
+                logger.error('Unexpected error occurred: ${err.message}');
                 expect.fail(err);
             }
         });
+    });
+
+    describe('POST /user/daemon/login', () => {
+        // @ts-ignore
+        userServiceStub.authenticateUserDaemonApp.resolves({"token": "test token"});
+
+        it('should return JWT on existing valid email and password input', async function () {
+            try {
+                response.json = sinon.spy((result) =>
+                    expect(result).to.have.property('token')) as any;
+
+                response.status = sinon.spy((result) => {
+                    expect(result).to.equal(200)
+                    return response;
+                }) as any;
+
+                await userController.loginUserDaemonApp({
+                    body: {
+                        email: 'example@example.com',
+                        password: 'secret password'
+                    }
+                } as Request, response)
+            } catch (err) {
+                logger.error('Unexpected error occurred: ${err.message}');
+                expect.fail(err);
+            }
+        });
+    });
+
+    describe('GET /node/user', () => {
+        nodeServiceStub.getAllNodes.resolves([
+            {
+                "url": "url111",
+                "token": "token111",
+                "address": "address111",
+            } as unknown as Node,
+            {
+                "url": "url222",
+                "token": "token222",
+                "address": "address222",
+            } as unknown as Node
+        ]);
     });
 });
