@@ -7,7 +7,7 @@ import {ServiceError} from "./ServiceError";
 
 export enum AuthSource {
     CLIENT,
-    DEAMON_APP
+    DAEMON_APP
 }
 
 export class UserService {
@@ -31,8 +31,8 @@ export class UserService {
         return await this.authenticate(email, password, AuthSource.CLIENT)
     }
 
-    public async authenticateUserDeamonApp(email: string, password: string) {
-        return await this.authenticate(email, password, AuthSource.DEAMON_APP)
+    public async authenticateUserDaemonApp(email: string, password: string) {
+        return await this.authenticate(email, password, AuthSource.DAEMON_APP)
     }
 
     private async authenticate(email: string, password: string, source: AuthSource) {
@@ -45,7 +45,7 @@ export class UserService {
         if (user) {
             const authenticatedUser = bcrypt.compareSync(password, user['hash_password']);
             if (authenticatedUser) {
-                const token = jwt.sign({id: user['id']}, config.jwtKey, this.createJwtOptions(source));
+                const token = jwt.sign({id: user.id}, config.jwtKey, this.createJwtOptions(source));
                 return {token: token};
             }
             throw new ServiceError(401, "Unauthorized user.");
@@ -59,7 +59,7 @@ export class UserService {
             case AuthSource.CLIENT:
                 options = {expiresIn: config.jwtExpiry};
                 break;
-            case AuthSource.DEAMON_APP:
+            case AuthSource.DAEMON_APP:
                 options = {};
                 break;
         }

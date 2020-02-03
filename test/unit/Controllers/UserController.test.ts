@@ -39,7 +39,7 @@ describe("UserController", function () {
                     }
                 } as Request, response)
             } catch (err) {
-                logger.error('Unexpected error occured: ${err.message}');
+                logger.error('Unexpected error occurred: ${err.message}');
                 expect.fail(err);
             }
         });
@@ -66,15 +66,15 @@ describe("UserController", function () {
                     }
                 } as Request, response)
             } catch (err) {
-                logger.error('Unexpected error occured: ${err.message}');
+                logger.error('Unexpected error occurred: ${err.message}');
                 expect.fail(err);
             }
         });
     });
 
-    describe('POST /user/deamon/login', () => {
+    describe('POST /user/daemon/login', () => {
         // @ts-ignore
-        userServiceStub.authenticateUserDeamonApp.resolves({"token": "test token"});
+        userServiceStub.authenticateUserDaemonApp.resolves({"token": "test token"});
 
         it('should return JWT on existing valid email and password input', async function () {
             try {
@@ -86,14 +86,14 @@ describe("UserController", function () {
                     return response;
                 }) as any;
 
-                await userController.loginUserDeamonApp({
+                await userController.loginUserDaemonApp({
                     body: {
                         email: 'example@example.com',
                         password: 'secret password'
                     }
                 } as Request, response)
             } catch (err) {
-                logger.error('Unexpected error occured: ${err.message}');
+                logger.error('Unexpected error occurred: ${err.message}');
                 expect.fail(err);
             }
         });

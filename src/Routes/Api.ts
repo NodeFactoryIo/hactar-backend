@@ -71,9 +71,9 @@ export function createApiRoutes(
         userController.loginUser.bind(userController));
 
     router.post(
-        "/user/deamon/login",
+        "/user/daemon/login",
         validator.body(UserValidationSchema),
-        userController.loginUserDeamonApp.bind(userController));
+        userController.loginUserDaemonApp.bind(userController));
 
     return router;
 

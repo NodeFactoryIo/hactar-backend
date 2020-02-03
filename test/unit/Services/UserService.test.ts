@@ -54,7 +54,7 @@ describe("UserService", function () {
         }
     });
 
-    it("should successfully authenticate user deamon app", async () => {
+    it("should successfully authenticate user daemon app", async () => {
         userFindStub.returns({
             id: 123,
             email: 'example@example.com',
@@ -62,7 +62,7 @@ describe("UserService", function () {
             hash_password: '$2a$10$/cF6NuqvsX8/J7WbU1REEeO4xWafYrh6CmZiQkl0bij436fz/oRaS'
         });
         try {
-            const authenticatedUser = await userService.authenticateUserDeamonApp(
+            const authenticatedUser = await userService.authenticateUserDaemonApp(
                 'example@example.com',
                 'super secret password'
             );
@@ -93,10 +93,10 @@ describe("UserService", function () {
         }
     });
 
-    it("should fail to authenticate user deamon app", async () => {
+    it("should fail to authenticate user daemon app", async () => {
         userFindStub.returns(null);
         try {
-            await userService.authenticateUserDeamonApp(
+            await userService.authenticateUserDaemonApp(
                 'example123@example.com',
                 'wrong password'
             );
