@@ -23,7 +23,7 @@ export class NodeGeneralInfoController {
                 version, sectorSize, minerPower, totalPower, nodeId);
             res.status(200).json(result)
         } catch (e) {
-            logger.error(`Error occurred on storing general info in controller: ${e.message}`);
+            logger.error(`Error occurred on storing node general info in controller: ${e.message}`);
             res.status(500).json({error: "An unknown error occurred."});
         }
     }
@@ -38,7 +38,7 @@ export class NodeGeneralInfoController {
                 res.status(404).json({error: "Node not found."});
             }
         } catch (e) {
-            logger.error(`Error occurred on storing general info in controller: ${e.message}`);
+            logger.error(`Error occurred on fetching node general info in controller: ${e.message}`);
             res.status(500).json({error: "An unknown error occurred."});
         }
     }
