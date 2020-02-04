@@ -13,6 +13,9 @@ import {CreateNodeUptimeValidationSchema} from "../Controller/Api/NodeUptimeCont
 import {UserController} from "../Controller/Api/UserController";
 import {UserValidationSchema} from "../Controller/Api/UserControllerValidation";
 
+import {NodeGeneralInfoController} from "../Controller/Api/NodeGeneralInfoController";
+import {CreateNodeGeneralInfoValidationSchema} from "../Controller/Api/NodeGeneralInfoControllerValidation";
+
 import {passNodeData} from "../Middleware/passingNodeData";
 import {AuthorizeUser} from "../Middleware/Authorization";
 
@@ -21,7 +24,8 @@ export function createApiRoutes(
     nodesController: NodeController,
     nodeDiskInformationController: NodeDiskInformationController,
     nodeUptimeController: NodeUptimeController,
-    userController: UserController
+    userController: UserController,
+    nodeGeneralInfoController: NodeGeneralInfoController
 ): express.Router {
     const router = express.Router();
 
@@ -59,6 +63,16 @@ export function createApiRoutes(
         "/user/node/uptime/:nodeId",
         [passNodeData, AuthorizeUser],
         nodeUptimeController.getNodeUptime.bind(nodeUptimeController));
+
+    router.put(
+        "/user/node/generalminerinfo",
+        [validator.body(CreateNodeGeneralInfoValidationSchema), passNodeData, AuthorizeUser],
+        nodeGeneralInfoController.updateOrCreateNodeGeneralInfo.bind(nodeGeneralInfoController))
+
+    router.get(
+        "/user/node/generalminerinfo/:nodeId",
+        [passNodeData, AuthorizeUser],
+        nodeGeneralInfoController.fetchNodeGeneralInfo.bind(nodeGeneralInfoController));
 
     router.post(
         "/user/register",
