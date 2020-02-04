@@ -1,12 +1,12 @@
 import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequelize";
-import {User} from "../Models/User";
+import {User} from "./User";
 
 export class Node extends Model {
 
-    private url: string;
-    private token: string;
-    private address: string;
-    private userId: number;
+    public url: string;
+    public token: string;
+    public address: string;
+    public userId: number;
 
     public static initialize(sequelize: Sequelize) {
         this.init({
