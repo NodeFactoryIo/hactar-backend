@@ -13,7 +13,7 @@ export async function passNodeData(
             const node = await Node.findByPk(req.params.nodeId)
             res.locals.node = node;
         } else {
-            const nodeInfo = req.body.node;
+            const nodeInfo = req.body.nodeInfo;
             if (nodeInfo) {
                 const {url, address} = nodeInfo;
                 const node = await NodeService.getNodeByData(url, address);

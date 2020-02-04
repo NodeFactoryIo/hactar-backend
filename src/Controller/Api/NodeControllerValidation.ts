@@ -4,7 +4,7 @@ import * as Joi from "@hapi/joi";
 export interface CreateNodeRequestSchema extends ValidatedRequestSchema {
     [ContainerTypes.Body]: {
         token: string;
-        node: {
+        nodeInfo: {
             url: string;
             address: string;
         };
@@ -13,7 +13,7 @@ export interface CreateNodeRequestSchema extends ValidatedRequestSchema {
 
 export const CreateNodeValidationSchema = Joi.object({
     token: Joi.string().required(),
-    node: Joi.object({
+    nodeInfo: Joi.object({
         url: Joi.string().required(),
         address: Joi.string().required(),
     })

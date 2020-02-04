@@ -4,7 +4,7 @@ import * as Joi from "@hapi/joi";
 export interface CreateNodeUptimeRequestSchema extends ValidatedRequestSchema {
     [ContainerTypes.Body]: {
         isWorking: boolean;
-        node: {
+        nodeInfo: {
             url: string;
             address: string;
         };
@@ -14,7 +14,7 @@ export interface CreateNodeUptimeRequestSchema extends ValidatedRequestSchema {
 
 export const CreateNodeUptimeValidationSchema = Joi.object({
     isWorking: Joi.boolean().required(),
-    node: Joi.object({
+    nodeInfo: Joi.object({
         url: Joi.string().required(),
         address: Joi.string().required(),
     })

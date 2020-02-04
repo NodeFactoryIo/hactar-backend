@@ -27,7 +27,7 @@ describe("NodeController", function () {
                 await nodeController.createNode({
                     body: {
                         url: 'some url',
-                        node: {
+                        nodeInfo: {
                             token: 'some token',
                             address: 'some address'
                         }
