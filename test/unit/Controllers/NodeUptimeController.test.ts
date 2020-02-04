@@ -26,7 +26,6 @@ describe("NodeUptimeController", function () {
                 await nodeUptimeController.storeNodeUptime({
                     body: {
                         isWorking: true,
-                        nodeId: 4,
                     }
                 } as Request, response)
             } catch (err) {

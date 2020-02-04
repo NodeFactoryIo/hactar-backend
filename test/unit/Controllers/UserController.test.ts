@@ -2,15 +2,12 @@ import sinon from "sinon";
 import {expect} from "chai";
 import {Request, Response} from "express";
 import {UserService} from "../../../src/Services/UserService";
-import {NodeService} from "../../../src/Services/NodeService";
 import {UserController} from "../../../src/Controller/Api/UserController";
 import logger from "../../../src/Services/Logger";
-import {Node} from "../../../src/Models/Node";
 
 describe("UserController", function () {
 
     const userServiceStub = sinon.createStubInstance(UserService);
-    const nodeServiceStub = sinon.createStubInstance(NodeService);
 
     const userController = new UserController(
         userServiceStub as unknown as UserService);
