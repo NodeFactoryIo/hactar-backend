@@ -67,12 +67,12 @@ export function createApiRoutes(
     router.put(
         "/user/node/generalminerinfo",
         [validator.body(CreateNodeGeneralInfoValidationSchema), passNodeData, AuthorizeUser],
-        nodeGeneralInfoController.updateOrCreateNodeGenralInfo.bind(nodeGeneralInfoController))
+        nodeGeneralInfoController.updateOrCreateNodeGeneralInfo.bind(nodeGeneralInfoController))
 
     router.get(
         "/user/node/generalminerinfo/:nodeId",
         [passNodeData, AuthorizeUser],
-        nodeGeneralInfoController.fetchNodeGenralInfo.bind(nodeGeneralInfoController));
+        nodeGeneralInfoController.fetchNodeGeneralInfo.bind(nodeGeneralInfoController));
 
     router.post(
         "/user/register",
