@@ -7,7 +7,7 @@ export interface CreateNodeGeneralInfoRequestSchema extends ValidatedRequestSche
         sectorSize: number;
         minerPower: number;
         totalPower: number;
-        node: {
+        nodeInfo: {
             url: string;
             address: string;
         };
@@ -19,7 +19,7 @@ export const CreateNodeGeneralInfoValidationSchema = Joi.object({
     sectorSize: Joi.number().required(),
     minerPower: Joi.number().required(),
     totalPower: Joi.number().required(),
-    node: Joi.object({
+    nodeInfo: Joi.object({
         url: Joi.string().required(),
         address: Joi.string().required()
     })
