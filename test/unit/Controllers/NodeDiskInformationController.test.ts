@@ -28,7 +28,6 @@ describe("NodeDiskInformation Controller", function () {
                     body: {
                         freeSpace: 150,
                         takenSpace: 50,
-                        nodeId: 4
                     }
                 } as Request, response)
             } catch (err) {

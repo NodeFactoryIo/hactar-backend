@@ -16,9 +16,9 @@ export class NodeController {
 
     public async createNode(req: ValidatedRequest<CreateNodeRequestSchema>, res: Response): Promise<any> {
         try {
-            const {url, token, address} = req.body;
+            const {token, node} = req.body;
             const userId = res.locals.userId;
-            const result = await this.nodeService.createNode(url, token, address, userId);
+            const result = await this.nodeService.createNode(node.url, token, node.address, userId);
             res.status(201).json(result);
         } catch (e) {
             logger.error(`Error occurred on creating node in controller: ${e}`);

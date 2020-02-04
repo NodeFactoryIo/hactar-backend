@@ -5,14 +5,18 @@ export interface CreateNodeDiskInformationRequestSchema extends ValidatedRequest
     [ContainerTypes.Body]: {
         freeSpace: number;
         takenSpace: number;
-        url: string;
-        address: string;
+        node: {
+            url: string;
+            address: string;
+        };
     };
 }
 
 export const CreateNodeDiskInforamtionValidationSchema = Joi.object({
     freeSpace: Joi.number().required(),
     takenSpace: Joi.number().required(),
-    url: Joi.string().required(),
-    address: Joi.string().required(),
+    node: Joi.object({
+        url: Joi.string().required(),
+        address: Joi.string().required(),
+    })
 });
