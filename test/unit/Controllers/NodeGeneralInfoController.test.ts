@@ -9,7 +9,7 @@ describe("NodeGeneralInfoController", function () {
     describe('PUT /user/node/generalminerinfo', () => {
         const nodeGeneralInfoStub = sinon.createStubInstance(NodeGeneralInfoService);
         // @ts-ignore
-        nodeGeneralInfoStub.updateOrCreateNodeGenralInfo.resolves({
+        nodeGeneralInfoStub.updateOrCreateNodeGeneralInfo.resolves({
             version: '1.0.1',
             sectorSize: 100,
             minerPower: 150,
@@ -30,7 +30,7 @@ describe("NodeGeneralInfoController", function () {
                     return response;
                 }) as any;
 
-                await nodeGeneralInfoController.updateOrCreateNodeGenralInfo({
+                await nodeGeneralInfoController.updateOrCreateNodeGeneralInfo({
                     body: {
                         version: '1.0.1',
                         sectorSize: 100,
@@ -49,7 +49,7 @@ describe("NodeGeneralInfoController", function () {
     describe('GET /user/node/generalminerinfo/:nodeId', () => {
         const nodeGeneralInfoStub = sinon.createStubInstance(NodeGeneralInfoService);
         // @ts-ignore
-        nodeGeneralInfoStub.fetchNodeGenralInfo.resolves({
+        nodeGeneralInfoStub.fetchNodeGeneralInfo.resolves({
             version: '1.0.1',
             sectorSize: 100,
             minerPower: 150,
@@ -69,7 +69,7 @@ describe("NodeGeneralInfoController", function () {
                     return response;
                 }) as any;
 
-                await nodeGeneralInfoController.fetchNodeGenralInfo({
+                await nodeGeneralInfoController.fetchNodeGeneralInfo({
                     params: {
                         nodeId: 100
                     }
