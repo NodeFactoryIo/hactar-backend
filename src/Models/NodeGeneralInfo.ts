@@ -4,9 +4,9 @@ import {Node} from "./Node";
 export class NodeGeneralInfo extends Model {
 
     private version: string;
-    private sectorSize: number;
-    private minerPower: number;
-    private totalPower: number;
+    private sectorSize: string;
+    private minerPower: string;
+    private totalPower: string;
     private nodeId: number;
 
     public static initialize(sequelize: Sequelize) {
@@ -16,15 +16,15 @@ export class NodeGeneralInfo extends Model {
                 allowNull: false,
             },
             sectorSize: {
-                type: DataTypes.BIGINT,
+                type: DataTypes.STRING,
                 allowNull: false,
             },
             minerPower: {
-                type: DataTypes.BIGINT,
+                type: DataTypes.STRING,
                 allowNull: false,
             },
             totalPower: {
-                type: DataTypes.BIGINT,
+                type: DataTypes.STRING,
                 allowNull: false,
             },
         } as ModelAttributes,

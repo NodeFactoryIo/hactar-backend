@@ -3,17 +3,17 @@ import {Node} from "./Node";
 
 export class NodeDiskInformation extends Model {
 
-    private freeSpace: number;
-    private takenSpace: number;
+    private freeSpace: string;
+    private takenSpace: string;
 
     public static initialize(sequelize: Sequelize) {
         this.init({
             freeSpace: {
-                type: DataTypes.BIGINT,
+                type: DataTypes.STRING,
                 allowNull: false,
             },
             takenSpace: {
-                type: DataTypes.BIGINT,
+                type: DataTypes.STRING,
                 allowNull: false,
             },
         } as ModelAttributes,
