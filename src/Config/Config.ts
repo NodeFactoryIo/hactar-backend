@@ -18,7 +18,8 @@ const config = Object.freeze({
     env: process.env.NODE_ENV || "dev",
     port: env.SERVER_PORT || 3000,
     jwtKey: process.env.JWT_KEY || "nodefactory",
-    jwtExpiry: process.env.JWT_EXPIRY || '24h'
+    jwtExpiry: process.env.JWT_EXPIRY || '24h',
+    rewardAmount: process.env.REWARD_AMOUNT || 5
 });
 
 export default config;
