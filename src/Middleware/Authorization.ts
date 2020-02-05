@@ -12,7 +12,10 @@ export async function AuthorizeUser(
     next: express.NextFunction
 ) {
     try {
-        const token = (req.headers.authorization || req.headers.Authorization) as string;
+        let token = (req.headers.authorization || req.headers.Authorization) as string;
+        if (token.startsWith('Bearer ')) {
+            token = token.slice(7, token.length).trimLeft();
+        }
         const authorizedUser = await jwt.verify(token, config.jwtKey) as JwtPayload;
         if (res.locals.node && authorizedUser.id !== res.locals.node['userId']) {
             throw new ServiceError(403, 'Unauthorized user.')

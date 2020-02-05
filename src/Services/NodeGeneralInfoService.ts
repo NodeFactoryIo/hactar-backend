@@ -3,8 +3,8 @@ import {NodeGeneralInfo} from "../Models/NodeGeneralInfo";
 export class NodeGeneralInfoService {
 
     public async updateOrCreateNodeGeneralInfo(
-        version: string, sectorSize: number, minerPower: number, totalPower: number, nodeId: number) {
-        const node = this.fetchNodeGeneralInfo(nodeId);
+        version: string, sectorSize: string, minerPower: string, totalPower: string, nodeId: number) {
+        const node = await this.fetchNodeGeneralInfo(nodeId);
         if (node) {
             const updatedNode = await NodeGeneralInfo.update({version, sectorSize, minerPower, totalPower, nodeId},
                 {
