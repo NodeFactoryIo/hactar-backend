@@ -26,7 +26,7 @@ export class UserController {
                 res.status(e.status).json({error: e.message});
             } else {
                 logger.error(`Error occurred on registering user in controller: ${e.message}`);
-                res.status(500).json({error: "An uknown error occurred."});
+                res.status(500).json({error: "An unknown error occurred."});
             }
         }
     }
@@ -43,7 +43,24 @@ export class UserController {
                 res.status(e.status).json({error: e.message});
             } else {
                 logger.error(`Error occurred on authorizing user in controller: ${e.message}`);
-                res.status(500).json({error: "An uknown error occurred."});
+                res.status(500).json({error: "An unknown error occurred."});
+            }
+        }
+    }
+
+    public async loginUserDaemonApp(req: ValidatedRequest<UserRequestSchema>, res: Response) {
+        try {
+            const {email, password} = req.body;
+            const result = await this.userService.authenticateUserDaemonApp(email, password);
+            if (result) {
+                res.status(200).json(result)
+            }
+        } catch (e) {
+            if (e instanceof ServiceError) {
+                res.status(e.status).json({error: e.message});
+            } else {
+                logger.error(`Error occurred on authorizing user daemon app in controller: ${e.message}`);
+                res.status(500).json({error: "An unknown error occurred."});
             }
         }
     }

@@ -3,14 +3,18 @@ import * as Joi from "@hapi/joi";
 
 export interface CreateNodeRequestSchema extends ValidatedRequestSchema {
     [ContainerTypes.Body]: {
-        url: string;
         token: string;
-        address: string;
+        nodeInfo: {
+            url: string;
+            address: string;
+        };
     };
 }
 
 export const CreateNodeValidationSchema = Joi.object({
-    url: Joi.string().required(),
     token: Joi.string().required(),
-    address: Joi.string().required(),
+    nodeInfo: Joi.object({
+        url: Joi.string().required(),
+        address: Joi.string().required(),
+    })
 });

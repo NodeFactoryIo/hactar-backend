@@ -2,30 +2,33 @@ var sequelize = require("sequelize");
 
 module.exports = {
     up: function (queryInterface) {
-        return queryInterface.createTable('Nodes', {
+        return queryInterface.createTable('NodeGeneralInfo', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: sequelize.INTEGER
             },
-            url: {
+            version: {
                 type: sequelize.STRING
             },
-            token: {
-                type: sequelize.STRING
+            sectorSize: {
+                type: sequelize.BIGINT
             },
-            address: {
-                type: sequelize.STRING
+            minerPower: {
+                type: sequelize.BIGINT
             },
-            userId: {
+            totalPower: {
+                type: sequelize.BIGINT
+            },
+            nodeId: {
                 type: sequelize.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'Users',
+                    model: 'Nodes',
                     key: 'id'
                 },
-                onDelete: 'CASCADE'
+                unique: true
             },
             createdAt: {
                 allowNull: false,
@@ -35,16 +38,9 @@ module.exports = {
                 allowNull: false,
                 type: sequelize.DATE
             }
-        },
-            {
-                uniqueKeys: {
-                    actions_unique: {
-                        fields: ['url', 'token', 'address']
-                    }
-                }
-            })
+        })
     },
     down: function (queryInterface) {
-        return queryInterface.dropTable('Nodes');
+        return queryInterface.dropTable('NodeGeneralInfo');
     }
 };
