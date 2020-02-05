@@ -1,5 +1,6 @@
 import sinon, {createSandbox, SinonSandbox} from "sinon";
 import {EmailService} from "../../../src/Services/EmailService";
+import {User} from "../../../src/Models/User";
 
 describe("EmailService", function () {
 
@@ -15,7 +16,7 @@ describe("EmailService", function () {
 
     it("should successfully authenticate user", async () => {
         const emailService = new EmailService();
-        const newVar = await emailService.sendEmailNotification();
+        const newVar = await emailService.sendEmailNotification({id: 1, email: ""} as User, 1);
         console.log(newVar)
     })
 });
