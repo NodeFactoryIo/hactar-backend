@@ -16,6 +16,10 @@ import {UserValidationSchema} from "../Controller/Api/UserControllerValidation";
 import {NodeGeneralInfoController} from "../Controller/Api/NodeGeneralInfoController";
 import {CreateNodeGeneralInfoValidationSchema} from "../Controller/Api/NodeGeneralInfoControllerValidation";
 
+import {MiningRewardsController} from "../Controller/Api/MiningRewardsController";
+import {CreateMiningRewardsValidationSchema} from "../Controller/Api/MiningRewardsControllerValidation";
+
+
 import {passNodeData} from "../Middleware/passingNodeData";
 import {AuthorizeUser} from "../Middleware/Authorization";
 
@@ -25,7 +29,8 @@ export function createApiRoutes(
     nodeDiskInformationController: NodeDiskInformationController,
     nodeUptimeController: NodeUptimeController,
     userController: UserController,
-    nodeGeneralInfoController: NodeGeneralInfoController
+    nodeGeneralInfoController: NodeGeneralInfoController,
+    miningRewardsController: MiningRewardsController
 ): express.Router {
     const router = express.Router();
 
@@ -75,6 +80,11 @@ export function createApiRoutes(
         nodeGeneralInfoController.fetchNodeGeneralInfo.bind(nodeGeneralInfoController));
 
     router.post(
+        "/user/node/miningrewards",
+        [validator.body(CreateMiningRewardsValidationSchema), passNodeData, AuthorizeUser],
+        miningRewardsController.storeMiningRewards.bind(miningRewardsController));
+
+    router.post(
         "/user/register",
         validator.body(UserValidationSchema),
         userController.registerUser.bind(userController));
@@ -90,5 +100,4 @@ export function createApiRoutes(
         userController.loginUserDaemonApp.bind(userController));
 
     return router;
-
 }
