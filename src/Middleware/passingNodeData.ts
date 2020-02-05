@@ -12,7 +12,7 @@ export async function passNodeData(
         if (req.params && req.params.nodeId) {
             const node = await Node.findByPk(req.params.nodeId)
             res.locals.node = node;
-        } else {
+        } else if (req.body && req.body.nodeInfo) {
             const nodeInfo = req.body.nodeInfo;
             if (nodeInfo) {
                 const {url, address} = nodeInfo;
@@ -21,6 +21,9 @@ export async function passNodeData(
                     res.locals.node = node;
                 }
             }
+        } else {
+            const miningRewards = req.body;
+            res.locals.miningRewards = miningRewards;
         }
         next();
     } catch (e) {
