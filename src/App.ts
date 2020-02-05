@@ -11,6 +11,7 @@ import {NodeController} from "./Controller/Api/NodeController";
 import {NodeDiskInformationController} from "./Controller/Api/NodeDiskInformationController";
 import {NodeUptimeController} from "./Controller/Api/NodeUptimeController";
 import {NodeGeneralInfoController} from "./Controller/Api/NodeGeneralInfoController";
+import {MiningRewardsController} from "./Controller/Api/MiningRewardsController";
 import {UserController} from "./Controller/Api/UserController";
 import {createApiRoutes} from "./Routes/Api";
 import {Service} from "./Services/interface";
@@ -19,6 +20,7 @@ import {NodeService} from "./Services/NodeService";
 import {NodeDiskInformationService} from "./Services/NodeDiskInformationService";
 import {NodeUptimeService} from "./Services/NodeUptimeService";
 import {NodeGeneralInfoService} from "./Services/NodeGeneralInfoService";
+import {MiningRewardsService} from "./Services/MiningRewardsService";
 import {UserService} from "./Services/UserService";
 import {validateJoiError} from "./Middleware/ValidationErrorHandling";
 
@@ -36,11 +38,14 @@ export class App implements Service {
     private nodeDiskInformationController: NodeDiskInformationController;
     private nodeDiskInformationService: NodeDiskInformationService;
 
-    private nodeGeneralInfoController: NodeGeneralInfoController;
-    private nodeGeneralInfoService: NodeGeneralInfoService;
-
     private userController: UserController;
     private userService: UserService;
+
+    private nodeGeneralInfoService: NodeGeneralInfoService;
+    private nodeGeneralInfoController: NodeGeneralInfoController;
+
+    private miningRewardsController: MiningRewardsController;
+    private miningRewardsService: MiningRewardsService;
 
     constructor() {
         this.express = express();
@@ -53,6 +58,7 @@ export class App implements Service {
         this.nodeService = new NodeService();
         this.nodeDiskInformationService = new NodeDiskInformationService();
         this.nodeUptimeService = new NodeUptimeService();
+        this.miningRewardsService = new MiningRewardsService();
         this.userService = new UserService();
         this.nodeGeneralInfoService = new NodeGeneralInfoService();
     }
@@ -79,6 +85,7 @@ export class App implements Service {
         this.nodeController = new NodeController(this.nodeService);
         this.nodeDiskInformationController = new NodeDiskInformationController(this.nodeDiskInformationService);
         this.nodeUptimeController = new NodeUptimeController(this.nodeUptimeService);
+        this.miningRewardsController = new MiningRewardsController(this.miningRewardsService);
         this.userController = new UserController(this.userService);
         this.nodeGeneralInfoController = new NodeGeneralInfoController(this.nodeGeneralInfoService);
     }
@@ -106,7 +113,8 @@ export class App implements Service {
             this.nodeDiskInformationController,
             this.nodeUptimeController,
             this.userController,
-            this.nodeGeneralInfoController
+            this.nodeGeneralInfoController,
+            this.miningRewardsController
         ));
 
         this.express.use(validateJoiError);
