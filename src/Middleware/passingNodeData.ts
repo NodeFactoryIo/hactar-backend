@@ -1,6 +1,7 @@
 import express, {Request} from "express";
 import {NodeService} from "../Services/NodeService";
 import {Node} from "../Models/Node";
+import {MiningRewardInput} from "../Types/MiningRewardType";
 import logger from "../Services/Logger";
 
 export async function passNodeData(
@@ -21,9 +22,13 @@ export async function passNodeData(
                     res.locals.node = node;
                 }
             }
-        } else {
-            const miningRewards = req.body;
-            res.locals.miningRewards = miningRewards;
+        } else if (req.body.length > 0) {
+            const nodesList = req.body.map(
+                (mri: MiningRewardInput) => {
+                    return NodeService.getNodeByData(mri.nodeInfo.url, mri.nodeInfo.address);
+                }
+            )
+            res.locals.nodes = await Promise.all(nodesList)
         }
         next();
     } catch (e) {
