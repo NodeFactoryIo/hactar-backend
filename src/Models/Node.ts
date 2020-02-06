@@ -3,6 +3,7 @@ import {User} from "./User";
 
 export class Node extends Model {
 
+    public id: number;
     public url: string;
     public token: string;
     public address: string;

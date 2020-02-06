@@ -19,6 +19,7 @@ const config = Object.freeze({
     port: env.SERVER_PORT || 3000,
     jwtKey: process.env.JWT_KEY || "nodefactory",
     jwtExpiry: process.env.JWT_EXPIRY || '24h',
+    rewardAmount: process.env.REWARD_AMOUNT || 5,
     sendinblue: {
         // eslint-disable-next-line max-len
         apiKey: process.env.EMAIL_API_KEY || "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",

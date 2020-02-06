@@ -4,13 +4,10 @@ import {Request, Response} from "express";
 import {UserService} from "../../../src/Services/UserService";
 import {UserController} from "../../../src/Controller/Api/UserController";
 import logger from "../../../src/Services/Logger";
-import {NodeService} from "../../../src/Services/NodeService";
-import {Node} from "../../../src/Models/Node";
 
 describe("UserController", function () {
 
     const userServiceStub = sinon.createStubInstance(UserService);
-    const nodeServiceStub = sinon.createStubInstance(NodeService);
 
     const userController = new UserController(
         userServiceStub as unknown as UserService);
@@ -97,20 +94,5 @@ describe("UserController", function () {
                 expect.fail(err);
             }
         });
-    });
-
-    describe('GET /node/user', () => {
-        nodeServiceStub.getAllNodes.resolves([
-            {
-                "url": "url111",
-                "token": "token111",
-                "address": "address111",
-            } as unknown as Node,
-            {
-                "url": "url222",
-                "token": "token222",
-                "address": "address222",
-            } as unknown as Node
-        ]);
     });
 });
