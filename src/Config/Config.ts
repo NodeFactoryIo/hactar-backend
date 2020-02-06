@@ -21,9 +21,9 @@ const config = Object.freeze({
     jwtExpiry: process.env.JWT_EXPIRY || '24h',
     sendinblue: {
         // eslint-disable-next-line max-len
-        apiKey: process.env.EMAIL_API_KEY || "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",
-        apiPartnerKey: "" || "YOUR-PARTNER-API-KEY",
-        templateId: process.env.EMAIL_TEMPLATE_ID || "1",
+        apiKey: process.env.EMAIL_API_KEY || "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",
+        apiUrl: process.env.EMAIL_API_URL || "https://api.sendinblue.com/v3/smtp/email",
+        templateId: process.env.EMAIL_TEMPLATE_ID || "2",
     }
 });
 

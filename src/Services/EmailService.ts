@@ -1,34 +1,28 @@
-import * as SibApiV3Sdk from "sib-api-v3-typescript";
-import {SendSmtpEmail} from "sib-api-v3-typescript";
 import config from "../Config/Config";
 import {User} from "../Models/User";
-import {CreateSmtpEmail} from "sib-api-v3-typescript/api";
-import * as http from "http";
+import axios, {AxiosRequestConfig} from "axios"
 
 export class EmailService {
 
-    protected smtpApi: SibApiV3Sdk.SMTPApi;
-
-    constructor() {
-        this.smtpApi = new SibApiV3Sdk.SMTPApi();
-        // @ts-ignore
-        const apiKey = this.smtpApi.authentications.apiKey;
-        apiKey.apiKey = config.sendinblue.apiKey;
-    }
-
-    public async sendEmailNotification(user: User, templateId: number):
-        Promise<{response: http.ServerResponse; body: CreateSmtpEmail}> {
-        const sendSmtpEmail = {
-            to: [{
-                email: user.email,
-                name: ""
-            }],
-            templateId: templateId,
+    public async sendEmailNotification(user: User, templateId: number, params: any): Promise<boolean> {
+        const sendEmailRequest: AxiosRequestConfig = {
+            data: {
+                to: [{
+                    email: user.email,
+                }],
+                templateId: templateId,
+                params: params
+            },
+            url: "https://api.sendinblue.com/v3/smtp/email",
             headers: {
-                'X-Mailin-custom': 'custom_header_1:custom_value_1|custom_header_2:custom_value_2'
-            }
-        } as SendSmtpEmail;
-
-        return await this.smtpApi.sendTransacEmail(sendSmtpEmail)
+                'content-type': 'application/json',
+                'accept': 'application/json',
+                'api-key': config.sendinblue.apiKey
+            },
+            method: "POST"
+        };
+        // send request
+        const response = await axios(sendEmailRequest);
+        return response.status >= 200 && response.status < 300
     }
 }
