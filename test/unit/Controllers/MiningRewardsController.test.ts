@@ -4,16 +4,31 @@ import {Request, Response} from "express";
 import {MiningRewardsService} from "../../../src/Services/MiningRewardsService";
 import {MiningRewardsController} from "../../../src/Controller/Api/MiningRewardsController";
 import logger from "../../../src/Services/Logger";
+import {MiningRewardInput} from "../../../src/Types/MiningRewardType";
 
 describe("MiningRewardsController", function () {
     describe('POST /user/node', () => {
         const miningRewardsServiceStub = sinon.createStubInstance(MiningRewardsService);
         // @ts-ignore
-        miningRewardsServiceStub.storeMiningRewards.resolves([[], 1]);
+        miningRewardsServiceStub.storeMiningRewards.resolves([
+            {
+                "id": 81,
+                "cid": "some cid",
+                "rewardAmount": "5",
+                "nodeId": 100,
+            },
+            {
+                "id": 82,
+                "cid": "cid - 2",
+                "rewardAmount": "5",
+                "nodeId": 200,
+            }
+        ] as unknown as Array<MiningRewardInput>);
 
         it('should store mining rewards array to the database', async function () {
             try {
-                const nodeController = new MiningRewardsController(miningRewardsServiceStub as unknown as MiningRewardsService);
+                const nodeController = new MiningRewardsController(
+                    miningRewardsServiceStub as unknown as MiningRewardsService);
                 const response = {} as Response;
                 response.locals = [
                     {
@@ -31,7 +46,12 @@ describe("MiningRewardsController", function () {
                         }
                     }
                 ];
-                response.json = sinon.spy((result) => expect(result['Inserted records']).to.be.equal(1)) as any;
+                response.json = sinon.spy((result) => {
+                    expect(result).to.be.an('array');
+                    expect(result[0]).to.have.ownProperty('cid');
+                    expect(result[0]).to.have.ownProperty('rewardAmount');
+                    expect(result[0]).to.have.ownProperty('nodeId');
+                }) as any;
 
                 response.status = sinon.spy((result) => {
                     expect(result).to.equal(201)
