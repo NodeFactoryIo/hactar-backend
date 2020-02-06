@@ -2,13 +2,13 @@ import {ContainerTypes, ValidatedRequestSchema} from "express-joi-validation";
 import * as Joi from "@hapi/joi";
 
 export interface CreateMiningRewardsRequestSchema extends ValidatedRequestSchema {
-    [ContainerTypes.Body]: {
+    [ContainerTypes.Body]: [{
         cid: string;
         nodeInfo: {
             address: string;
             url: string;
         };
-    };
+    }];
 }
 
 export const CreateMiningRewardsValidationSchema = Joi.array().items(
