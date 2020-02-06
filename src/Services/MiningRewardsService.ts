@@ -1,22 +1,21 @@
-import sequelize from "./Database";
-import {MiningReward} from "../Types/MiningRewardType";
+import {MiningReward} from "../Models/MiningReward";
 import config from "../Config/Config";
+import {Node} from "../Models/Node";
+import {MiningRewardInput} from "../Types/MiningRewardType";
 
 export class MiningRewardsService {
 
-    public async storeMiningRewards(miningRewards: Array<MiningReward>) {
-        return await sequelize.sequelize.query(
-            `INSERT INTO public."MiningRewards"
-                VALUES (DEFAULT, array[:miningRewards]::json[], :rewardAmount,
-                current_timestamp, current_timestamp);`,
-            {
-                replacements: {
-                    miningRewards: miningRewards
-                        // stringifying every object in the array because of Postgres array format
-                        .map(mr => JSON.stringify(mr)),
+    public async storeMiningRewards(nodes: Array<Node>, rewards: Array<MiningRewardInput>) {
+        return await Promise.all(nodes.map(
+            (node: Node, index) => (
+                {
+                    cid: rewards[index].cid,
                     rewardAmount: config.rewardAmount,
-                },
-            }
-        ) as unknown as Array<MiningReward>;
+                    nodeId: node.id,
+                }
+            )
+        ).map(async (node) => {
+            return await MiningReward.create(node);
+        }))
     }
 }
