@@ -3,17 +3,16 @@ import {User} from "../Models/User";
 import axios, {AxiosRequestConfig} from "axios"
 
 export class EmailService {
-
-    public async sendEmailNotification(user: User, templateId: number, params: any): Promise<boolean> {
+    public async sendEmailNotification(user: User, params: any): Promise<boolean> {
         const sendEmailRequest: AxiosRequestConfig = {
             data: {
                 to: [{
                     email: user.email,
                 }],
-                templateId: templateId,
+                templateId: config.sendinblue.templateId,
                 params: params
             },
-            url: "https://api.sendinblue.com/v3/smtp/email",
+            url: config.sendinblue.apiUrl,
             headers: {
                 'content-type': 'application/json',
                 'accept': 'application/json',
