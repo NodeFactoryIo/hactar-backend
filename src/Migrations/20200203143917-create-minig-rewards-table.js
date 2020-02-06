@@ -9,11 +9,19 @@ module.exports = {
                 primaryKey: true,
                 type: sequelize.INTEGER
             },
-            minerRewards: {
-                type: sequelize.ARRAY(sequelize.JSON)
+            cid: {
+                type: sequelize.STRING
             },
             rewardAmount: {
-                type: sequelize.INTEGER
+                type: sequelize.BIGINT
+            },
+            nodeId: {
+                type: sequelize.INTEGER,
+                allowNull: false,
+                references: {
+                    model: 'Nodes',
+                    key: 'id'
+                },
             },
             createdAt: {
                 allowNull: false,
