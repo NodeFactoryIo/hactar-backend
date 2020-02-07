@@ -10,6 +10,8 @@ import {NodeDiskInformation} from "../Models/NodeDiskInformation";
 import {NodeUptime} from "../Models/NodeUptime";
 import {User} from "../Models/User";
 import {NodeGeneralInfo} from "../Models/NodeGeneralInfo";
+import {MiningReward} from "../Models/MiningReward";
+import {NodeBalance} from "../Models/NodeBalance";
 
 export class Database {
 
@@ -101,6 +103,8 @@ export class Database {
         NodeDiskInformation.initialize(this.sequelize);
         NodeUptime.initialize(this.sequelize);
         NodeGeneralInfo.initialize(this.sequelize);
+        MiningReward.initialize(this.sequelize);
+        NodeBalance.initialize(this.sequelize);
     }
 }
 
