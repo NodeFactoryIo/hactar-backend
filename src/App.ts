@@ -12,6 +12,7 @@ import {NodeDiskInformationController} from "./Controller/Api/NodeDiskInformatio
 import {NodeUptimeController} from "./Controller/Api/NodeUptimeController";
 import {NodeGeneralInfoController} from "./Controller/Api/NodeGeneralInfoController";
 import {MiningRewardsController} from "./Controller/Api/MiningRewardsController";
+import {NodeBalanceController} from "./Controller/Api/NodeBalanceController";
 import {UserController} from "./Controller/Api/UserController";
 import {createApiRoutes} from "./Routes/Api";
 import {Service} from "./Services/interface";
@@ -21,6 +22,7 @@ import {NodeDiskInformationService} from "./Services/NodeDiskInformationService"
 import {NodeUptimeService} from "./Services/NodeUptimeService";
 import {NodeGeneralInfoService} from "./Services/NodeGeneralInfoService";
 import {MiningRewardsService} from "./Services/MiningRewardsService";
+import {NodeBalanceService} from "./Services/NodeBalanceService";
 import {UserService} from "./Services/UserService";
 import {validateJoiError} from "./Middleware/ValidationErrorHandling";
 
@@ -41,11 +43,11 @@ export class App implements Service {
     private userController: UserController;
     private userService: UserService;
 
-    private nodeGeneralInfoService: NodeGeneralInfoService;
-    private nodeGeneralInfoController: NodeGeneralInfoController;
-
     private miningRewardsController: MiningRewardsController;
     private miningRewardsService: MiningRewardsService;
+
+    private nodeBalanceController: NodeBalanceController;
+    private nodeBalanceService: NodeBalanceService;
 
     constructor() {
         this.express = express();
@@ -61,6 +63,7 @@ export class App implements Service {
         this.miningRewardsService = new MiningRewardsService();
         this.userService = new UserService();
         this.nodeGeneralInfoService = new NodeGeneralInfoService();
+        this.nodeBalanceService = new NodeBalanceService();
     }
 
     public async start(): Promise<void> {
@@ -88,6 +91,7 @@ export class App implements Service {
         this.miningRewardsController = new MiningRewardsController(this.miningRewardsService);
         this.userController = new UserController(this.userService);
         this.nodeGeneralInfoController = new NodeGeneralInfoController(this.nodeGeneralInfoService);
+        this.nodeBalanceController = new NodeBalanceController(this.nodeBalanceService);
     }
 
     private addInitialRoutes(): void {
@@ -114,7 +118,8 @@ export class App implements Service {
             this.nodeUptimeController,
             this.userController,
             this.nodeGeneralInfoController,
-            this.miningRewardsController
+            this.miningRewardsController,
+            this.nodeBalanceController
         ));
 
         this.express.use(validateJoiError);

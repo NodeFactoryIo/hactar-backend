@@ -19,6 +19,8 @@ import {CreateNodeGeneralInfoValidationSchema} from "../Controller/Api/NodeGener
 import {MiningRewardsController} from "../Controller/Api/MiningRewardsController";
 import {CreateMiningRewardsValidationSchema} from "../Controller/Api/MiningRewardsControllerValidation";
 
+import {NodeBalanceController} from "../Controller/Api/NodeBalanceController";
+import {CreateNodeBalanceValidationSchema} from "../Controller/Api/NodeBalanceControllerValidation";
 
 import {passNodeData} from "../Middleware/passingNodeData";
 import {AuthorizeUser} from "../Middleware/Authorization";
@@ -30,7 +32,9 @@ export function createApiRoutes(
     nodeUptimeController: NodeUptimeController,
     userController: UserController,
     nodeGeneralInfoController: NodeGeneralInfoController,
-    miningRewardsController: MiningRewardsController
+    miningRewardsController: MiningRewardsController,
+    nodeBalanceController: NodeBalanceController
+
 ): express.Router {
     const router = express.Router();
 
@@ -83,6 +87,11 @@ export function createApiRoutes(
         "/user/node/miningrewards",
         [validator.body(CreateMiningRewardsValidationSchema), passNodeData, AuthorizeUser],
         miningRewardsController.storeMiningRewards.bind(miningRewardsController));
+
+    router.post(
+        "/user/node/balance",
+        [validator.body(CreateNodeBalanceValidationSchema), passNodeData, AuthorizeUser],
+        nodeBalanceController.storeNodeBalance.bind(nodeBalanceController));
 
     router.post(
         "/user/register",
