@@ -40,9 +40,6 @@ export class App implements Service {
     private nodeDiskInformationController: NodeDiskInformationController;
     private nodeDiskInformationService: NodeDiskInformationService;
 
-    private nodeGeneralInfoController: NodeGeneralInfoController;
-    private nodeGeneralInfoService: NodeGeneralInfoService;
-
     private userController: UserController;
     private userService: UserService;
 
@@ -51,6 +48,7 @@ export class App implements Service {
 
     private nodeBalanceController: NodeBalanceController;
     private nodeBalanceService: NodeBalanceService;
+
     constructor() {
         this.express = express();
         // add before route middleware's here

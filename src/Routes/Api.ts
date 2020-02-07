@@ -34,6 +34,7 @@ export function createApiRoutes(
     nodeGeneralInfoController: NodeGeneralInfoController,
     miningRewardsController: MiningRewardsController,
     nodeBalanceController: NodeBalanceController
+
 ): express.Router {
     const router = express.Router();
 
