@@ -3,8 +3,9 @@ import {Node} from "../Models/Node";
 
 export class NodeUptime extends Model {
 
-    private isWorking: boolean;
-    private nodeId: number;
+    public id: number;
+    public isWorking: boolean;
+    public nodeId: number;
 
     public static initialize(sequelize: Sequelize) {
         this.init({
