@@ -90,7 +90,7 @@ export function createApiRoutes(
 
     router.post(
         "/user/node/balance",
-        [passNodeData, AuthorizeUser],
+        [validator.body(CreateNodeBalanceValidationSchema), passNodeData, AuthorizeUser],
         nodeBalanceController.storeNodeBalance.bind(nodeBalanceController));
 
     router.post(
