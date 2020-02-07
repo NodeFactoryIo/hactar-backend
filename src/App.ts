@@ -43,6 +43,9 @@ export class App implements Service {
     private userController: UserController;
     private userService: UserService;
 
+    private nodeGeneralInfoController: NodeGeneralInfoController;
+    private nodeGeneralInfoService: NodeGeneralInfoService;
+
     private miningRewardsController: MiningRewardsController;
     private miningRewardsService: MiningRewardsService;
 
