@@ -239,6 +239,7 @@ dist
 src/**/*.js
 src/**/*.js.map
 !src/Migrations/*.js
+!src/Seeders/*.js
 test/**/*.js
 test/**/*.js.map
 
