@@ -13,6 +13,7 @@ import {NodeUptimeController} from "./Controller/Api/NodeUptimeController";
 import {NodeGeneralInfoController} from "./Controller/Api/NodeGeneralInfoController";
 import {MiningRewardsController} from "./Controller/Api/MiningRewardsController";
 import {NodeBalanceController} from "./Controller/Api/NodeBalanceController";
+import {NodePastDealsController} from "./Controller/Api/NodePastDealsController";
 import {UserController} from "./Controller/Api/UserController";
 import {createApiRoutes} from "./Routes/Api";
 import {Service} from "./Services/interface";
@@ -23,6 +24,7 @@ import {NodeUptimeService} from "./Services/NodeUptimeService";
 import {NodeGeneralInfoService} from "./Services/NodeGeneralInfoService";
 import {MiningRewardsService} from "./Services/MiningRewardsService";
 import {NodeBalanceService} from "./Services/NodeBalanceService";
+import {NodePastDealsService} from "./Services/NodePastDealsService";
 import {UserService} from "./Services/UserService";
 import {validateJoiError} from "./Middleware/ValidationErrorHandling";
 
@@ -52,6 +54,9 @@ export class App implements Service {
     private nodeBalanceController: NodeBalanceController;
     private nodeBalanceService: NodeBalanceService;
 
+    private nodePastDealsController: NodePastDealsController;
+    private nodePastDealsService: NodePastDealsService;
+
     constructor() {
         this.express = express();
         // add before route middleware's here
@@ -67,6 +72,7 @@ export class App implements Service {
         this.userService = new UserService();
         this.nodeGeneralInfoService = new NodeGeneralInfoService();
         this.nodeBalanceService = new NodeBalanceService();
+        this.nodePastDealsService = new NodePastDealsService();
     }
 
     public async start(): Promise<void> {
@@ -95,6 +101,7 @@ export class App implements Service {
         this.userController = new UserController(this.userService);
         this.nodeGeneralInfoController = new NodeGeneralInfoController(this.nodeGeneralInfoService);
         this.nodeBalanceController = new NodeBalanceController(this.nodeBalanceService);
+        this.nodePastDealsController = new NodePastDealsController(this.nodePastDealsService);
     }
 
     private addInitialRoutes(): void {
@@ -122,7 +129,8 @@ export class App implements Service {
             this.userController,
             this.nodeGeneralInfoController,
             this.miningRewardsController,
-            this.nodeBalanceController
+            this.nodeBalanceController,
+            this.nodePastDealsController
         ));
 
         this.express.use(validateJoiError);
