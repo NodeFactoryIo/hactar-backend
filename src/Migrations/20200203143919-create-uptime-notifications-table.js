@@ -16,6 +16,10 @@ module.exports = {
                     model: 'NodeUptime',
                     key: 'id'
                 },
+                unique: true
+            },
+            notificationSent: {
+                type: sequelize.BOOLEAN
             },
             createdAt: {
                 allowNull: false,

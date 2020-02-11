@@ -21,11 +21,12 @@ const config = Object.freeze({
     jwtExpiry: process.env.JWT_EXPIRY || '24h',
     rewardAmount: process.env.REWARD_AMOUNT || 5,
     sendinblue: {
-        // eslint-disable-next-line max-len
-        apiKey: process.env.EMAIL_API_KEY || "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",
+        apiKey: process.env.EMAIL_API_KEY ,
         apiUrl: process.env.EMAIL_API_URL || "https://api.sendinblue.com/v3/smtp/email",
         templateId: process.env.EMAIL_TEMPLATE_ID || "2",
-    }
+    },
+    // cron like definition (every hour by default)
+    uptimeNotificationsRecurrenceRule: process.env.UPTIME_NOTIF_RECURRENCE || "* 0 * * * *"
 });
 
 export default config;

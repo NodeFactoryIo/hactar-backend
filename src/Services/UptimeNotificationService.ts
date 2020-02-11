@@ -23,7 +23,7 @@ export class UptimeNotificationService {
                     {NODE: node.address + node.url}
                 );
                 if (emailSent) {
-                    await this.createUptimeNotifications(uptime.id);
+                    await this.createUptimeNotifications(1);//uptime.id
                 }
             }
         }

@@ -23,6 +23,7 @@ import {NodeGeneralInfoService} from "./Services/NodeGeneralInfoService";
 import {MiningRewardsService} from "./Services/MiningRewardsService";
 import {UserService} from "./Services/UserService";
 import {validateJoiError} from "./Middleware/ValidationErrorHandling";
+import {SchedulingService} from "./Scheduler/SchedulingService";
 
 export class App implements Service {
 
@@ -47,6 +48,8 @@ export class App implements Service {
     private miningRewardsController: MiningRewardsController;
     private miningRewardsService: MiningRewardsService;
 
+    private schedulingService: SchedulingService;
+
     constructor() {
         this.express = express();
         // add before route middleware's here
@@ -61,6 +64,8 @@ export class App implements Service {
         this.miningRewardsService = new MiningRewardsService();
         this.userService = new UserService();
         this.nodeGeneralInfoService = new NodeGeneralInfoService();
+        // initialize scheduling service
+        this.schedulingService = new SchedulingService();
     }
 
     public async start(): Promise<void> {
@@ -69,6 +74,7 @@ export class App implements Service {
             logger.info(`Server is listening on ${config.port}`);
             this.initControllers();
             this.addApiRoutes();
+            this.schedulingService.startScheduledTasks();
         } catch (e) {
             logger.error(`App failed to start. Reason: ${e.message}`);
         }
@@ -79,6 +85,7 @@ export class App implements Service {
         if (this.server) {
             await this.server.close();
         }
+        this.schedulingService.stopScheduledTasks();
     }
 
     private initControllers(): void {
