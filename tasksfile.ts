@@ -24,6 +24,14 @@ function build() {
     sh("docker-compose build", {async: false, nopipe: true});
 }
 
+function seed() {
+    sh("docker-compose run --rm backend yarn run seed", {async: false, nopipe: true});
+}
+
+function seedUndo() {
+    sh("docker-compose run --rm backend yarn run seed:undo", {async: false, nopipe: true});
+}
+
 function e2e() {
     sh("docker-compose run -e NODE_ENV=test --rm backend yarn run test:e2e", {async: false, nopipe: true});
 }
@@ -55,12 +63,16 @@ help(compile, "Transpiles files to es5");
 help(clean, "Removes all build directories and dependencies");
 help(lint, "Runs eslint on current project");
 help(build, "Builds new docker image");
+help(seed, "Seed database");
+help(seedUndo, "Reverts database seeds")
 
 cli({
     clean,
     lint,
     npm,
     build,
+    seed,
+    seedUndo,
     unit,
     test,
     compile,

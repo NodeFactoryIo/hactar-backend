@@ -13,6 +13,8 @@
     "revert": "yarn run compile && sequelize --config sequelizecli.js db:migrate:undo",
     "revert-all": "yarn run compile && sequelize --config sequelizecli.js db:migrate:undo:all",
     "migrate": "yarn run compile && sequelize --config sequelizecli.js db:migrate",
+    "seed": "sequelize --config sequelizecli.js db:seed:all",
+    "seed:undo": "sequelize --config sequelizecli.js db:seed:undo:all",
     "prebuild": "yarn run clean && yarn run init",
     "build": "tsc --incremental --sourceMap --outDir dist",
     "compile": "tsc",
