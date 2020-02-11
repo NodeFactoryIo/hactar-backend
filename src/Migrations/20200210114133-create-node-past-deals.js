@@ -16,13 +16,13 @@ module.exports = {
                 type: sequelize.INTEGER
             },
             size: {
-                type: sequelize.STRING
+                type: sequelize.BIGINT
             },
             provider: {
                 type: sequelize.STRING
             },
             price: {
-                type: sequelize.STRING
+                type: sequelize.BIGINT
             },
             duration: {
                 type: sequelize.INTEGER
