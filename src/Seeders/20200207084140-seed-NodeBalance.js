@@ -1,25 +1,25 @@
 module.exports = {
     up: (queryInterface) => {
         return queryInterface.bulkInsert('NodeBalance', [{
-            balance: 5238,
+            balance: 6926520399982608,
             nodeId: 1,
             createdAt: new Date().toLocaleString(),
             updatedAt: new Date().toLocaleString()
         },
         {
-            balance: 725,
+            balance: 78974914234696,
             nodeId: 1,
             createdAt: new Date().toLocaleString(),
             updatedAt: new Date().toLocaleString()
         },
         {
-            balance: 4937,
+            balance: 8537124947501041,
             nodeId: 2,
             createdAt: new Date().toLocaleString(),
             updatedAt: new Date().toLocaleString()
         },
         {
-            balance: 1248,
+            balance: 832375843963591,
             nodeId: 2,
             createdAt: new Date().toLocaleString(),
             updatedAt: new Date().toLocaleString()
