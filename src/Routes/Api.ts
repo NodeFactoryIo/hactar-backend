@@ -2,7 +2,7 @@ import express from "express";
 import {createValidator} from "express-joi-validation";
 
 import {NodeController} from "../Controller/Api/NodeController";
-import {CreateNodeValidationSchema} from "../Controller/Api/NodeControllerValidation";
+import {CreateNodeValidationSchema, UpdateNodeValidationSchema} from "../Controller/Api/NodeControllerValidation";
 
 import {NodeDiskInformationController} from "../Controller/Api/NodeDiskInformationController";
 import {CreateNodeDiskInforamtionValidationSchema} from "../Controller/Api/NodeDiskInformationControllerValidation";
@@ -51,6 +51,11 @@ export function createApiRoutes(
         "/user/node",
         [passNodeData, AuthorizeUser],
         nodesController.getAllUserNodes.bind(nodesController));
+
+    router.put(
+        "/user/node",
+        [validator.body(UpdateNodeValidationSchema), passNodeData, AuthorizeUser],
+        nodesController.addNodeAdditionalInfo.bind(nodesController));
 
     router.delete(
         "/user/node/:nodeId",
