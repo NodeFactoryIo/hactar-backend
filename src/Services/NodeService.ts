@@ -1,4 +1,5 @@
 import {Node} from "../Models/Node";
+import {ServiceError} from "./ServiceError";
 
 export class NodeService {
 
@@ -18,7 +19,7 @@ export class NodeService {
                 })
             return await updatedNode[1][0]; // returns the updated object, without updates count
         }
-        return await Node.create({name, description});
+        throw new ServiceError(404, "Node not found.");
     }
 
     public async deleteNode(nodeId: number) {
