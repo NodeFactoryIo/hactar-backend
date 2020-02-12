@@ -6,6 +6,21 @@ export class NodeService {
         return await Node.create({url, token, address, userId});
     }
 
+    public async addNodeAdditionalInfo(name: string, description: string, nodeId: number) {
+        const node = await this.getNodeByPk(nodeId);
+        if (node) {
+            const updatedNode = await Node.update({name, description},
+                {
+                    where: {
+                        id: nodeId
+                    },
+                    returning: true,
+                })
+            return await updatedNode[1][0]; // returns the updated object, without updates count
+        }
+        return await Node.create({name, description});
+    }
+
     public async deleteNode(nodeId: number) {
         return await Node.destroy({
             where: {id: nodeId}
