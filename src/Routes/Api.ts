@@ -22,6 +22,9 @@ import {CreateMiningRewardsValidationSchema} from "../Controller/Api/MiningRewar
 import {NodeBalanceController} from "../Controller/Api/NodeBalanceController";
 import {CreateNodeBalanceValidationSchema} from "../Controller/Api/NodeBalanceControllerValidation";
 
+import {NodePastDealsController} from "../Controller/Api/NodePastDealsController";
+import {CreateNodePastDealsValidationSchema} from "../Controller/Api/NodePastDealsControllerValidation";
+
 import {passNodeData} from "../Middleware/passingNodeData";
 import {AuthorizeUser} from "../Middleware/Authorization";
 
@@ -33,7 +36,8 @@ export function createApiRoutes(
     userController: UserController,
     nodeGeneralInfoController: NodeGeneralInfoController,
     miningRewardsController: MiningRewardsController,
-    nodeBalanceController: NodeBalanceController
+    nodeBalanceController: NodeBalanceController,
+    nodePastDealsController: NodePastDealsController
 
 ): express.Router {
     const router = express.Router();
@@ -92,6 +96,11 @@ export function createApiRoutes(
         "/user/node/balance",
         [validator.body(CreateNodeBalanceValidationSchema), passNodeData, AuthorizeUser],
         nodeBalanceController.storeNodeBalance.bind(nodeBalanceController));
+
+    router.put(
+        "/user/node/pastdeals",
+        [validator.body(CreateNodePastDealsValidationSchema), passNodeData, AuthorizeUser],
+        nodePastDealsController.updateOrCreatePastDeal.bind(nodePastDealsController));
 
     router.post(
         "/user/register",
