@@ -9,8 +9,8 @@ import {Node} from "../../../../src/Models/Node";
 
 describe("Node controller add additional node info tests", async () => {
 
-    before(function () {
-        Node.create({
+    before(async function () {
+        await Node.create({
             url: 'some url',
             token: 'some token',
             address: 'some address',
