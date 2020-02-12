@@ -5,11 +5,17 @@ module.exports = {
         return queryInterface.sequelize.transaction(t => {
             return Promise.all([
                 queryInterface.addColumn('Nodes', 'name',
-                    {type: sequelize.STRING},
+                    {
+                        type: sequelize.STRING,
+                        dafaultValue: ''
+                    },
                     {transaction: t}
                 ),
                 queryInterface.addColumn('Nodes', 'description',
-                    {type: sequelize.STRING},
+                    {
+                        type: sequelize.TEXT,
+                        dafaultValue: ''
+                    },
                     {transaction: t}
                 ),
             ]);
