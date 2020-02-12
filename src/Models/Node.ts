@@ -8,6 +8,8 @@ export class Node extends Model {
     private token: string;
     private address: string;
     private userId: number;
+    private name: string;
+    private description: string;
 
     public static initialize(sequelize: Sequelize) {
         this.init({
@@ -23,6 +25,14 @@ export class Node extends Model {
                 type: DataTypes.STRING(128),
                 allowNull: false,
             },
+            name: {
+                type: DataTypes.STRING(),
+                allowNull: true
+            },
+            description: {
+                type: DataTypes.STRING(),
+                allowNull: true
+            }
         } as ModelAttributes,
             {
                 sequelize: sequelize,
