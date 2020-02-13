@@ -82,7 +82,6 @@ describe("NodeBalanceController", function () {
                     },
                 } as Request, response)
             } catch (err) {
-                console.log('test error ', err)
                 logger.error('Unexpected error occured: ${err.message}');
                 expect.fail(err);
             }
