@@ -93,6 +93,11 @@ export function createApiRoutes(
         [validator.body(CreateNodeBalanceValidationSchema), passNodeData, AuthorizeUser],
         nodeBalanceController.storeNodeBalance.bind(nodeBalanceController));
 
+    router.get(
+        "/user/node/balance/:nodeId",
+        [passNodeData, AuthorizeUser],
+        nodeBalanceController.fetchNodeBalance.bind(nodeBalanceController));
+
     router.post(
         "/user/register",
         validator.body(UserValidationSchema),
