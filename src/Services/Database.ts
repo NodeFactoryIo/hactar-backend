@@ -87,7 +87,6 @@ export class Database {
                 const doneMigrations = await this.migrations.up();
                 logger.info(`${doneMigrations.length} migrations executed successfully`);
             } catch (err) {
-                console.log('err', err)
                 logger.error('Error while trying to run migrations');
             }
         }
