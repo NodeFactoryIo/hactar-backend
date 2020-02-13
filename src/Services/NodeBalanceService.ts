@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js'
 import {NodeBalance} from "../Models/NodeBalance";
 import sequelize from "../Services/Database";
 import {QueryTypes} from "sequelize";
@@ -11,31 +12,23 @@ export class NodeBalanceService {
 
     public async fetchNodeBalance(nodeId: number) {
         const balances = await sequelize.sequelize.query(
-            `(SELECT *
+            `SELECT *
                 FROM "NodeBalance"
                 WHERE "nodeId" = 100
                     AND "updatedAt" >= now() - interval '24 hours'
-                ORDER BY "updatedAt" DESC
-                LIMIT 1)
-                UNION ALL (
-                SELECT *
-                FROM "NodeBalance"
-                WHERE "nodeId" = 100
-                    AND "updatedAt" >= now() - interval '24 hours'
-                ORDER BY "updatedAt" ASC
-                LIMIT 1);`,
+                ORDER BY "updatedAt" ASC`,
             {
                 replacements: {nodeId: nodeId},
                 type: QueryTypes.SELECT
             }
         ) as Array<NodeBalance>;
         if (balances.length > 0) {
-            const earliestRecord = balances[0]['balance'] as unknown as bigint;
-            const latestRecord = balances[1]['balance'] as unknown as bigint;
+            const earliestRecord = new BigNumber(balances[0]['balance']);
+            const latestRecord = new BigNumber(balances[balances.length - 1]['balance']);
             return {
                 currentBalance: latestRecord,
-                balanceChangePerc: (((latestRecord - earliestRecord) /
-                    earliestRecord as unknown as number) * 100).toFixed(2) + '%'
+                balanceChangePerc: (latestRecord.minus(earliestRecord))
+                    .div(earliestRecord).multipliedBy(100).toFixed(2) + '%'
             }
         }
         throw new ServiceError(404, "No balance found.")
