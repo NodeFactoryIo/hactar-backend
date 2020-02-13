@@ -12,6 +12,7 @@ import {User} from "../Models/User";
 import {NodeGeneralInfo} from "../Models/NodeGeneralInfo";
 import {MiningReward} from "../Models/MiningReward";
 import {NodeBalance} from "../Models/NodeBalance";
+import {NodePastDeal} from "../Models/NodePastDeal";
 
 export class Database {
 
@@ -86,6 +87,7 @@ export class Database {
                 const doneMigrations = await this.migrations.up();
                 logger.info(`${doneMigrations.length} migrations executed successfully`);
             } catch (err) {
+                console.log('err', err)
                 logger.error('Error while trying to run migrations');
             }
         }
@@ -105,6 +107,7 @@ export class Database {
         NodeGeneralInfo.initialize(this.sequelize);
         MiningReward.initialize(this.sequelize);
         NodeBalance.initialize(this.sequelize);
+        NodePastDeal.initialize(this.sequelize);
     }
 }
 
