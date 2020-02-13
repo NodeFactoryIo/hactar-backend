@@ -31,7 +31,6 @@ export class NodeBalanceController {
             const result = await this.nodeBalanceService.fetchNodeBalance(nodeId);
             res.status(200).json(result)
         } catch (e) {
-            console.log('controller error', e)
             logger.error(`Error occurred on fetching node balance in controller: ${e.message}`);
             res.status(500).json({error: "An unknown error occurred."});
         }
