@@ -26,6 +26,18 @@ export class NodeController {
         }
     }
 
+    public async addNodeAdditionalInfo(req: Request, res: Response) {
+        try {
+            const {name, description} = req.body;
+            const nodeId = res.locals.node.id;
+            const node = await this.nodeService.addNodeAdditionalInfo(name, description, nodeId);
+            res.status(200).json(node);
+        } catch (e) {
+            logger.error(`Error occurred on storing/updating name/description in controller: ${e.message}`);
+            res.status(500).json({error: "An unknown error occurred."});
+        }
+    }
+
     public async deleteNode(req: Request, res: Response): Promise<any> {
         try {
             const {nodeId} = req.params;
