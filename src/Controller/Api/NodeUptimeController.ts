@@ -34,7 +34,7 @@ export class NodeUptimeController {
                 res.status(404).json({error: "Node not found."});
             }
         } catch (e) {
-            logger.error(`Error occured on fetching node in controller: ${e}`);
+            logger.error(`Error occured on fetching node uptime in controller: ${e}`);
             res.status(500).json({error: "An unknown error occured."})
         }
     }

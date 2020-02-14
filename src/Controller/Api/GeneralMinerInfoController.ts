@@ -23,7 +23,7 @@ export class GeneralMinerInfoController {
                 version, sectorSize, minerPower, totalPower, nodeId);
             res.status(200).json(result)
         } catch (e) {
-            logger.error(`Error occurred on storing general miner info in controller: ${e.message}`);
+            logger.error(`Error occurred on storing/updating general miner info in controller: ${e.message}`);
             res.status(500).json({error: "An unknown error occurred."});
         }
     }
