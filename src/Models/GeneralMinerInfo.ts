@@ -1,7 +1,7 @@
 import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequelize";
 import {Node} from "./Node";
 
-export class NodeGeneralInfo extends Model {
+export class GeneralMinerInfo extends Model {
 
     private version: string;
     private sectorSize: string;
@@ -30,9 +30,9 @@ export class NodeGeneralInfo extends Model {
         } as ModelAttributes,
             {
                 sequelize: sequelize,
-                tableName: "NodeGeneralInfo",
+                tableName: "GeneralMinerInfo",
             } as InitOptions);
         this.belongsTo(Node, {foreignKey: "nodeId"});
-        Node.hasOne(NodeGeneralInfo, {foreignKey: "nodeId"});
+        Node.hasOne(GeneralMinerInfo, {foreignKey: "nodeId"});
     }
 }

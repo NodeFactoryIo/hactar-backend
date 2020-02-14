@@ -1,6 +1,6 @@
 module.exports = {
     up: (queryInterface) => {
-        return queryInterface.bulkInsert('NodeGeneralInfo', [{
+        return queryInterface.bulkInsert('GeneralMinerInfo', [{
             version: '1.0.1',
             sectorSize: 5,
             minerPower: 42534,
@@ -39,6 +39,6 @@ module.exports = {
     },
 
     down: (queryInterface) => {
-        return queryInterface.bulkDelete('NodeGeneralInfo', null, {});
+        return queryInterface.bulkDelete('GeneralMinerInfo', null, {});
     }
 };

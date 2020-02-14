@@ -10,7 +10,7 @@ import config from "./Config/Config";
 import {NodeController} from "./Controller/Api/NodeController";
 import {NodeDiskInformationController} from "./Controller/Api/NodeDiskInformationController";
 import {NodeUptimeController} from "./Controller/Api/NodeUptimeController";
-import {NodeGeneralInfoController} from "./Controller/Api/NodeGeneralInfoController";
+import {GeneralMinerInfoController} from "./Controller/Api/GeneralMinerInfoController";
 import {MiningRewardsController} from "./Controller/Api/MiningRewardsController";
 import {NodeBalanceController} from "./Controller/Api/NodeBalanceController";
 import {NodePastDealsController} from "./Controller/Api/NodePastDealsController";
@@ -21,7 +21,7 @@ import logger, {morganLogger} from "./Services/Logger";
 import {NodeService} from "./Services/NodeService";
 import {NodeDiskInformationService} from "./Services/NodeDiskInformationService";
 import {NodeUptimeService} from "./Services/NodeUptimeService";
-import {NodeGeneralInfoService} from "./Services/NodeGeneralInfoService";
+import {GeneralMinerInfoService} from "./Services/GeneralMinerInfoService";
 import {MiningRewardsService} from "./Services/MiningRewardsService";
 import {NodeBalanceService} from "./Services/NodeBalanceService";
 import {NodePastDealsService} from "./Services/NodePastDealsService";
@@ -45,8 +45,8 @@ export class App implements Service {
     private userController: UserController;
     private userService: UserService;
 
-    private nodeGeneralInfoController: NodeGeneralInfoController;
-    private nodeGeneralInfoService: NodeGeneralInfoService;
+    private generalMinerInfoController: GeneralMinerInfoController;
+    private generalMinerInfoService: GeneralMinerInfoService;
 
     private miningRewardsController: MiningRewardsController;
     private miningRewardsService: MiningRewardsService;
@@ -70,7 +70,7 @@ export class App implements Service {
         this.nodeUptimeService = new NodeUptimeService();
         this.miningRewardsService = new MiningRewardsService();
         this.userService = new UserService();
-        this.nodeGeneralInfoService = new NodeGeneralInfoService();
+        this.generalMinerInfoService = new GeneralMinerInfoService();
         this.nodeBalanceService = new NodeBalanceService();
         this.nodePastDealsService = new NodePastDealsService();
     }
@@ -99,7 +99,7 @@ export class App implements Service {
         this.nodeUptimeController = new NodeUptimeController(this.nodeUptimeService);
         this.miningRewardsController = new MiningRewardsController(this.miningRewardsService);
         this.userController = new UserController(this.userService);
-        this.nodeGeneralInfoController = new NodeGeneralInfoController(this.nodeGeneralInfoService);
+        this.generalMinerInfoController = new GeneralMinerInfoController(this.generalMinerInfoService);
         this.nodeBalanceController = new NodeBalanceController(this.nodeBalanceService);
         this.nodePastDealsController = new NodePastDealsController(this.nodePastDealsService);
     }
@@ -127,7 +127,7 @@ export class App implements Service {
             this.nodeDiskInformationController,
             this.nodeUptimeController,
             this.userController,
-            this.nodeGeneralInfoController,
+            this.generalMinerInfoController,
             this.miningRewardsController,
             this.nodeBalanceController,
             this.nodePastDealsController

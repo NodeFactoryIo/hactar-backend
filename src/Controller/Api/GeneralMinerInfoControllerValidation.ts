@@ -1,7 +1,7 @@
 import {ContainerTypes, ValidatedRequestSchema} from "express-joi-validation";
 import * as Joi from "@hapi/joi";
 
-export interface CreateNodeGeneralInfoRequestSchema extends ValidatedRequestSchema {
+export interface CreateGeneralMinerInfoRequestSchema extends ValidatedRequestSchema {
     [ContainerTypes.Body]: {
         version: string;
         sectorSize: string;
@@ -14,7 +14,7 @@ export interface CreateNodeGeneralInfoRequestSchema extends ValidatedRequestSche
     };
 }
 
-export const CreateNodeGeneralInfoValidationSchema = Joi.object({
+export const CreateGeneralMinerInfoValidationSchema = Joi.object({
     version: Joi.string().required(),
     sectorSize: Joi.string().regex(/^\d+$/).required(),
     minerPower: Joi.string().regex(/^\d+$/).required(),

@@ -13,8 +13,8 @@ import {CreateNodeUptimeValidationSchema} from "../Controller/Api/NodeUptimeCont
 import {UserController} from "../Controller/Api/UserController";
 import {UserValidationSchema} from "../Controller/Api/UserControllerValidation";
 
-import {NodeGeneralInfoController} from "../Controller/Api/NodeGeneralInfoController";
-import {CreateNodeGeneralInfoValidationSchema} from "../Controller/Api/NodeGeneralInfoControllerValidation";
+import {GeneralMinerInfoController} from "../Controller/Api/GeneralMinerInfoController";
+import {CreateGeneralMinerInfoValidationSchema} from "../Controller/Api/GeneralMinerInfoControllerValidation";
 
 import {MiningRewardsController} from "../Controller/Api/MiningRewardsController";
 import {CreateMiningRewardsValidationSchema} from "../Controller/Api/MiningRewardsControllerValidation";
@@ -34,7 +34,7 @@ export function createApiRoutes(
     nodeDiskInformationController: NodeDiskInformationController,
     nodeUptimeController: NodeUptimeController,
     userController: UserController,
-    nodeGeneralInfoController: NodeGeneralInfoController,
+    generalMinerInfoController: GeneralMinerInfoController,
     miningRewardsController: MiningRewardsController,
     nodeBalanceController: NodeBalanceController,
     nodePastDealsController: NodePastDealsController
@@ -84,13 +84,13 @@ export function createApiRoutes(
 
     router.put(
         "/user/node/generalminerinfo",
-        [validator.body(CreateNodeGeneralInfoValidationSchema), passNodeData, AuthorizeUser],
-        nodeGeneralInfoController.updateOrCreateNodeGeneralInfo.bind(nodeGeneralInfoController));
+        [validator.body(CreateGeneralMinerInfoValidationSchema), passNodeData, AuthorizeUser],
+        generalMinerInfoController.updateOrCreateGeneralMinerInfo.bind(generalMinerInfoController));
 
     router.get(
         "/user/node/generalminerinfo/:nodeId",
         [passNodeData, AuthorizeUser],
-        nodeGeneralInfoController.fetchNodeGeneralInfo.bind(nodeGeneralInfoController));
+        generalMinerInfoController.fetchGeneralMinerInfo.bind(generalMinerInfoController));
 
     router.post(
         "/user/node/miningrewards",

@@ -1,15 +1,15 @@
 import sinon from "sinon";
 import {expect} from "chai";
 import {Request, Response} from "express";
-import {NodeGeneralInfoService} from "../../../src/Services/NodeGeneralInfoService";
-import {NodeGeneralInfoController} from "../../../src/Controller/Api/NodeGeneralInfoController";
+import {GeneralMinerInfoService} from "../../../src/Services/GeneralMinerInfoService";
+import {GeneralMinerInfoController} from "../../../src/Controller/Api/GeneralMinerInfoController";
 import logger from "../../../src/Services/Logger";
 
-describe("NodeGeneralInfoController", function () {
+describe("GeneralMinerInfoController", function () {
     describe('PUT /user/node/generalminerinfo', () => {
-        const nodeGeneralInfoStub = sinon.createStubInstance(NodeGeneralInfoService);
+        const generalMinerInfoStub = sinon.createStubInstance(GeneralMinerInfoService);
         // @ts-ignore
-        nodeGeneralInfoStub.updateOrCreateNodeGeneralInfo.resolves({
+        generalMinerInfoStub.updateOrCreateGeneralMinerInfo.resolves({
             version: '1.0.1',
             sectorSize: 100,
             minerPower: 150,
@@ -17,10 +17,10 @@ describe("NodeGeneralInfoController", function () {
             nodeId: 100
         });
 
-        it('should add new node general info to the database', async function () {
+        it('should add new general miner info to the database', async function () {
             try {
-                const nodeGeneralInfoController = new NodeGeneralInfoController(
-                    nodeGeneralInfoStub as unknown as NodeGeneralInfoService);
+                const generalMinerInfoController = new GeneralMinerInfoController(
+                    generalMinerInfoStub as unknown as GeneralMinerInfoService);
                 const response = {} as Response;
                 response.locals = {node: {id: 100}};
                 response.json = sinon.spy((result) => expect(result.nodeId).to.be.equal(100)) as any;
@@ -30,7 +30,7 @@ describe("NodeGeneralInfoController", function () {
                     return response;
                 }) as any;
 
-                await nodeGeneralInfoController.updateOrCreateNodeGeneralInfo({
+                await generalMinerInfoController.updateOrCreateGeneralMinerInfo({
                     body: {
                         version: '1.0.1',
                         sectorSize: 100,
@@ -45,9 +45,9 @@ describe("NodeGeneralInfoController", function () {
         });
     });
     describe('GET /user/node/generalminerinfo/:nodeId', () => {
-        const nodeGeneralInfoStub = sinon.createStubInstance(NodeGeneralInfoService);
+        const generalMinerInfoStub = sinon.createStubInstance(GeneralMinerInfoService);
         // @ts-ignore
-        nodeGeneralInfoStub.fetchNodeGeneralInfo.resolves({
+        generalMinerInfoStub.fetchGeneralMinerInfo.resolves({
             version: '1.0.1',
             sectorSize: 100,
             minerPower: 150,
@@ -55,10 +55,10 @@ describe("NodeGeneralInfoController", function () {
             nodeId: 100
         });
 
-        it('should return node general info', async function () {
+        it('should return general miner info', async function () {
             try {
-                const nodeGeneralInfoController = new NodeGeneralInfoController(
-                    nodeGeneralInfoStub as unknown as NodeGeneralInfoService);
+                const generalMinerInfoController = new GeneralMinerInfoController(
+                    generalMinerInfoStub as unknown as GeneralMinerInfoService);
                 const response = {} as Response;
                 response.locals = {node: {id: 100}};
                 response.json = sinon.spy((result) => expect(result.nodeId).to.be.equal(100)) as any;
@@ -67,7 +67,7 @@ describe("NodeGeneralInfoController", function () {
                     return response;
                 }) as any;
 
-                await nodeGeneralInfoController.fetchNodeGeneralInfo({
+                await generalMinerInfoController.fetchGeneralMinerInfo({
                     params: {
                         nodeId: 100
                     }
