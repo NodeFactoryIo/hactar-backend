@@ -2,36 +2,40 @@ var sequelize = require("sequelize");
 
 module.exports = {
     up: function (queryInterface) {
-        return queryInterface.createTable('UptimeNotifications', {
+        return queryInterface.createTable('NodeStatus', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: sequelize.INTEGER
             },
-            nodeUptimeId: {
+            isUp: {
+                type: sequelize.BOOLEAN,
+                allowNull: false
+            },
+            isReported: {
+                type: sequelize.BOOLEAN,
+                allowNull: false
+            },
+            nodeId: {
                 type: sequelize.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'NodeUptime',
+                    model: 'Nodes',
                     key: 'id'
                 },
-                unique: true
-            },
-            notificationSent: {
-                type: sequelize.BOOLEAN
             },
             createdAt: {
                 allowNull: false,
-                type: sequelize.DATE
+                type: sequelize.DataTypes.DATE
             },
             updatedAt: {
                 allowNull: false,
-                type: sequelize.DATE
+                type: sequelize.DataTypes.DATE
             }
-        })
+        });
     },
     down: function (queryInterface) {
-        return queryInterface.dropTable('UptimeNotifications');
+        return queryInterface.dropTable('NodeStatus');
     }
 };

@@ -22,9 +22,6 @@ export class UptimeNotificationService {
                     user,
                     {NODE: node.address + node.url}
                 );
-                if (emailSent) {
-                    await this.createUptimeNotifications(1);//uptime.id
-                }
             }
         }
     }
