@@ -9,7 +9,7 @@ export class User extends Model {
     public static initialize(sequelize: Sequelize) {
         this.init({
             email: {
-                type: DataTypes.STRING(),
+                type: DataTypes.STRING,
                 allowNull: false,
                 unique: true,
             },

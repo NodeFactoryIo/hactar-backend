@@ -26,11 +26,11 @@ export class Node extends Model {
                 allowNull: false,
             },
             name: {
-                type: DataTypes.STRING(),
+                type: DataTypes.STRING,
                 allowNull: true
             },
             description: {
-                type: DataTypes.STRING(),
+                type: DataTypes.STRING,
                 allowNull: true
             }
         } as ModelAttributes,

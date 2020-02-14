@@ -8,7 +8,7 @@ export class NodeBalance extends Model {
     public static initialize(sequelize: Sequelize) {
         this.init({
             balance: {
-                type: DataTypes.STRING(),
+                type: DataTypes.STRING,
                 allowNull: false,
             },
         } as ModelAttributes,

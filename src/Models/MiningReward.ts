@@ -10,11 +10,11 @@ export class MiningReward extends Model {
     public static initialize(sequelize: Sequelize) {
         this.init({
             cid: {
-                type: DataTypes.STRING(),
+                type: DataTypes.STRING,
                 allowNull: false,
             },
             rewardAmount: {
-                type: DataTypes.STRING(),
+                type: DataTypes.STRING,
                 allowNull: false,
             },
         } as ModelAttributes,

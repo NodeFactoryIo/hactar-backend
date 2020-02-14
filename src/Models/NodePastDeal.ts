@@ -14,7 +14,7 @@ export class NodePastDeal extends Model {
     public static initialize(sequelize: Sequelize) {
         this.init({
             cid: {
-                type: DataTypes.STRING(),
+                type: DataTypes.STRING,
                 allowNull: false,
             },
             state: {
@@ -22,15 +22,15 @@ export class NodePastDeal extends Model {
                 allowNull: false,
             },
             size: {
-                type: DataTypes.STRING(),
+                type: DataTypes.STRING,
                 allowNull: false,
             },
             provider: {
-                type: DataTypes.STRING(),
+                type: DataTypes.STRING,
                 allowNull: false,
             },
             price: {
-                type: DataTypes.STRING(),
+                type: DataTypes.STRING,
                 allowNull: false,
             },
             duration: {
