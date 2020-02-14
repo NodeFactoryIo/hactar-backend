@@ -17,7 +17,7 @@ describe("NodeController", function () {
                 const nodeController = new NodeController(nodeServiceStub as unknown as NodeService);
                 const response = {} as Response;
                 response.locals = {userId: 100}
-                response.json = sinon.spy((result) => expect(result.token).to.be.equal("some token")) as any;
+                response.json = sinon.spy((result) => expect(result.url).to.be.equal("some url")) as any;
 
                 response.status = sinon.spy((result) => {
                     expect(result).to.equal(201)
@@ -26,9 +26,9 @@ describe("NodeController", function () {
 
                 await nodeController.createNode({
                     body: {
-                        url: 'some url',
+                        token: 'some token',
                         nodeInfo: {
-                            token: 'some token',
+                            url: 'some url',
                             address: 'some address'
                         }
                     }
