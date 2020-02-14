@@ -28,7 +28,8 @@ module.exports = {
                     model: 'Nodes',
                     key: 'id'
                 },
-                unique: true
+                unique: true,
+                onDelete: 'CASCADE'
             },
             createdAt: {
                 allowNull: false,
