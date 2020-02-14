@@ -26,6 +26,7 @@ import {NodeBalanceService} from "./Services/NodeBalanceService";
 import {UserService} from "./Services/UserService";
 import {validateJoiError} from "./Middleware/ValidationErrorHandling";
 import {SchedulingService} from "./Scheduler/SchedulingService";
+import {NodeUptimeNotificationService} from "./Services/NodeUptimeNotificationService";
 
 export class App implements Service {
 
@@ -53,6 +54,7 @@ export class App implements Service {
     private nodeBalanceController: NodeBalanceController;
     private nodeBalanceService: NodeBalanceService;
 
+    private nodeUptimeNotificationService: NodeUptimeNotificationService;
     private schedulingService: SchedulingService;
 
     constructor() {
@@ -70,6 +72,7 @@ export class App implements Service {
         this.userService = new UserService();
         this.nodeGeneralInfoService = new NodeGeneralInfoService();
         this.nodeBalanceService = new NodeBalanceService();
+        this.nodeUptimeNotificationService = new NodeUptimeNotificationService();
         // initialize scheduling service
         this.schedulingService = new SchedulingService();
     }
@@ -95,13 +98,27 @@ export class App implements Service {
     }
 
     private initControllers(): void {
-        this.nodeController = new NodeController(this.nodeService);
-        this.nodeDiskInformationController = new NodeDiskInformationController(this.nodeDiskInformationService);
-        this.nodeUptimeController = new NodeUptimeController(this.nodeUptimeService);
-        this.miningRewardsController = new MiningRewardsController(this.miningRewardsService);
-        this.userController = new UserController(this.userService);
-        this.nodeGeneralInfoController = new NodeGeneralInfoController(this.nodeGeneralInfoService);
-        this.nodeBalanceController = new NodeBalanceController(this.nodeBalanceService);
+        this.nodeController = new NodeController(
+            this.nodeService
+        );
+        this.nodeDiskInformationController = new NodeDiskInformationController(
+            this.nodeDiskInformationService
+        );
+        this.nodeUptimeController = new NodeUptimeController(
+            this.nodeUptimeService, this.nodeUptimeNotificationService
+        );
+        this.miningRewardsController = new MiningRewardsController(
+            this.miningRewardsService
+        );
+        this.userController = new UserController(
+            this.userService
+        );
+        this.nodeGeneralInfoController = new NodeGeneralInfoController(
+            this.nodeGeneralInfoService
+        );
+        this.nodeBalanceController = new NodeBalanceController(
+            this.nodeBalanceService
+        );
     }
 
     private addInitialRoutes(): void {

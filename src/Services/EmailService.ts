@@ -1,9 +1,10 @@
 import config from "../Config/Config";
 import {User} from "../Models/User";
 import axios, {AxiosRequestConfig} from "axios"
+import logger from "./Logger";
 
 export class EmailService {
-    public async sendEmailNotification(user: User, params: any): Promise<boolean> {
+    public async sendEmailNotification(user: User, params: any): Promise<void> {
         const sendEmailRequest: AxiosRequestConfig = {
             data: {
                 to: [{
@@ -20,8 +21,14 @@ export class EmailService {
             },
             method: "POST"
         };
-        // send request
-        const response = await axios(sendEmailRequest);
-        return response.status >= 200 && response.status < 300
+        // send request (retry X times as defined in config)
+        for (let i = 0; i < config.sendinblue.retryCount; i++) {
+            const response = await axios(sendEmailRequest);
+            // finish if email sent
+            if(response.status >= 200 && response.status < 300) {
+                return;
+            }
+            logger.error(`Failed to send mail to: ${user.email}, try [${i+1}]`)
+        }
     }
 }

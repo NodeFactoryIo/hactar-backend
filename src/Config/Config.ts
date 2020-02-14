@@ -24,6 +24,7 @@ const config = Object.freeze({
         apiKey: process.env.EMAIL_API_KEY ,
         apiUrl: process.env.EMAIL_API_URL || "https://api.sendinblue.com/v3/smtp/email",
         templateId: process.env.EMAIL_TEMPLATE_ID || "2",
+        retryCount: process.env.EMAIL_RETRY_COUNT || 3
     },
     // cron like definition (every hour by default)
     uptimeNotificationsRecurrenceRule: process.env.UPTIME_NOTIF_RECURRENCE || "* 0 * * * *"

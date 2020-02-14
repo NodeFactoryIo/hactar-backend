@@ -13,7 +13,6 @@ export class SchedulingService {
     }
 
     public startScheduledTasks(): void {
-        this.uptimeTask.start();
         this.uptimeJob = scheduleJob(
             config.uptimeNotificationsRecurrenceRule,
             async () => await this.uptimeTask.start()
