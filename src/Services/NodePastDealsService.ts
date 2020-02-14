@@ -18,7 +18,7 @@ export class NodePastDealsService {
                     },
                     returning: true,
                 })
-            return await updatedPastDeal[1]; // returns the updated object, without updates count
+            return await updatedPastDeal[1][0]; // returns the updated object, without updates count
         }
         return await NodePastDeal.create({cid, state, size, provider, price, duration, nodeId});
     }

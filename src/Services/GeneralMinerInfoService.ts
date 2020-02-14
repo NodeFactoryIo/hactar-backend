@@ -13,7 +13,7 @@ export class GeneralMinerInfoService {
                     },
                     returning: true,
                 })
-            return await updatedNode[1]; // returns the updated object, without updates count
+            return await updatedNode[1][0]; // returns the updated object, without updates count
         }
         return await GeneralMinerInfo.create({version, sectorSize, minerPower, totalPower, nodeId});
     }
