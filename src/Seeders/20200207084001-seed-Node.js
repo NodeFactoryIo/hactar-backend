@@ -31,6 +31,38 @@ module.exports = {
             userId: 2,
             createdAt: new Date('2019-06-27T20:17:45').toLocaleString(),
             updatedAt: new Date('2019-06-27T20:17:45').toLocaleString()
+        },
+        {
+            url: 'https://mynode.com/6523',
+            token: '8yPFLa5E8Ni8WNiVAgRFPhvbA9JRqkI3',
+            address: '3clos84',
+            userId: 3,
+            createdAt: new Date('2019-01-04T12:51:35').toLocaleString(),
+            updatedAt: new Date('2019-01-04T12:51:35').toLocaleString()
+        },
+        {
+            url: 'https://mynode.com/76452',
+            token: 'EzRsr3eKHRUR2137rCIhSg7LUCAb5xoh',
+            address: 's007f65',
+            userId: 3,
+            createdAt: new Date('2019-04-27T20:17:45').toLocaleString(),
+            updatedAt: new Date('2019-04-27T20:17:45').toLocaleString()
+        },
+        {
+            url: 'https://mynode.com/9874321',
+            token: '0uPFLa5E8Ni8WNiVAgRFPhvbAhJRqkI3',
+            address: '2tros84',
+            userId: 4,
+            createdAt: new Date('2019-05-04T12:51:35').toLocaleString(),
+            updatedAt: new Date('2019-05-04T12:51:35').toLocaleString()
+        },
+        {
+            url: 'https://mynode.com/8722',
+            token: 'KkRsr3eKHROR2137rCIhSg7LUCAb5voh',
+            address: 'v008f65',
+            userId: 4,
+            createdAt: new Date('2019-06-27T20:17:45').toLocaleString(),
+            updatedAt: new Date('2019-06-27T20:17:45').toLocaleString()
         }], {});
     },
 

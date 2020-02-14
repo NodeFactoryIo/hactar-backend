@@ -17,6 +17,20 @@ module.exports = {
             hash_password: bcrypt.hashSync('secret password', 10),
             createdAt: new Date('2019-07-10T13:35:56').toLocaleString(),
             updatedAt: new Date('2019-07-10T13:35:56').toLocaleString()
+        },
+        {
+            email: 'steve@test.com',
+            // eslint-disable-next-line
+            hash_password: bcrypt.hashSync('secret password', 10),
+            createdAt: new Date('2019-07-10T13:35:57').toLocaleString(),
+            updatedAt: new Date('2019-07-10T13:35:57').toLocaleString()
+        },
+        {
+            email: 'donna@test.com',
+            // eslint-disable-next-line
+            hash_password: bcrypt.hashSync('secret password', 10),
+            createdAt: new Date('2019-07-10T13:35:58').toLocaleString(),
+            updatedAt: new Date('2019-07-10T13:35:58').toLocaleString()
         }], {});
     },
 
