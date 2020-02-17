@@ -4,6 +4,7 @@ import logger from "./Logger";
 import {UserService} from "./UserService";
 import {NodeService} from "./NodeService";
 import {NodeStatusService} from "./NodeStatusService";
+import config from "../Config/Config";
 
 
 export class NodeUptimeNotificationService {
@@ -68,7 +69,8 @@ export class NodeUptimeNotificationService {
                 logger.info(`Sending mail to:${user.email} for node:${node.id}::${node.address}`);
                 await this.emailService.sendEmailNotification(
                     user,
-                    {NODE: node.address + node.url}
+                    {NODE: node.address + node.url},
+                    config.sendinblue.nodeUptimeNotifEmailTemplateId
                 );
                 return;
             }

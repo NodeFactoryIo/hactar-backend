@@ -4,13 +4,13 @@ import axios, {AxiosRequestConfig} from "axios"
 import logger from "./Logger";
 
 export class EmailService {
-    public async sendEmailNotification(user: User, params: any): Promise<void> {
+    public async sendEmailNotification(user: User, params: any, templateId: string): Promise<void> {
         const sendEmailRequest: AxiosRequestConfig = {
             data: {
                 to: [{
                     email: user.email,
                 }],
-                templateId: config.sendinblue.templateId,
+                nodeUptimeNotifEmailTemplateId: templateId,
                 params: params
             },
             url: config.sendinblue.apiUrl,
