@@ -23,10 +23,11 @@ export class NodeBalanceService {
             order: [['updatedAt', 'ASC']]
         });
         if (balances.length > 0) {
-            const earliestRecord = new BigNumber(balances[0]['balance']);
-            const latestRecord = new BigNumber(balances[balances.length - 1]['balance']);
+            const earliestRecord = new BigNumber(balances[0].balance);
+            const latestRecord = new BigNumber(balances[balances.length - 1].balance);
             return {
                 currentBalance: latestRecord,
+                updatedAt: balances[balances.length - 1].updatedAt,
                 balanceChangePerc: (latestRecord.minus(earliestRecord))
                     .div(earliestRecord).multipliedBy(100).toFixed(2) + '%'
             }
