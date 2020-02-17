@@ -21,7 +21,7 @@ const config = Object.freeze({
     jwtExpiry: process.env.JWT_EXPIRY || '24h',
     rewardAmount: process.env.REWARD_AMOUNT || 5,
     sendinblue: {
-        apiKey: process.env.EMAIL_API_KEY ,
+        apiKey: process.env.EMAIL_API_KEY,
         apiUrl: process.env.EMAIL_API_URL || "https://api.sendinblue.com/v3/smtp/email",
         nodeUptimeNotifEmailTemplateId: process.env.EMAIL_UPTIME_NOTIF_TEMPLATE_ID || "2",
         retryCount: process.env.EMAIL_RETRY_COUNT || 3

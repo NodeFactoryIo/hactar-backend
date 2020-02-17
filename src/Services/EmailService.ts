@@ -25,10 +25,10 @@ export class EmailService {
         for (let i = 0; i < config.sendinblue.retryCount; i++) {
             const response = await axios(sendEmailRequest);
             // finish if email sent
-            if(response.status >= 200 && response.status < 300) {
+            if (response.status >= 200 && response.status < 300) {
                 return;
             }
-            logger.error(`Failed to send mail to: ${user.email}, try [${i+1}]`)
+            logger.error(`Failed to send mail to: ${user.email}, try [${i + 1}]`)
         }
     }
 }

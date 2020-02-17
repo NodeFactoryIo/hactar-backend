@@ -6,7 +6,6 @@ import {NodeService} from "./NodeService";
 import {NodeStatusService} from "./NodeStatusService";
 import config from "../Config/Config";
 
-
 export class NodeUptimeNotificationService {
 
     private emailService: EmailService;
@@ -39,8 +38,7 @@ export class NodeUptimeNotificationService {
             }
             // update node status if something changed
             if (currentNodeStatus.isReported != newNodeStatus.isReported
-                || currentNodeStatus.isUp != newNodeStatus.isUp)
-            {
+                || currentNodeStatus.isUp != newNodeStatus.isUp) {
                 await this.nodeStatusService.updateNodeStatus(
                     nodeUptime.nodeId,
                     nodeUptime.isWorking,

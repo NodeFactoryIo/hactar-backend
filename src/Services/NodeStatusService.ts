@@ -9,7 +9,7 @@ export class NodeStatusService {
         });
     }
 
-    public async getNodeStatusByNodeId(nodeId: number): Promise<NodeStatus|null> {
+    public async getNodeStatusByNodeId(nodeId: number): Promise<NodeStatus | null> {
         return await NodeStatus.findOne({
             raw: true,
             where: {

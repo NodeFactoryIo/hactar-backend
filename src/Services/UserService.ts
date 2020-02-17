@@ -27,7 +27,7 @@ export class UserService {
         return await User.create({email, 'hash_password': hashPassword});
     }
 
-    public async getUserByPk(userId: number): Promise<User|null> {
+    public async getUserByPk(userId: number): Promise<User | null> {
         return await User.findByPk(userId);
     }
 
