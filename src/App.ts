@@ -13,6 +13,7 @@ import {NodeUptimeController} from "./Controller/Api/NodeUptimeController";
 import {NodeGeneralInfoController} from "./Controller/Api/NodeGeneralInfoController";
 import {MiningRewardsController} from "./Controller/Api/MiningRewardsController";
 import {NodeBalanceController} from "./Controller/Api/NodeBalanceController";
+import {NodePastDealsController} from "./Controller/Api/NodePastDealsController";
 import {UserController} from "./Controller/Api/UserController";
 import {createApiRoutes} from "./Routes/Api";
 import {Service} from "./Services/interface";
@@ -23,6 +24,7 @@ import {NodeUptimeService} from "./Services/NodeUptimeService";
 import {NodeGeneralInfoService} from "./Services/NodeGeneralInfoService";
 import {MiningRewardsService} from "./Services/MiningRewardsService";
 import {NodeBalanceService} from "./Services/NodeBalanceService";
+import {NodePastDealsService} from "./Services/NodePastDealsService";
 import {UserService} from "./Services/UserService";
 import {validateJoiError} from "./Middleware/ValidationErrorHandling";
 import {SchedulingService, SchedulingTask} from "./Scheduler/SchedulingService";
@@ -57,6 +59,9 @@ export class App implements Service {
     private nodeBalanceController: NodeBalanceController;
     private nodeBalanceService: NodeBalanceService;
 
+    private nodePastDealsController: NodePastDealsController;
+    private nodePastDealsService: NodePastDealsService;
+
     private nodeStatusService: NodeStatusService;
     private nodeUptimeNotificationService: NodeUptimeNotificationService;
     private emailService: EmailService;
@@ -77,6 +82,7 @@ export class App implements Service {
         this.userService = new UserService();
         this.nodeGeneralInfoService = new NodeGeneralInfoService();
         this.nodeBalanceService = new NodeBalanceService();
+        this.nodePastDealsService = new NodePastDealsService();
         this.nodeStatusService = new NodeStatusService();
         this.emailService = new EmailService();
         this.nodeUptimeNotificationService = new NodeUptimeNotificationService(
@@ -136,6 +142,9 @@ export class App implements Service {
         this.nodeBalanceController = new NodeBalanceController(
             this.nodeBalanceService
         );
+        this.nodePastDealsController = new NodePastDealsController(
+            this.nodePastDealsService
+        );
     }
 
     private addInitialRoutes(): void {
@@ -163,7 +172,8 @@ export class App implements Service {
             this.userController,
             this.nodeGeneralInfoController,
             this.miningRewardsController,
-            this.nodeBalanceController
+            this.nodeBalanceController,
+            this.nodePastDealsController
         ));
 
         this.express.use(validateJoiError);
