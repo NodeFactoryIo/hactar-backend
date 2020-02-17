@@ -121,30 +121,19 @@ export class App implements Service {
     }
 
     private initControllers(): void {
-        this.nodeController = new NodeController(
-            this.nodeService
-        );
+        this.userController = new UserController(this.userService);
+        this.nodeController = new NodeController(this.nodeService);
+        this.miningRewardsController = new MiningRewardsController(this.miningRewardsService);
+        this.nodeGeneralInfoController = new NodeGeneralInfoController(this.nodeGeneralInfoService);
+        this.nodeBalanceController = new NodeBalanceController(this.nodeBalanceService);
+        this.nodePastDealsController = new NodePastDealsController(this.nodePastDealsService);
         this.nodeDiskInformationController = new NodeDiskInformationController(
             this.nodeDiskInformationService
         );
         this.nodeUptimeController = new NodeUptimeController(
             this.nodeUptimeService, this.nodeUptimeNotificationService
         );
-        this.miningRewardsController = new MiningRewardsController(
-            this.miningRewardsService
-        );
-        this.userController = new UserController(
-            this.userService
-        );
-        this.nodeGeneralInfoController = new NodeGeneralInfoController(
-            this.nodeGeneralInfoService
-        );
-        this.nodeBalanceController = new NodeBalanceController(
-            this.nodeBalanceService
-        );
-        this.nodePastDealsController = new NodePastDealsController(
-            this.nodePastDealsService
-        );
+
     }
 
     private addInitialRoutes(): void {

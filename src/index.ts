@@ -6,7 +6,6 @@ import logger from "./Services/Logger";
 const app = new App();
 
 database.init().then(() => {
-    logger.warn("App started");
     app.start();
 });
 
