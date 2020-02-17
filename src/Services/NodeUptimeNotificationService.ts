@@ -1,22 +1,33 @@
 import {NodeUptime} from "../Models/NodeUptime";
 import {EmailService} from "./EmailService";
-import {Node} from "../Models/Node";
-import {User} from "../Models/User";
-import {NodeStatus} from "../Models/NodeStatus";
 import logger from "./Logger";
+import {UserService} from "./UserService";
+import {NodeService} from "./NodeService";
+import {NodeStatusService} from "./NodeStatusService";
 
 
 export class NodeUptimeNotificationService {
 
     private emailService: EmailService;
+    private userService: UserService;
+    private nodeService: NodeService;
+    private nodeStatusService: NodeStatusService;
 
-    constructor() {
-        this.emailService = new EmailService();
+    constructor(
+        emailService: EmailService,
+        userService: UserService,
+        nodeService: NodeService,
+        nodeStatusService: NodeStatusService
+    ) {
+        this.emailService = emailService;
+        this.userService = userService;
+        this.nodeService = nodeService;
+        this.nodeStatusService = nodeStatusService
     }
 
     public async processNodeUptime(nodeUptime: NodeUptime): Promise<void> {
         // check if node status already created for node
-        const currentNodeStatus = await this.getNodeStatusInfo(nodeUptime.nodeId);
+        const currentNodeStatus = await this.nodeStatusService.getNodeStatusByNodeId(nodeUptime.nodeId);
         const newNodeStatus = {nodeId: nodeUptime.nodeId, isUp: nodeUptime.isWorking, isReported: true};
         if (currentNodeStatus != null) {
             if (!nodeUptime.isWorking) {
@@ -29,24 +40,19 @@ export class NodeUptimeNotificationService {
             if (currentNodeStatus.isReported != newNodeStatus.isReported
                 || currentNodeStatus.isUp != newNodeStatus.isUp)
             {
-                await NodeStatus.update({
-                    nodeId: nodeUptime.nodeId,
-                    isUp: nodeUptime.isWorking,
-                    isReported: true
-                }, {
-                    where: {
-                        nodeId: nodeUptime.nodeId,
-                    },
-                    returning: true
-                });
+                await this.nodeStatusService.updateNodeStatus(
+                    nodeUptime.nodeId,
+                    nodeUptime.isWorking,
+                    true
+                );
             }
         } else {
             // create new node status entry
-            await NodeStatus.create({
-                nodeId: nodeUptime.nodeId,
-                isUp: nodeUptime.isWorking,
-                isReported: true
-            });
+            await this.nodeStatusService.storeNodeStatus(
+                nodeUptime.nodeId,
+                nodeUptime.isWorking,
+                true
+            );
             // send notification if node is down
             if (!newNodeStatus.isUp) {
                 await this.sendUptimeNotification(nodeUptime);
@@ -55,9 +61,9 @@ export class NodeUptimeNotificationService {
     }
 
     private async sendUptimeNotification(uptime: NodeUptime): Promise<void> {
-        const node = await Node.findByPk(uptime.nodeId);
+        const node = await this.nodeService.getNodeByPk(uptime.nodeId);
         if (node != null) {
-            const user = await User.findByPk(node.userId);
+            const user = await this.userService.getUserByPk(node.userId);
             if (user != null) {
                 logger.info(`Sending mail to:${user.email} for node:${node.id}::${node.address}`);
                 await this.emailService.sendEmailNotification(
@@ -69,14 +75,5 @@ export class NodeUptimeNotificationService {
             logger.error(`Failed to find user:${node.userId} for uptime entry:${uptime.id}`);
         }
         logger.error(`Failed to find node:${uptime.nodeId} for uptime entry:${uptime.id}`);
-    }
-
-    private async getNodeStatusInfo(nodeId: number): Promise<NodeStatus|null> {
-        return NodeStatus.findOne({
-            raw: true,
-            where: {
-                nodeId
-            }
-        })
     }
 }

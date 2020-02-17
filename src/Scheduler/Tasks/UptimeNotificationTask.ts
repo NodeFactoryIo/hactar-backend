@@ -9,8 +9,8 @@ export class UptimeNotificationTask implements Task {
 
     private uptimeNotificationService: NodeUptimeNotificationService;
 
-    constructor() {
-        this.uptimeNotificationService = new NodeUptimeNotificationService();
+    constructor(uptimeNotificationService: NodeUptimeNotificationService) {
+        this.uptimeNotificationService = uptimeNotificationService;
     }
 
     async start(): Promise<void> {

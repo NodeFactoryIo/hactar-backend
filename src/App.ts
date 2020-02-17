@@ -25,8 +25,11 @@ import {MiningRewardsService} from "./Services/MiningRewardsService";
 import {NodeBalanceService} from "./Services/NodeBalanceService";
 import {UserService} from "./Services/UserService";
 import {validateJoiError} from "./Middleware/ValidationErrorHandling";
-import {SchedulingService} from "./Scheduler/SchedulingService";
+import {SchedulingService, SchedulingTask} from "./Scheduler/SchedulingService";
 import {NodeUptimeNotificationService} from "./Services/NodeUptimeNotificationService";
+import {EmailService} from "./Services/EmailService";
+import {NodeStatusService} from "./Services/NodeStatusService";
+import {UptimeNotificationTask} from "./Scheduler/Tasks/UptimeNotificationTask";
 
 export class App implements Service {
 
@@ -54,7 +57,9 @@ export class App implements Service {
     private nodeBalanceController: NodeBalanceController;
     private nodeBalanceService: NodeBalanceService;
 
+    private nodeStatusService: NodeStatusService;
     private nodeUptimeNotificationService: NodeUptimeNotificationService;
+    private emailService: EmailService;
     private schedulingService: SchedulingService;
 
     constructor() {
@@ -72,9 +77,21 @@ export class App implements Service {
         this.userService = new UserService();
         this.nodeGeneralInfoService = new NodeGeneralInfoService();
         this.nodeBalanceService = new NodeBalanceService();
-        this.nodeUptimeNotificationService = new NodeUptimeNotificationService();
-        // initialize scheduling service
-        this.schedulingService = new SchedulingService();
+        this.nodeStatusService = new NodeStatusService();
+        this.emailService = new EmailService();
+        this.nodeUptimeNotificationService = new NodeUptimeNotificationService(
+            this.emailService,
+            this.userService,
+            this.nodeService,
+            this.nodeStatusService
+        );
+        // define scheduled tasks
+        this.schedulingService = new SchedulingService(
+            new SchedulingTask(
+                new UptimeNotificationTask(this.nodeUptimeNotificationService),
+                config.uptimeNotificationsRecurrenceRule
+            )
+        );
     }
 
     public async start(): Promise<void> {
@@ -83,7 +100,7 @@ export class App implements Service {
             logger.info(`Server is listening on ${config.port}`);
             this.initControllers();
             this.addApiRoutes();
-            this.schedulingService.startScheduledTasks();
+            await this.schedulingService.startScheduledTasks();
         } catch (e) {
             logger.error(`App failed to start. Reason: ${e.message}`);
         }

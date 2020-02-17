@@ -1,25 +1,34 @@
-import {Job, scheduleJob} from "node-schedule"
-import config from "../Config/Config";
-import {UptimeNotificationTask} from "./Tasks/UptimeNotificationTask";
+import {Job, RecurrenceRule, RecurrenceSpecDateRange, RecurrenceSpecObjLit, scheduleJob} from "node-schedule"
+import {Task} from "./Tasks/interface";
+
+export class SchedulingTask {
+    public task: Task;
+    public rule: RecurrenceRule | RecurrenceSpecDateRange | RecurrenceSpecObjLit | Date | string | number;
+
+    // eslint-disable-next-line max-len
+    constructor(task: Task, rule: RecurrenceRule | RecurrenceSpecDateRange | RecurrenceSpecObjLit | Date | string | number) {
+        this.task = task;
+        this.rule = rule;
+    }
+}
 
 export class SchedulingService {
 
-    // email uptime notification task
-    private uptimeTask: UptimeNotificationTask;
-    private uptimeJob: Job;
+    private tasks: SchedulingTask[];
+    private jobs: Job[];
 
-    constructor() {
-        this.uptimeTask = new UptimeNotificationTask();
+    constructor(...tasks: SchedulingTask[]) {
+        this.tasks = tasks;
     }
 
-    public startScheduledTasks(): void {
-        this.uptimeJob = scheduleJob(
-            config.uptimeNotificationsRecurrenceRule,
-            async () => await this.uptimeTask.start()
-        );
+    public async startScheduledTasks(): Promise<void> {
+        this.jobs = this.tasks.map(t => scheduleJob(
+            t.rule,
+            async () => await t.task.start()
+        ));
     }
 
     public stopScheduledTasks(): void {
-        this.uptimeJob.cancel(false);
+        this.jobs.forEach(j => j.cancel())
     }
 }
