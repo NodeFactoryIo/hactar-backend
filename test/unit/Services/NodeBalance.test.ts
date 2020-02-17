@@ -23,12 +23,23 @@ describe("NodeBalanceService", function () {
         nodeBalanceFindStub.restore();
     });
 
-    it("should return current node balance user", async () => {
-        nodeBalanceFindStub.returns({
-            "currentBalance": "78974914234696",
-            "updatedAt": "2020-02-17T12:02:13.000Z",
-            "balanceChangePerc": "-99.07%"
-        });
+    it("should return current node balance", async () => {
+        nodeBalanceFindStub.returns([
+            {
+                "id": 3,
+                "balance": "8537124947501041",
+                "createdAt": "2020-01-13T06:41:48.000Z",
+                "updatedAt": "2020-02-17T06:41:48.000Z",
+                "nodeId": 1
+            },
+            {
+                "id": 2,
+                "balance": "78974914234696",
+                "createdAt": "2020-02-13T12:02:13.000Z",
+                "updatedAt": "2020-02-17T12:02:13.000Z",
+                "nodeId": 1
+            }
+        ]);
         try {
             const balances = await nodeBalanceService.fetchNodeBalance(1);
 
