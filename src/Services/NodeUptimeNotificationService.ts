@@ -5,6 +5,7 @@ import {UserService} from "./UserService";
 import {NodeService} from "./NodeService";
 import {NodeStatusService} from "./NodeStatusService";
 import config from "../Config/Config";
+import {NodeStatus} from "../Models/NodeStatus";
 
 export class NodeUptimeNotificationService {
 
@@ -28,34 +29,51 @@ export class NodeUptimeNotificationService {
     public async processNodeUptime(nodeUptime: NodeUptime): Promise<void> {
         // check if node status already created for node
         const currentNodeStatus = await this.nodeStatusService.getNodeStatusByNodeId(nodeUptime.nodeId);
-        const newNodeStatus = {nodeId: nodeUptime.nodeId, isUp: nodeUptime.isWorking, isReported: true};
+        const newNodeStatus = {nodeId: nodeUptime.nodeId, isUp: nodeUptime.isWorking, isReported: true} as NodeStatus;
         if (currentNodeStatus != null) {
-            if (!nodeUptime.isWorking) {
-                // send email notification if current node was up until now or was down but report wasn't sent
-                if (currentNodeStatus.isUp || (!currentNodeStatus.isUp && !currentNodeStatus.isReported)) {
-                    await this.sendUptimeNotification(nodeUptime)
-                }
-            }
-            // update node status if something changed
-            if (currentNodeStatus.isReported != newNodeStatus.isReported
-                || currentNodeStatus.isUp != newNodeStatus.isUp) {
-                await this.nodeStatusService.updateNodeStatus(
-                    nodeUptime.nodeId,
-                    nodeUptime.isWorking,
-                    true
-                );
-            }
+            this.updateExistingNodeStatus(nodeUptime, newNodeStatus, currentNodeStatus);
         } else {
-            // create new node status entry
-            await this.nodeStatusService.storeNodeStatus(
+            this.createNewNodeStatus(nodeUptime, newNodeStatus);
+        }
+    }
+
+    private async createNewNodeStatus(
+        nodeUptime: NodeUptime, newNodeStatus: NodeStatus
+    ): Promise<void> {
+        // create new node status entry
+        await this.nodeStatusService.storeNodeStatus(
+            nodeUptime.nodeId,
+            nodeUptime.isWorking,
+            true
+        );
+        // eslint-disable-next-line max-len
+        logger.info(`Created new node status [isUp: ${nodeUptime.isWorking}, isReported: true] for node ${nodeUptime.nodeId}.`);
+        // send notification if node is down
+        if (!newNodeStatus.isUp) {
+            await this.sendUptimeNotification(nodeUptime);
+        }
+    }
+
+    private async updateExistingNodeStatus(
+        nodeUptime: NodeUptime, newNodeStatus: NodeStatus, oldNodeStatus: NodeStatus
+    ): Promise<void> {
+        // if reported node is down
+        if (!nodeUptime.isWorking) {
+            // send email notification if current node was up until now or was down but report wasn't sent
+            if (oldNodeStatus.isUp || (!oldNodeStatus.isUp && !oldNodeStatus.isReported)) {
+                await this.sendUptimeNotification(nodeUptime)
+            }
+        }
+        // update node status if something changed
+        if (oldNodeStatus.isReported != newNodeStatus.isReported
+            || oldNodeStatus.isUp != newNodeStatus.isUp) {
+            await this.nodeStatusService.updateNodeStatus(
                 nodeUptime.nodeId,
                 nodeUptime.isWorking,
                 true
             );
-            // send notification if node is down
-            if (!newNodeStatus.isUp) {
-                await this.sendUptimeNotification(nodeUptime);
-            }
+            // eslint-disable-next-line max-len
+            logger.info(`Updated node status [isUp: ${nodeUptime.isWorking}, isReported: true] for node ${nodeUptime.nodeId}.`)
         }
     }
 
@@ -65,11 +83,13 @@ export class NodeUptimeNotificationService {
             const user = await this.userService.getUserByPk(node.userId);
             if (user != null) {
                 logger.info(`Sending mail to:${user.email} for node:${node.id}::${node.address}`);
-                await this.emailService.sendEmailNotification(
-                    user,
-                    {NODE: node.address + node.url},
-                    config.sendinblue.nodeUptimeNotifEmailTemplateId
-                );
+                if (config.env != "dev") {
+                    await this.emailService.sendEmailNotification(
+                        user,
+                        {NODE: node.address + node.url},
+                        config.sendinblue.nodeUptimeNotifEmailTemplateId
+                    );
+                }
                 return;
             }
             logger.error(`Failed to find user:${node.userId} for uptime entry:${uptime.id}`);

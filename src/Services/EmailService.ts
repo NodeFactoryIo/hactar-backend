@@ -28,7 +28,7 @@ export class EmailService {
             if (response.status >= 200 && response.status < 300) {
                 return;
             }
-            logger.error(`Failed to send mail to: ${user.email}, try [${i + 1}]`)
+            logger.error(`Failed to send mail to: ${user.email}, try [${i + 1}]`, response.data)
         }
     }
 }
