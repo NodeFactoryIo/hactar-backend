@@ -1,5 +1,5 @@
 import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequelize";
-import {Node} from "../Models/Node";
+import {Node} from "./Node";
 
 export class NodeBalance extends Model {
 
@@ -7,11 +7,11 @@ export class NodeBalance extends Model {
 
     public static initialize(sequelize: Sequelize) {
         this.init({
-            balance: {
-                type: DataTypes.STRING(),
-                allowNull: false,
-            },
-        } as ModelAttributes,
+                balance: {
+                    type: DataTypes.STRING(),
+                    allowNull: false,
+                },
+            } as ModelAttributes,
             {
                 sequelize: sequelize,
                 tableName: "NodeBalance",

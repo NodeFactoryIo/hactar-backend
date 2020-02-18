@@ -19,7 +19,15 @@ const config = Object.freeze({
     port: env.SERVER_PORT || 3000,
     jwtKey: process.env.JWT_KEY || "nodefactory",
     jwtExpiry: process.env.JWT_EXPIRY || '24h',
-    rewardAmount: process.env.REWARD_AMOUNT || 5
+    rewardAmount: process.env.REWARD_AMOUNT || 5,
+    sendinblue: {
+        apiKey: process.env.EMAIL_API_KEY,
+        apiUrl: process.env.EMAIL_API_URL || "https://api.sendinblue.com/v3/smtp/email",
+        nodeUptimeNotifEmailTemplateId: process.env.EMAIL_UPTIME_NOTIF_TEMPLATE_ID || "2",
+        retryCount: process.env.EMAIL_RETRY_COUNT || 3
+    },
+    // cron like definition (every hour by default)
+    uptimeNotificationsRecurrenceRule: process.env.UPTIME_NOTIF_RECURRENCE || "0 * * * *"
 });
 
 export default config;

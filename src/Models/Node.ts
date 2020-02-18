@@ -1,39 +1,39 @@
 import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequelize";
-import {User} from "../Models/User";
+import {User} from "./User";
 
 export class Node extends Model {
 
     public id: number;
-    private url: string;
-    private token: string;
-    private address: string;
-    private userId: number;
-    private name: string;
-    private description: string;
+    public url: string;
+    public token: string;
+    public address: string;
+    public userId: number;
+    public name: string;
+    public description: string;
 
     public static initialize(sequelize: Sequelize) {
         this.init({
-            url: {
-                type: DataTypes.STRING(128),
-                allowNull: false,
-            },
-            token: {
-                type: DataTypes.STRING(128),
-                allowNull: false,
-            },
-            address: {
-                type: DataTypes.STRING(128),
-                allowNull: false,
-            },
-            name: {
-                type: DataTypes.STRING(),
-                allowNull: true
-            },
-            description: {
-                type: DataTypes.STRING(),
-                allowNull: true
-            }
-        } as ModelAttributes,
+                url: {
+                    type: DataTypes.STRING(128),
+                    allowNull: false,
+                },
+                token: {
+                    type: DataTypes.STRING(128),
+                    allowNull: false,
+                },
+                address: {
+                    type: DataTypes.STRING(128),
+                    allowNull: false,
+                },
+                name: {
+                    type: DataTypes.STRING(),
+                    allowNull: true
+                },
+                description: {
+                    type: DataTypes.STRING(),
+                    allowNull: true
+                }
+            } as ModelAttributes,
             {
                 sequelize: sequelize,
                 tableName: "Nodes",

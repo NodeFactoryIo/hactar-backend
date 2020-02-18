@@ -11,7 +11,7 @@ export enum AuthSource {
 }
 
 export class UserService {
-    // eslint-disable-next-line
+
     public async registerUser(email: string, password: string) {
         const user = await User.findOne({
             raw: true,
@@ -25,6 +25,10 @@ export class UserService {
         }
         const hashPassword = bcrypt.hashSync(password, 10);
         return await User.create({email, 'hash_password': hashPassword});
+    }
+
+    public async getUserByPk(userId: number): Promise<User | null> {
+        return await User.findByPk(userId);
     }
 
     public async authenticateUser(email: string, password: string) {

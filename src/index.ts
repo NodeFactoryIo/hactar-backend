@@ -9,7 +9,7 @@ database.init().then(() => {
     app.start();
 });
 
-cleanup( () => {
+cleanup(() => {
     logger.info("Shutting down gracefully");
     app.stop();
     uninstall();
