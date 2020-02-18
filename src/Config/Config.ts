@@ -27,7 +27,7 @@ const config = Object.freeze({
         retryCount: process.env.EMAIL_RETRY_COUNT || 3
     },
     // cron like definition (every hour by default)
-    uptimeNotificationsRecurrenceRule: process.env.UPTIME_NOTIF_RECURRENCE || "5 * * * *"
+    uptimeNotificationsRecurrenceRule: process.env.UPTIME_NOTIF_RECURRENCE || "0 * * * *"
 });
 
 export default config;
