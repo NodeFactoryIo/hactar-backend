@@ -8,6 +8,7 @@ import config from "../../../src/Config/Config";
 import {Node} from "../../../src/Models/Node";
 import {User} from "../../../src/Models/User";
 import * as bcrypt from "bcryptjs";
+import database from "../../../src/Services/Database";
 
 describe("Authorization middleware tests", async () => {
 
@@ -25,18 +26,8 @@ describe("Authorization middleware tests", async () => {
     });
 
     after(async () => {
-        await User.destroy({
-            where: {
-                id: 100
-            }
-        })
-
-        await Node.destroy({
-            where: {
-                id: 1
-            }
-        })
-    })
+        await database.sequelize.sync({force: true});
+    });
 
     it("Should return unauthorized user - user not the owner of the node", (done) => {
         const token = jwt.sign({id: 200}, config.jwtKey, {expiresIn: '1h'})

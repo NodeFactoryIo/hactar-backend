@@ -8,38 +8,29 @@ import config from "../../../../src/Config/Config";
 import {Node} from "../../../../src/Models/Node";
 import * as bcrypt from "bcryptjs";
 import {User} from "../../../../src/Models/User";
+import database from "../../../../src/Services/Database";
 
 describe("Node controller add additional node info tests", async () => {
 
     before(async function () {
         const password = bcrypt.hashSync('password', 10);
         // eslint-disable-next-line
-        await User.create({id: 200, email: 'test@test.com', hash_password: `${password}`})
+        await User.create({id: 100, email: 'test@test.com', hash_password: `${password}`})
         await Node.create({
             id: 2,
             url: 'some url',
             token: 'some token',
             address: 'some address',
-            userId: 200
+            userId: 100
         });
     });
 
     after(async () => {
-        await User.destroy({
-            where: {
-                id: 200
-            }
-        });
-
-        await Node.destroy({
-            where: {
-                id: 2
-            }
-        })
+        await database.sequelize.sync({force: true})
     });
 
     it("Should add name and description to the node", (done) => {
-        const token = jwt.sign({id: 200}, config.jwtKey, {expiresIn: '1h'})
+        const token = jwt.sign({id: 100}, config.jwtKey, {expiresIn: '1h'})
 
         try {
             request(app.server)
@@ -54,7 +45,7 @@ describe("Node controller add additional node info tests", async () => {
                     description: 'node description'
                 })
                 .expect(200)
-                .end((err, res) => {
+                .end(async (err, res) => {
                     expect(res).to.exist;
                     expect(err).to.not.exist;
                     expect(res.body).to.deep.include(
@@ -70,5 +61,6 @@ describe("Node controller add additional node info tests", async () => {
             expect.fail(err);
             done()
         }
+
     });
 });
