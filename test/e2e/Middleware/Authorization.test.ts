@@ -31,7 +31,6 @@ describe("Authorization middleware tests", async () => {
 
     it("Should return unauthorized user - user not the owner of the node", (done) => {
         const token = jwt.sign({id: 200}, config.jwtKey, {expiresIn: '1h'})
-
         try {
             request(app.server)
                 .post("/api/user/node/diskinformation")
@@ -50,7 +49,6 @@ describe("Authorization middleware tests", async () => {
                     expect(err).to.not.exist;
                     done()
                 });
-
         } catch (err) {
             logger.error('Unexpected error occured: ${err.message}');
             expect.fail(err);
@@ -60,7 +58,6 @@ describe("Authorization middleware tests", async () => {
 
     it("Should return unauthorized user - token expired", (done) => {
         const token = jwt.sign({id: 100}, config.jwtKey, {expiresIn: '0s'})
-
         try {
             request(app.server)
                 .post("/api/user/node/diskinformation")
@@ -79,7 +76,6 @@ describe("Authorization middleware tests", async () => {
                     expect(err).to.not.exist;
                     done()
                 });
-
         } catch (err) {
             logger.error('Unexpected error occured: ${err.message}');
             expect.fail(err);
@@ -89,7 +85,6 @@ describe("Authorization middleware tests", async () => {
 
     it("Should successfully authorize user.", (done) => {
         const token = jwt.sign({id: 100}, config.jwtKey, {expiresIn: '24h'})
-
         try {
             request(app.server)
                 .post("/api/user/node/diskinformation")
@@ -108,7 +103,6 @@ describe("Authorization middleware tests", async () => {
                     expect(err).to.not.exist;
                     done()
                 });
-
         } catch (err) {
             logger.error('Unexpected error occured: ${err.message}');
             expect.fail(err);

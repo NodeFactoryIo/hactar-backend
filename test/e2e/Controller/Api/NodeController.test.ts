@@ -31,7 +31,6 @@ describe("Node controller add/update additional node info tests", async () => {
 
     it("Should add name and description to the node", (done) => {
         const token = jwt.sign({id: 100}, config.jwtKey, {expiresIn: '1h'})
-
         try {
             request(app.server)
                 .put("/api/user/node")
@@ -45,7 +44,7 @@ describe("Node controller add/update additional node info tests", async () => {
                     description: 'node description'
                 })
                 .expect(200)
-                .end(async (err, res) => {
+                .end((err, res) => {
                     expect(res).to.exist;
                     expect(err).to.not.exist;
                     expect(res.body).to.deep.include(
@@ -61,6 +60,5 @@ describe("Node controller add/update additional node info tests", async () => {
             expect.fail(err);
             done()
         }
-
     });
 });
