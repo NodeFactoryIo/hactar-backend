@@ -3,7 +3,8 @@ import {Node} from "./Node";
 
 export class NodeBalance extends Model {
 
-    private balance: string;
+    public balance: string;
+    public updatedAt: string;
 
     public static initialize(sequelize: Sequelize) {
         this.init({

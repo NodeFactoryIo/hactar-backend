@@ -1,4 +1,4 @@
-import {Response} from "express";
+import {Request, Response} from "express";
 import {ValidatedRequest} from "express-joi-validation";
 
 import {CreateNodeBalanceRequestSchema} from "./NodeBalanceControllerValidation";
@@ -21,6 +21,17 @@ export class NodeBalanceController {
             res.status(201).json(result)
         } catch (e) {
             logger.error(`Error occurred on storing node general info in controller: ${e.message}`);
+            res.status(500).json({error: "An unknown error occurred."});
+        }
+    }
+
+    public async fetchNodeBalance(req: Request, res: Response) {
+        try {
+            const nodeId = res.locals.node.id;
+            const result = await this.nodeBalanceService.fetchNodeBalance(nodeId);
+            res.status(200).json(result)
+        } catch (e) {
+            logger.error(`Error occurred on fetching node balance in controller: ${e.message}`);
             res.status(500).json({error: "An unknown error occurred."});
         }
     }
