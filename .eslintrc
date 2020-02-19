@@ -29,6 +29,13 @@
         ],
         "no-multiple-empty-lines": "error",
         "object-curly-spacing": "error",
-        "no-console": "error"
+        "no-console": "error",
+        "indent": [
+            "error",
+            4,
+            {
+                "SwitchCase": 1
+            }
+        ]
     }
 }

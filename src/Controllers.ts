@@ -2,7 +2,7 @@ import {NodeController} from "./Controller/Api/NodeController";
 import {NodeUptimeController} from "./Controller/Api/NodeUptimeController";
 import {NodeDiskInformationController} from "./Controller/Api/NodeDiskInformationController";
 import {UserController} from "./Controller/Api/UserController";
-import {NodeGeneralInfoController} from "./Controller/Api/NodeGeneralInfoController";
+import {GeneralMinerInfoController} from "./Controller/Api/GeneralMinerInfoController";
 import {MiningRewardsController} from "./Controller/Api/MiningRewardsController";
 import {NodeBalanceController} from "./Controller/Api/NodeBalanceController";
 import {NodePastDealsController} from "./Controller/Api/NodePastDealsController";
@@ -14,7 +14,7 @@ export class Controllers {
     public nodeUptimeController: NodeUptimeController;
     public nodeDiskInformationController: NodeDiskInformationController;
     public userController: UserController;
-    public nodeGeneralInfoController: NodeGeneralInfoController;
+    public generalMinerInfoController: GeneralMinerInfoController;
     public miningRewardsController: MiningRewardsController;
     public nodeBalanceController: NodeBalanceController;
     public nodePastDealsController: NodePastDealsController;
@@ -24,7 +24,7 @@ export class Controllers {
         this.userController = new UserController(services.userService);
         this.nodeController = new NodeController(services.nodeService);
         this.miningRewardsController = new MiningRewardsController(services.miningRewardsService);
-        this.nodeGeneralInfoController = new NodeGeneralInfoController(services.nodeGeneralInfoService);
+        this.generalMinerInfoController = new GeneralMinerInfoController(services.generalMinerInfoService);
         this.nodeBalanceController = new NodeBalanceController(services.nodeBalanceService);
         this.nodePastDealsController = new NodePastDealsController(services.nodePastDealsService);
         this.nodeDiskInformationController = new NodeDiskInformationController(

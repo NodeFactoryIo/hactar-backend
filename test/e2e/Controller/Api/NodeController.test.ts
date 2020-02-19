@@ -7,7 +7,7 @@ import * as jwt from "jsonwebtoken";
 import config from "../../../../src/Config/Config";
 import {Node} from "../../../../src/Models/Node";
 
-describe("Node controller add additional node info tests", async () => {
+describe("Node controller add/update additional node info tests", async () => {
 
     before(async function () {
         await Node.create({

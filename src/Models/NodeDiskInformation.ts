@@ -8,15 +8,15 @@ export class NodeDiskInformation extends Model {
 
     public static initialize(sequelize: Sequelize) {
         this.init({
-                freeSpace: {
-                    type: DataTypes.STRING,
-                    allowNull: false,
-                },
-                takenSpace: {
-                    type: DataTypes.STRING,
-                    allowNull: false,
-                },
-            } as ModelAttributes,
+            freeSpace: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            takenSpace: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+        } as ModelAttributes,
             {
                 sequelize: sequelize,
                 tableName: "NodeDiskInformation",

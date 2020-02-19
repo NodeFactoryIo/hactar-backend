@@ -9,7 +9,7 @@ import {Node} from "../Models/Node";
 import {NodeDiskInformation} from "../Models/NodeDiskInformation";
 import {NodeUptime} from "../Models/NodeUptime";
 import {User} from "../Models/User";
-import {NodeGeneralInfo} from "../Models/NodeGeneralInfo";
+import {GeneralMinerInfo} from "../Models/GeneralMinerInfo";
 import {MiningReward} from "../Models/MiningReward";
 import {NodeBalance} from "../Models/NodeBalance";
 import {NodeStatus} from "../Models/NodeStatus";
@@ -111,7 +111,7 @@ export class Database {
         Node.initialize(this.sequelize);
         NodeDiskInformation.initialize(this.sequelize);
         NodeUptime.initialize(this.sequelize);
-        NodeGeneralInfo.initialize(this.sequelize);
+        GeneralMinerInfo.initialize(this.sequelize);
         MiningReward.initialize(this.sequelize);
         NodeBalance.initialize(this.sequelize);
         NodePastDeal.initialize(this.sequelize);

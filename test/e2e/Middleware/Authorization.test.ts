@@ -11,11 +11,11 @@ import * as bcrypt from "bcryptjs";
 
 describe("Authorization middleware tests", async () => {
 
-    before(function () {
+    before(async function () {
         const password = bcrypt.hashSync('password', 10);
         // eslint-disable-next-line
-        User.create({id: 100, email: 'test@test.com', hash_password: `${password}`})
-        Node.create({
+        await User.create({id: 100, email: 'test@test.com', hash_password: `${password}`})
+        await Node.create({
             url: 'url111',
             token: 'token111',
             address: 'address111',

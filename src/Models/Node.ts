@@ -13,27 +13,27 @@ export class Node extends Model {
 
     public static initialize(sequelize: Sequelize) {
         this.init({
-                url: {
-                    type: DataTypes.STRING(128),
-                    allowNull: false,
-                },
-                token: {
-                    type: DataTypes.STRING(128),
-                    allowNull: false,
-                },
-                address: {
-                    type: DataTypes.STRING(128),
-                    allowNull: false,
-                },
-                name: {
-                    type: DataTypes.STRING(),
-                    allowNull: true
-                },
-                description: {
-                    type: DataTypes.STRING(),
-                    allowNull: true
-                }
-            } as ModelAttributes,
+            url: {
+                type: DataTypes.STRING(128),
+                allowNull: false,
+            },
+            token: {
+                type: DataTypes.STRING(128),
+                allowNull: false,
+            },
+            address: {
+                type: DataTypes.STRING(128),
+                allowNull: false,
+            },
+            name: {
+                type: DataTypes.STRING,
+                allowNull: true
+            },
+            description: {
+                type: DataTypes.STRING,
+                allowNull: true
+            }
+        } as ModelAttributes,
             {
                 sequelize: sequelize,
                 tableName: "Nodes",
