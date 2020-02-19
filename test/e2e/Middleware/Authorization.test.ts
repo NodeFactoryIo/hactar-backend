@@ -14,6 +14,8 @@ describe("Authorization middleware tests", async () => {
 
     before(async () => {
         const password = bcrypt.hashSync('password', 10);
+        // eslint-disable-next-line no-console
+        console.log("Before Authorization e2e test")
         // eslint-disable-next-line
         await User.create({id: 100, email: 'test@test.com', hash_password: `${password}`})
         await Node.create({
@@ -27,6 +29,8 @@ describe("Authorization middleware tests", async () => {
 
     after(async () => {
         await database.sequelize.sync({force: true});
+        // eslint-disable-next-line no-console
+        console.log("After Authorization e2e test")
     });
 
     it("Should return unauthorized user - user not the owner of the node", (done) => {

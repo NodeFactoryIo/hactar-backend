@@ -14,6 +14,8 @@ describe("Node controller add/update additional node info tests", async () => {
 
     before(async function () {
         const password = bcrypt.hashSync('password', 10);
+        // eslint-disable-next-line no-console
+        console.log("Before NodeController e2e test")
         // eslint-disable-next-line
         await User.create({id: 100, email: 'test@test.com', hash_password: `${password}`})
         await Node.create({
@@ -27,6 +29,8 @@ describe("Node controller add/update additional node info tests", async () => {
 
     after(async () => {
         await database.sequelize.sync({force: true})
+        // eslint-disable-next-line no-console
+        console.log("After NodeController e2e test")
     });
 
     it("Should add name and description to the node", (done) => {

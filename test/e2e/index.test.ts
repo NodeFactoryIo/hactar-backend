@@ -10,6 +10,8 @@ before(async function () {
     logger.silent = true;
     await database.init();
     await app.start();
+    // eslint-disable-next-line no-console
+    console.log("DB initi before test suit finished")
 });
 
 after(async function () {
