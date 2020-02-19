@@ -83,7 +83,7 @@ export function createApiRoutes(
     router.get(
         "/user/node/balance/:nodeId",
         [passNodeData, AuthorizeUser],
-        nodeBalanceController.fetchNodeBalance.bind(nodeBalanceController));
+        controllers.nodeBalanceController.fetchNodeBalance.bind(controllers.nodeBalanceController));
 
     router.put(
         "/user/node/pastdeals",
