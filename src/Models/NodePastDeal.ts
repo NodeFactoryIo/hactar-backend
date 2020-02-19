@@ -1,5 +1,5 @@
 import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequelize";
-import {Node} from "../Models/Node";
+import {Node} from "./Node";
 
 export class NodePastDeal extends Model {
 

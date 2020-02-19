@@ -1,18 +1,19 @@
 import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequelize";
-import {Node} from "../Models/Node";
+import {Node} from "./Node";
 
 export class NodeUptime extends Model {
 
-    private isWorking: boolean;
-    private nodeId: number;
+    public id: number;
+    public isWorking: boolean;
+    public nodeId: number;
 
     public static initialize(sequelize: Sequelize) {
         this.init({
-            isWorking: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false,
-            },
-        } as ModelAttributes,
+                isWorking: {
+                    type: DataTypes.BOOLEAN,
+                    allowNull: false,
+                },
+            } as ModelAttributes,
             {
                 sequelize: sequelize,
                 tableName: "NodeUptime",

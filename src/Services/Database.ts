@@ -1,5 +1,5 @@
 import path from "path";
-import {Options, Sequelize} from "sequelize";
+import {Options, QueryOptionsWithType, QueryTypes, Sequelize} from "sequelize";
 import Umzug from "umzug";
 import {Umzug as UmzugInterface} from "umzug";
 
@@ -12,6 +12,7 @@ import {User} from "../Models/User";
 import {GeneralMinerInfo} from "../Models/GeneralMinerInfo";
 import {MiningReward} from "../Models/MiningReward";
 import {NodeBalance} from "../Models/NodeBalance";
+import {NodeStatus} from "../Models/NodeStatus";
 import {NodePastDeal} from "../Models/NodePastDeal";
 
 export class Database {
@@ -63,6 +64,13 @@ export class Database {
         return this.sequelize;
     }
 
+    public async runQuery<T extends object>(
+        query: string,
+        options: QueryOptionsWithType<QueryTypes.SELECT>
+    ): Promise<T[]> {
+        return this.sequelize.query<T>(query, options);
+    }
+
     private async waitForDb(): Promise<void> {
         // eslint-disable-next-line no-constant-condition
         while (true) {
@@ -107,6 +115,7 @@ export class Database {
         MiningReward.initialize(this.sequelize);
         NodeBalance.initialize(this.sequelize);
         NodePastDeal.initialize(this.sequelize);
+        NodeStatus.initialize(this.sequelize);
     }
 }
 
