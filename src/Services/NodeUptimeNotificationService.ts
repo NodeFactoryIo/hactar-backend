@@ -31,9 +31,9 @@ export class NodeUptimeNotificationService {
         const currentNodeStatus = await this.nodeStatusService.getNodeStatusByNodeId(nodeUptime.nodeId);
         const newNodeStatus = {nodeId: nodeUptime.nodeId, isUp: nodeUptime.isWorking, isReported: true} as NodeStatus;
         if (currentNodeStatus != null) {
-            this.updateExistingNodeStatus(nodeUptime, newNodeStatus, currentNodeStatus);
+            await this.updateExistingNodeStatus(nodeUptime, newNodeStatus, currentNodeStatus);
         } else {
-            this.createNewNodeStatus(nodeUptime, newNodeStatus);
+            await this.createNewNodeStatus(nodeUptime, newNodeStatus);
         }
     }
 

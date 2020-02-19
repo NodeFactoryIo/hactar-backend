@@ -11,19 +11,34 @@ import * as bcrypt from "bcryptjs";
 
 describe("Authorization middleware tests", async () => {
 
-    before(function () {
+    before(async () => {
         const password = bcrypt.hashSync('password', 10);
         // eslint-disable-next-line
-        User.create({id: 100, email: 'test@test.com', hash_password: `${password}`})
-        Node.create({
+        await User.create({id: 100, email: 'test@test.com', hash_password: `${password}`})
+        await Node.create({
+            id: 1,
             url: 'url111',
             token: 'token111',
             address: 'address111',
             userId: 100
         });
+    });
+
+    after(async () => {
+        await User.destroy({
+            where: {
+                id: 100
+            }
+        })
+
+        await Node.destroy({
+            where: {
+                id: 1
+            }
+        })
     })
 
-    it("Should return unauthorized user - user not the owner of the node", () => {
+    it("Should return unauthorized user - user not the owner of the node", (done) => {
         const token = jwt.sign({id: 200}, config.jwtKey, {expiresIn: '1h'})
 
         try {
@@ -33,22 +48,26 @@ describe("Authorization middleware tests", async () => {
                 .send({
                     "freeSpace": "430",
                     "takenSpace": "270",
-                    "url": "url111",
-                    "address": "address111"
+                    "nodeInfo": {
+                        "url": "url111",
+                        "address": "address111"
+                    }
                 })
                 .expect(403)
                 .end((err, res) => {
                     expect(res).to.exist;
                     expect(err).to.not.exist;
+                    done()
                 });
 
         } catch (err) {
             logger.error('Unexpected error occured: ${err.message}');
             expect.fail(err);
+            done()
         }
     });
 
-    it("Should return unauthorized user - token expired", () => {
+    it("Should return unauthorized user - token expired", (done) => {
         const token = jwt.sign({id: 100}, config.jwtKey, {expiresIn: '0s'})
 
         try {
@@ -58,22 +77,26 @@ describe("Authorization middleware tests", async () => {
                 .send({
                     "freeSpace": "430",
                     "takenSpace": "270",
-                    "url": "url111",
-                    "address": "address111"
+                    "nodeInfo": {
+                        "url": "url111",
+                        "address": "address111"
+                    }
                 })
                 .expect(403)
                 .end((err, res) => {
                     expect(res).to.exist;
                     expect(err).to.not.exist;
+                    done()
                 });
 
         } catch (err) {
             logger.error('Unexpected error occured: ${err.message}');
             expect.fail(err);
+            done()
         }
     });
 
-    it("Should successfully authorize user.", () => {
+    it("Should successfully authorize user.", (done) => {
         const token = jwt.sign({id: 100}, config.jwtKey, {expiresIn: '24h'})
 
         try {
@@ -83,18 +106,22 @@ describe("Authorization middleware tests", async () => {
                 .send({
                     "freeSpace": "430",
                     "takenSpace": "270",
-                    "url": "url111",
-                    "address": "address111"
+                    "nodeInfo": {
+                        "url": "url111",
+                        "address": "address111"
+                    }
                 })
                 .expect(201)
                 .end((err, res) => {
                     expect(res).to.exist;
                     expect(err).to.not.exist;
+                    done()
                 });
 
         } catch (err) {
             logger.error('Unexpected error occured: ${err.message}');
             expect.fail(err);
+            done()
         }
     });
 });

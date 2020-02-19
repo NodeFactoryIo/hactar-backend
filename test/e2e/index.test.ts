@@ -5,13 +5,15 @@ import logger from "../../src/Services/Logger";
 
 export const app: App = new App();
 
-before(async () => {
+before(async function () {
+    this.timeout(10000);
     logger.silent = true;
     await database.init();
     await app.start();
 });
 
-after(async () => {
+after(async function () {
+    this.timeout(10000);
     await app.stop();
     logger.silent = false;
 });
