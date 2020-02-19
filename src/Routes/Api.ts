@@ -63,7 +63,8 @@ export function createApiRoutes(
     router.put(
         "/user/node/generalminerinfo",
         [validator.body(CreateGeneralMinerInfoValidationSchema), passNodeData, AuthorizeUser],
-        controllers.generalMinerInfoController.updateOrCreateGeneralMinerInfo.bind(controllers.generalMinerInfoController));
+        controllers.generalMinerInfoController.updateOrCreateGeneralMinerInfo.bind(
+            controllers.generalMinerInfoController));
 
     router.get(
         "/user/node/generalminerinfo/:nodeId",

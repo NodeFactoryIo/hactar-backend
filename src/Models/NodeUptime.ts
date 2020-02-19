@@ -9,11 +9,11 @@ export class NodeUptime extends Model {
 
     public static initialize(sequelize: Sequelize) {
         this.init({
-                isWorking: {
-                    type: DataTypes.BOOLEAN,
-                    allowNull: false,
-                },
-            } as ModelAttributes,
+            isWorking: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+            },
+        } as ModelAttributes,
             {
                 sequelize: sequelize,
                 tableName: "NodeUptime",
