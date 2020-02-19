@@ -1,7 +1,7 @@
 import {NodeService} from "./Services/NodeService";
 import {NodeUptimeService} from "./Services/NodeUptimeService";
 import {NodeDiskInformationService} from "./Services/NodeDiskInformationService";
-import {NodeGeneralInfoService} from "./Services/NodeGeneralInfoService";
+import {GeneralMinerInfoService} from "./Services/GeneralMinerInfoService";
 import {UserService} from "./Services/UserService";
 import {MiningRewardsService} from "./Services/MiningRewardsService";
 import {NodeBalanceService} from "./Services/NodeBalanceService";
@@ -19,7 +19,7 @@ export class Services {
     public nodeUptimeService: NodeUptimeService;
     public nodeDiskInformationService: NodeDiskInformationService;
     public userService: UserService;
-    public nodeGeneralInfoService: NodeGeneralInfoService;
+    public generalMinerInfoService: GeneralMinerInfoService;
     public miningRewardsService: MiningRewardsService;
     public nodeBalanceService: NodeBalanceService;
     public nodePastDealsService: NodePastDealsService;
@@ -35,7 +35,7 @@ export class Services {
         this.nodeUptimeService = new NodeUptimeService();
         this.miningRewardsService = new MiningRewardsService();
         this.userService = new UserService();
-        this.nodeGeneralInfoService = new NodeGeneralInfoService();
+        this.generalMinerInfoService = new GeneralMinerInfoService();
         this.nodeBalanceService = new NodeBalanceService();
         this.nodePastDealsService = new NodePastDealsService();
         this.nodeStatusService = new NodeStatusService();
