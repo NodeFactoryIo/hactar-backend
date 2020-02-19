@@ -33,7 +33,7 @@ export class NodeController {
             const node = await this.nodeService.addNodeAdditionalInfo(name, description, nodeId);
             res.status(200).json(node);
         } catch (e) {
-            logger.error(`Error occurred on storing/updating name/description in controller: ${e.message}`);
+            logger.error(`Error occurred on storing/updating node name/description in controller: ${e.message}`);
             res.status(500).json({error: "An unknown error occurred."});
         }
     }

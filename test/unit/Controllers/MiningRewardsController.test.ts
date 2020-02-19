@@ -7,7 +7,7 @@ import logger from "../../../src/Services/Logger";
 import {MiningRewardInput} from "../../../src/Types/MiningRewardInputType";
 
 describe("MiningRewardsController", function () {
-    describe('POST /user/node', () => {
+    describe('POST /user/node/miningrewards', () => {
         const miningRewardsServiceStub = sinon.createStubInstance(MiningRewardsService);
         // @ts-ignore
         miningRewardsServiceStub.storeMiningRewards.resolves({} as unknown as Array<MiningRewardInput>);
@@ -35,9 +35,6 @@ describe("MiningRewardsController", function () {
                 ];
                 response.json = sinon.spy((result) => {
                     expect(result).to.exist;
-                    // expect(result[0]).to.have.ownProperty('cid');
-                    // expect(result[0]).to.have.ownProperty('rewardAmount');
-                    // expect(result[0]).to.have.ownProperty('nodeId');
                 }) as any;
 
                 response.status = sinon.spy((result) => {

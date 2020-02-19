@@ -10,7 +10,7 @@ import * as bcrypt from "bcryptjs";
 import {User} from "../../../../src/Models/User";
 import database from "../../../../src/Services/Database";
 
-describe("Node controller add additional node info tests", async () => {
+describe("Node controller add/update additional node info tests", async () => {
 
     before(async function () {
         const password = bcrypt.hashSync('password', 10);

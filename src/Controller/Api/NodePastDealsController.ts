@@ -23,7 +23,7 @@ export class NodePastDealsController {
                 cid, state, size, provider, price, duration, nodeId);
             res.status(200).json(result)
         } catch (e) {
-            logger.error(`Error occurred on storing node past deal in controller: ${e.message}`);
+            logger.error(`Error occurred on storing/updating node past deal in controller: ${e.message}`);
             res.status(500).json({error: "An unknown error occurred."});
         }
     }

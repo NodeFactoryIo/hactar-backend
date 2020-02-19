@@ -3,15 +3,16 @@ import {Node} from "./Node";
 
 export class NodeBalance extends Model {
 
-    private balance: string;
+    public balance: string;
+    public updatedAt: string;
 
     public static initialize(sequelize: Sequelize) {
         this.init({
-                balance: {
-                    type: DataTypes.STRING(),
-                    allowNull: false,
-                },
-            } as ModelAttributes,
+            balance: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+        } as ModelAttributes,
             {
                 sequelize: sequelize,
                 tableName: "NodeBalance",

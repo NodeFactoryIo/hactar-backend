@@ -7,7 +7,7 @@ import logger from "../../../src/Services/Logger";
 import {NodeDiskInformation} from "../../../src/Models/NodeDiskInformation";
 
 describe("NodeDiskInformation Controller", function () {
-    describe('POST /diskinfo', () => {
+    describe('POST /user/node/diskinformation', () => {
         const nodeDiskInfoStub = sinon.createStubInstance(NodeDiskInformationService);
         // @ts-ignore
         nodeDiskInfoStub.createDiskData.resolves({freeSpace: 150, takenSpace: 50, nodeId: 4});
@@ -37,7 +37,7 @@ describe("NodeDiskInformation Controller", function () {
         });
     });
 
-    describe('GET /user/node/diskinformation/nodeId', () => {
+    describe('GET /user/node/diskinformation/:nodeId', () => {
         const nodeDiskInfoStub = sinon.createStubInstance(NodeDiskInformationService);
         nodeDiskInfoStub.fetchDiskInfo.resolves([
             {

@@ -8,17 +8,16 @@ export class NodeStatus extends Model {
     public isReported: boolean;
 
     public static initialize(sequelize: Sequelize) {
-        this.init(
-            {
-                isUp: {
-                    type: DataTypes.BOOLEAN,
-                    allowNull: false,
-                },
-                isReported: {
-                    type: DataTypes.BOOLEAN,
-                    allowNull: false,
-                },
-            } as ModelAttributes,
+        this.init({
+            isUp: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+            },
+            isReported: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false,
+            },
+        } as ModelAttributes,
             {
                 sequelize: sequelize,
                 tableName: "NodeStatus",

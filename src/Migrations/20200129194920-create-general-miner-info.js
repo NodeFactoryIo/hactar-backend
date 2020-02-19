@@ -2,7 +2,7 @@ var sequelize = require("sequelize");
 
 module.exports = {
     up: function (queryInterface) {
-        return queryInterface.createTable('NodeGeneralInfo', {
+        return queryInterface.createTable('GeneralMinerInfo', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -28,7 +28,8 @@ module.exports = {
                     model: 'Nodes',
                     key: 'id'
                 },
-                unique: true
+                unique: true,
+                onDelete: 'CASCADE'
             },
             createdAt: {
                 allowNull: false,
@@ -41,6 +42,6 @@ module.exports = {
         })
     },
     down: function (queryInterface) {
-        return queryInterface.dropTable('NodeGeneralInfo');
+        return queryInterface.dropTable('GeneralMinerInfo');
     }
 };

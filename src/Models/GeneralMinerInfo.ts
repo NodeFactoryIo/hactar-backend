@@ -1,28 +1,38 @@
 import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequelize";
 import {Node} from "./Node";
 
-export class MiningReward extends Model {
+export class GeneralMinerInfo extends Model {
 
-    private cid: string;
-    private rewardAmount: string;
+    private version: string;
+    private sectorSize: string;
+    private minerPower: string;
+    private totalPower: string;
     private nodeId: number;
 
     public static initialize(sequelize: Sequelize) {
         this.init({
-            cid: {
+            version: {
+                type: DataTypes.STRING(10),
+                allowNull: false,
+            },
+            sectorSize: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
-            rewardAmount: {
+            minerPower: {
+                type: DataTypes.STRING,
+                allowNull: false,
+            },
+            totalPower: {
                 type: DataTypes.STRING,
                 allowNull: false,
             },
         } as ModelAttributes,
             {
                 sequelize: sequelize,
-                tableName: "MiningRewards",
+                tableName: "GeneralMinerInfo",
             } as InitOptions);
         this.belongsTo(Node, {foreignKey: "nodeId"});
-        Node.hasMany(MiningReward, {foreignKey: "nodeId"});
+        Node.hasOne(GeneralMinerInfo, {foreignKey: "nodeId"});
     }
 }

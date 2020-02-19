@@ -5,7 +5,7 @@ import {CreateNodeDiskInforamtionValidationSchema} from "../Controller/Api/NodeD
 import {CreateNodeUptimeValidationSchema} from "../Controller/Api/NodeUptimeControllerValidation";
 
 import {UserValidationSchema} from "../Controller/Api/UserControllerValidation";
-import {CreateNodeGeneralInfoValidationSchema} from "../Controller/Api/NodeGeneralInfoControllerValidation";
+import {CreateGeneralMinerInfoValidationSchema} from "../Controller/Api/GeneralMinerInfoControllerValidation";
 import {CreateMiningRewardsValidationSchema} from "../Controller/Api/MiningRewardsControllerValidation";
 import {CreateNodeBalanceValidationSchema} from "../Controller/Api/NodeBalanceControllerValidation";
 import {CreateNodePastDealsValidationSchema} from "../Controller/Api/NodePastDealsControllerValidation";
@@ -62,15 +62,14 @@ export function createApiRoutes(
 
     router.put(
         "/user/node/generalminerinfo",
-        [validator.body(CreateNodeGeneralInfoValidationSchema), passNodeData, AuthorizeUser],
-        controllers.nodeGeneralInfoController.updateOrCreateNodeGeneralInfo.bind(
-            controllers.nodeGeneralInfoController
-        ));
+        [validator.body(CreateGeneralMinerInfoValidationSchema), passNodeData, AuthorizeUser],
+        controllers.generalMinerInfoController.updateOrCreateGeneralMinerInfo.bind(
+            controllers.generalMinerInfoController));
 
     router.get(
         "/user/node/generalminerinfo/:nodeId",
         [passNodeData, AuthorizeUser],
-        controllers.nodeGeneralInfoController.fetchNodeGeneralInfo.bind(controllers.nodeGeneralInfoController));
+        controllers.generalMinerInfoController.fetchGeneralMinerInfo.bind(controllers.generalMinerInfoController));
 
     router.post(
         "/user/node/miningrewards",
@@ -81,6 +80,11 @@ export function createApiRoutes(
         "/user/node/balance",
         [validator.body(CreateNodeBalanceValidationSchema), passNodeData, AuthorizeUser],
         controllers.nodeBalanceController.storeNodeBalance.bind(controllers.nodeBalanceController));
+
+    router.get(
+        "/user/node/balance/:nodeId",
+        [passNodeData, AuthorizeUser],
+        controllers.nodeBalanceController.fetchNodeBalance.bind(controllers.nodeBalanceController));
 
     router.put(
         "/user/node/pastdeals",
