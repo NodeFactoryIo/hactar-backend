@@ -5,6 +5,7 @@ export interface CreateGeneralMinerInfoRequestSchema extends ValidatedRequestSch
     [ContainerTypes.Body]: {
         version: string;
         sectorSize: string;
+        numberOfSectors: number;
         minerPower: string;
         totalPower: string;
         nodeInfo: {
@@ -17,6 +18,7 @@ export interface CreateGeneralMinerInfoRequestSchema extends ValidatedRequestSch
 export const CreateGeneralMinerInfoValidationSchema = Joi.object({
     version: Joi.string().required(),
     sectorSize: Joi.string().regex(/^\d+$/).required(),
+    numberOfSectors: Joi.number().required(),
     minerPower: Joi.string().regex(/^\d+$/).required(),
     totalPower: Joi.string().regex(/^\d+$/).required(),
     nodeInfo: Joi.object({
