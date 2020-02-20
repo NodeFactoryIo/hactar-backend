@@ -5,6 +5,7 @@ export class GeneralMinerInfo extends Model {
 
     private version: string;
     private sectorSize: string;
+    private numberOfSectors: number;
     private minerPower: string;
     private totalPower: string;
     private nodeId: number;
@@ -18,6 +19,10 @@ export class GeneralMinerInfo extends Model {
             sectorSize: {
                 type: DataTypes.STRING,
                 allowNull: false,
+            },
+            numberOfSectors: {
+                type: DataTypes.INTEGER,
+                allowNull: false
             },
             minerPower: {
                 type: DataTypes.STRING,
