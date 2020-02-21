@@ -19,3 +19,13 @@ export const CreateNodeUptimeValidationSchema = Joi.object({
         address: Joi.string().required(),
     })
 });
+
+export interface FetchNodeUptimeRequestSchema extends ValidatedRequestSchema {
+    [ContainerTypes.Query]: {
+        filter: string;
+    };
+}
+
+export const FetchNodeUptimeValidationSchema = Joi.object({
+    filter: Joi.string().required(),
+});

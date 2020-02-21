@@ -2,7 +2,10 @@ import express from "express";
 import {createValidator} from "express-joi-validation";
 import {CreateNodeValidationSchema, UpdateNodeValidationSchema} from "../Controller/Api/NodeControllerValidation";
 import {CreateNodeDiskInforamtionValidationSchema} from "../Controller/Api/NodeDiskInformationControllerValidation";
-import {CreateNodeUptimeValidationSchema} from "../Controller/Api/NodeUptimeControllerValidation";
+import {
+    CreateNodeUptimeValidationSchema,
+    FetchNodeUptimeValidationSchema
+} from "../Controller/Api/NodeUptimeControllerValidation";
 
 import {UserValidationSchema} from "../Controller/Api/UserControllerValidation";
 import {CreateGeneralMinerInfoValidationSchema} from "../Controller/Api/GeneralMinerInfoControllerValidation";
@@ -57,8 +60,8 @@ export function createApiRoutes(
 
     router.get(
         "/user/node/uptime/:nodeId",
-        [passNodeData, AuthorizeUser],
-        controllers.nodeUptimeController.getNodeUptime.bind(controllers.nodeUptimeController));
+        [validator.query(FetchNodeUptimeValidationSchema), passNodeData, AuthorizeUser],
+        controllers.nodeUptimeController.fetchNodeUptime.bind(controllers.nodeUptimeController));
 
     router.put(
         "/user/node/generalminerinfo",
