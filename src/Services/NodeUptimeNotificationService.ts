@@ -81,7 +81,7 @@ export class NodeUptimeNotificationService {
         const node = await this.nodeService.getNodeByPk(uptime.nodeId);
         if (node != null) {
             const user = await this.userService.getUserByPk(node.userId);
-            if (user != null) {
+            if (user != null && user.) {
                 logger.info(`Sending mail to:${user.email} for node:${node.id}::${node.address}`);
                 if (config.env != "dev") {
                     await this.emailService.sendEmailNotification(

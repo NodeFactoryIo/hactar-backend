@@ -32,6 +32,14 @@ export class NodeService {
         return await Node.findByPk(nodeId);
     }
 
+    public async getNodeWithUserByPk(nodeId: number) {
+        return await Node.findByPk(nodeId, {
+            include: [
+                {}
+            ]
+        })
+    }
+
     public static async getNodeByData(url: string, address: string) {
         return await Node.findOne({
             raw: true,
