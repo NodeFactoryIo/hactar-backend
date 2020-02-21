@@ -17,10 +17,10 @@ export class GeneralMinerInfoController {
         req: ValidatedRequest<CreateGeneralMinerInfoRequestSchema>,
         res: Response) {
         try {
-            const {version, sectorSize, minerPower, totalPower} = req.body;
+            const {version, sectorSize, numberOfSectors, minerPower, totalPower} = req.body;
             const nodeId = res.locals.node.id;
             const result = await this.generalMinerInfoService.updateOrCreateGeneralMinerInfo(
-                version, sectorSize, minerPower, totalPower, nodeId);
+                version, sectorSize, numberOfSectors, minerPower, totalPower, nodeId);
             res.status(200).json(result)
         } catch (e) {
             logger.error(`Error occurred on storing/updating general miner info in controller: ${e.message}`);
