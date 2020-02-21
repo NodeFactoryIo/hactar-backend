@@ -11,7 +11,7 @@ import {
 } from "../Controller/Api/NodeDiskInformationControllerValidation";
 import {UserValidationSchema} from "../Controller/Api/UserControllerValidation";
 import {CreateGeneralMinerInfoValidationSchema} from "../Controller/Api/GeneralMinerInfoControllerValidation";
-import {CreateMiningRewardsValidationSchema} from "../Controller/Api/MiningRewardsControllerValidation";
+import {CreateMiningRewardsValidationSchema, FetchMiningRewardsValidationSchema} from "../Controller/Api/MiningRewardsControllerValidation";
 import {CreateNodeBalanceValidationSchema} from "../Controller/Api/NodeBalanceControllerValidation";
 import {CreateNodePastDealsValidationSchema} from "../Controller/Api/NodePastDealsControllerValidation";
 
@@ -80,6 +80,11 @@ export function createApiRoutes(
         "/user/node/miningrewards",
         [validator.body(CreateMiningRewardsValidationSchema), passNodeData, AuthorizeUser],
         controllers.miningRewardsController.storeMiningRewards.bind(controllers.miningRewardsController));
+
+    router.get(
+        "/user/node/miningrewards/:nodeId",
+        [validator.query(FetchMiningRewardsValidationSchema), passNodeData, AuthorizeUser],
+        controllers.miningRewardsController.fetchMiningRewards.bind(controllers.miningRewardsController));
 
     router.post(
         "/user/node/balance",
