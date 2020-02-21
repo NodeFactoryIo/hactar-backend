@@ -1,7 +1,10 @@
 import express from "express";
 import {createValidator} from "express-joi-validation";
 import {CreateNodeValidationSchema, UpdateNodeValidationSchema} from "../Controller/Api/NodeControllerValidation";
-import {CreateNodeDiskInforamtionValidationSchema} from "../Controller/Api/NodeDiskInformationControllerValidation";
+import {
+    CreateNodeDiskInforamtionValidationSchema,
+    FetchNodeDiskInforamtionValidationSchema,
+} from "../Controller/Api/NodeDiskInformationControllerValidation";
 import {CreateNodeUptimeValidationSchema} from "../Controller/Api/NodeUptimeControllerValidation";
 
 import {UserValidationSchema} from "../Controller/Api/UserControllerValidation";
@@ -47,7 +50,7 @@ export function createApiRoutes(
 
     router.get(
         "/user/node/diskinformation/:nodeId",
-        [passNodeData, AuthorizeUser],
+        [validator.query(FetchNodeDiskInforamtionValidationSchema), passNodeData, AuthorizeUser],
         controllers.nodeDiskInformationController.fetchNodeDiskInfo.bind(controllers.nodeDiskInformationController));
 
     router.post(
