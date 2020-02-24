@@ -1,3 +1,6 @@
+import * as moment from "moment";
+import {unitOfTime} from "moment";
+import {Op} from "sequelize";
 import {NodeDiskInformation} from "../Models/NodeDiskInformation";
 
 export class NodeDiskInformationService {
@@ -10,12 +13,17 @@ export class NodeDiskInformationService {
         });
     }
 
-    public async fetchDiskInfo(nodeId: number) {
+    public async fetchDiskInfo(nodeId: number, filter: string) {
         return await NodeDiskInformation.findAll({
             raw: true,
             where: {
-                nodeId
-            }
+                nodeId,
+                updatedAt: {
+                    [Op.gte]:
+                        moment.utc().subtract(1, filter as unitOfTime.Base).format("YYYY-MM-DD HH:MM:ssZZ")
+                }
+            },
+            order: [['updatedAt', 'DESC']]
         });
     }
 }
