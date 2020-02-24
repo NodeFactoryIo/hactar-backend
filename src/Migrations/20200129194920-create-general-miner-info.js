@@ -15,6 +15,9 @@ module.exports = {
             sectorSize: {
                 type: sequelize.BIGINT
             },
+            numberOfSectors: {
+                type: sequelize.INTEGER
+            },
             minerPower: {
                 type: sequelize.BIGINT
             },

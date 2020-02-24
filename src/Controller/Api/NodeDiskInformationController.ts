@@ -1,9 +1,12 @@
-import {Request, Response} from "express";
+import {Response} from "express";
 import {ValidatedRequest} from "express-joi-validation";
 
 import {NodeDiskInformationService} from "../../Services/NodeDiskInformationService";
 import logger from "../../Services/Logger";
-import {CreateNodeDiskInformationRequestSchema} from "./NodeDiskInformationControllerValidation";
+import {
+    CreateNodeDiskInformationRequestSchema,
+    FetchNodeDiskInformationRequestSchema
+} from "./NodeDiskInformationControllerValidation";
 
 export class NodeDiskInformationController {
 
@@ -29,10 +32,11 @@ export class NodeDiskInformationController {
         }
     }
 
-    public async fetchNodeDiskInfo(req: Request, res: Response) {
+    public async fetchNodeDiskInfo(req: ValidatedRequest<FetchNodeDiskInformationRequestSchema>,
+        res: Response) {
         try {
-            const {nodeId} = req.params;
-            const result = await this.nodeDiskInformationService.fetchDiskInfo(nodeId);
+            const nodeId = res.locals.node.id;
+            const result = await this.nodeDiskInformationService.fetchDiskInfo(nodeId, req.query.filter);
             if (result) {
                 res.status(200).json(result)
             }

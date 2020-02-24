@@ -33,7 +33,7 @@ function seedUndo() {
 }
 
 function e2e() {
-  sh("docker-compose run -e NODE_ENV=test --rm backend yarn run test:e2e", {async: false, nopipe: true});
+  sh("docker-compose run -e NODE_ENV=test-e2e --rm backend yarn run test:e2e", {async: false, nopipe: true});
 }
 
 function unit() {

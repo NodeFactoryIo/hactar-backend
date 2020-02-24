@@ -37,7 +37,7 @@ describe("NodeDiskInformation Controller", function () {
         });
     });
 
-    describe('GET /user/node/diskinformation/:nodeId', () => {
+    describe('GET /user/node/diskinformation/:nodeId?filter=week', () => {
         const nodeDiskInfoStub = sinon.createStubInstance(NodeDiskInformationService);
         nodeDiskInfoStub.fetchDiskInfo.resolves([
             {
@@ -47,12 +47,18 @@ describe("NodeDiskInformation Controller", function () {
             } as unknown as NodeDiskInformation
         ]);
 
-        it('should return an array of disk information for a certain node', async function () {
+        it('should return a filtered array (by week) of disk information for a certain node', async function () {
             try {
                 const nodeDiskInfoController = new NodeDiskInformationController(
                     nodeDiskInfoStub as unknown as NodeDiskInformationService);
                 const response = {} as Response;
-                response.json = sinon.spy((result) => expect(result).to.be.an("Array")) as any;
+                response.locals = {node: {id: 100}};
+                response.json = sinon.spy((result) => {
+                    expect(result).to.be.an("Array");
+                    expect(result[0]).to.have.ownProperty('freeSpace');
+                    expect(result[0]).to.have.ownProperty('takenSpace');
+                    expect(result[0]).to.have.ownProperty('nodeId');
+                }) as any;
                 response.status = sinon.spy((result) => {
                     expect(result).to.equal(200)
                     return response;
@@ -61,6 +67,9 @@ describe("NodeDiskInformation Controller", function () {
                 await nodeDiskInfoController.fetchNodeDiskInfo({
                     params: {
                         nodeId: 100
+                    },
+                    query: {
+                        filter: 'week'
                     }
                 } as Request, response)
             } catch (err) {
