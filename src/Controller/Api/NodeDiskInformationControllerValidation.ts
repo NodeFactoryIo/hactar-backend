@@ -20,3 +20,13 @@ export const CreateNodeDiskInforamtionValidationSchema = Joi.object({
         address: Joi.string().required(),
     })
 });
+
+export interface FetchNodeDiskInformationRequestSchema extends ValidatedRequestSchema {
+    [ContainerTypes.Query]: {
+        filter: string;
+    };
+}
+
+export const FetchNodeDiskInforamtionValidationSchema = Joi.object({
+    filter: Joi.string().required(),
+});
