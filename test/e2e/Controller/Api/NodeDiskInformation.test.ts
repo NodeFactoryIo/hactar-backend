@@ -24,7 +24,8 @@ describe("Node disk information controller - fetch disk information test", async
             token: 'token111',
             url: 'url111',
             address: 'address111',
-            userId: 100
+            userId: 100,
+            notifications: true
         });
         await NodeDiskInformation.create({
             id: 10,
