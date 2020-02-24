@@ -31,7 +31,10 @@ export class NodeBalanceService {
                 balanceChangePerc: (latestRecord.minus(earliestRecord))
                     .div(earliestRecord).multipliedBy(100).toFixed(2) + '%'
             }
+        } else {
+            return {
+                currentBalance: 0
+            }
         }
-        throw new ServiceError(404, "No balance found.")
     }
 }
