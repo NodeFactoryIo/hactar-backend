@@ -14,7 +14,8 @@ describe("Node controller add/update additional node info tests", async () => {
             url: 'some url',
             token: 'some token',
             address: 'some address',
-            userId: 100
+            userId: 100,
+            notifications: true
         });
     })
 

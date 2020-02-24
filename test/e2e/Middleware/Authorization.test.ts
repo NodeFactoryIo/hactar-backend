@@ -19,7 +19,8 @@ describe("Authorization middleware tests", async () => {
             url: 'url111',
             token: 'token111',
             address: 'address111',
-            userId: 100
+            userId: 100,
+            notifications: true
         });
     })
 

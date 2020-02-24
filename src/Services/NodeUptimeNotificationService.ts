@@ -31,9 +31,9 @@ export class NodeUptimeNotificationService {
         const currentNodeStatus = await this.nodeStatusService.getNodeStatusByNodeId(nodeUptime.nodeId);
         const newNodeStatus = {nodeId: nodeUptime.nodeId, isUp: nodeUptime.isWorking, isReported: true} as NodeStatus;
         if (currentNodeStatus != null) {
-            this.updateExistingNodeStatus(nodeUptime, newNodeStatus, currentNodeStatus);
+            await this.updateExistingNodeStatus(nodeUptime, newNodeStatus, currentNodeStatus);
         } else {
-            this.createNewNodeStatus(nodeUptime, newNodeStatus);
+            await this.createNewNodeStatus(nodeUptime, newNodeStatus);
         }
     }
 
@@ -79,9 +79,9 @@ export class NodeUptimeNotificationService {
 
     private async sendUptimeNotification(uptime: NodeUptime): Promise<void> {
         const node = await this.nodeService.getNodeByPk(uptime.nodeId);
-        if (node != null) {
+        if (node != null && node.notifications) {
             const user = await this.userService.getUserByPk(node.userId);
-            if (user != null && user.) {
+            if (user != null) {
                 logger.info(`Sending mail to:${user.email} for node:${node.id}::${node.address}`);
                 if (config.env != "dev") {
                     await this.emailService.sendEmailNotification(

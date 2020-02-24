@@ -8,7 +8,7 @@ import {ServiceError} from "../../Services/ServiceError";
 
 export class NodeController {
 
-    private nodeService: NodeService
+    private nodeService: NodeService;
 
     constructor(nodeService: NodeService) {
         this.nodeService = nodeService;
@@ -16,9 +16,11 @@ export class NodeController {
 
     public async createNode(req: ValidatedRequest<CreateNodeRequestSchema>, res: Response): Promise<any> {
         try {
-            const {token, nodeInfo} = req.body;
+            const {token, nodeInfo, notifications} = req.body;
             const userId = res.locals.userId;
-            const result = await this.nodeService.createNode(nodeInfo.url, token, nodeInfo.address, userId);
+            const result = await this.nodeService.createNode(
+                nodeInfo.url, token, nodeInfo.address, userId, notifications
+            );
             res.status(201).json(result);
         } catch (e) {
             logger.error(`Error occurred on creating node in controller: ${e}`);

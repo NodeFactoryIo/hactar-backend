@@ -41,7 +41,7 @@ describe("NodeUptimeNotificationService", function () {
     const nodeUptimeNotWorking = {nodeId: testNodeId, isWorking: false} as NodeUptime;
     // eslint-disable-next-line @typescript-eslint/camelcase
     const testUser = {email: "user@email.com", id: 1, hash_password: "ps"} as User;
-    const testNode = {id: 1, userId: 1, address: "t0101", url: "mynodes.com/1"} as Node;
+    const testNode = {id: 1, userId: 1, address: "t0101", url: "mynodes.com/1", notifications: true} as Node;
 
     let nodeUptimeNotificationService: NodeUptimeNotificationService;
 

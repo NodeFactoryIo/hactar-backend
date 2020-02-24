@@ -3,8 +3,8 @@ import {ServiceError} from "./ServiceError";
 
 export class NodeService {
 
-    public async createNode(url: string, token: string, address: string, userId: number) {
-        return await Node.create({url, token, address, userId});
+    public async createNode(url: string, token: string, address: string, userId: number, notifications: boolean) {
+        return await Node.create({url, token, address, userId, notifications});
     }
 
     public async addNodeAdditionalInfo(name: string, description: string, nodeId: number) {
@@ -30,14 +30,6 @@ export class NodeService {
 
     public async getNodeByPk(nodeId: number) {
         return await Node.findByPk(nodeId);
-    }
-
-    public async getNodeWithUserByPk(nodeId: number) {
-        return await Node.findByPk(nodeId, {
-            include: [
-                {}
-            ]
-        })
     }
 
     public static async getNodeByData(url: string, address: string) {

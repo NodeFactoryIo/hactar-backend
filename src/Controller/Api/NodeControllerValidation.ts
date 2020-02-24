@@ -10,6 +10,7 @@ export interface CreateNodeRequestSchema extends ValidatedRequestSchema {
         };
         name: string;
         description: string;
+        notifications: boolean;
     };
 }
 
@@ -19,6 +20,7 @@ export const CreateNodeValidationSchema = Joi.object({
         url: Joi.string().required(),
         address: Joi.string().required(),
     }),
+    notifications: Joi.bool().required()
 });
 
 export const UpdateNodeValidationSchema = Joi.object({

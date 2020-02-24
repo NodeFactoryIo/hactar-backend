@@ -10,6 +10,7 @@ export class Node extends Model {
     public userId: number;
     public name: string;
     public description: string;
+    public notifications: boolean;
 
     public static initialize(sequelize: Sequelize) {
         this.init({
@@ -32,6 +33,10 @@ export class Node extends Model {
             description: {
                 type: DataTypes.STRING,
                 allowNull: true
+            },
+            notifications: {
+                type: DataTypes.BOOLEAN,
+                allowNull: false
             }
         } as ModelAttributes,
             {
