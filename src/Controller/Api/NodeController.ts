@@ -5,7 +5,6 @@ import {NodeService} from "../../Services/NodeService";
 import logger from "../../Services/Logger";
 import {CreateNodeRequestSchema} from "./NodeControllerValidation";
 import {ServiceError} from "../../Services/ServiceError";
-import * as Joi from "@hapi/joi";
 
 export class NodeController {
 
