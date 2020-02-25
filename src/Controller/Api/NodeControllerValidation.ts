@@ -29,5 +29,6 @@ export const UpdateNodeValidationSchema = Joi.object({
         address: Joi.string().required(),
     }),
     name: Joi.string(),
-    description: Joi.string()
+    description: Joi.string(),
+    hasEnabledNotifications: Joi.bool()
 });

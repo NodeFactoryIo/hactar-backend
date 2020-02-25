@@ -23,8 +23,7 @@ describe("Node controller add/update additional node info tests", async () => {
             url: 'some url',
             token: 'some token',
             address: 'some address',
-            userId: 100,
-            notifications: true
+            userId: 100
         });
     });
 
@@ -46,7 +45,8 @@ describe("Node controller add/update additional node info tests", async () => {
                         address: 'some address'
                     },
                     name: 'node name',
-                    description: 'node description'
+                    description: 'node description',
+                    hasEnabledNotifications: false
                 })
                 .expect(200)
                 .end((err, res) => {
@@ -55,7 +55,8 @@ describe("Node controller add/update additional node info tests", async () => {
                     expect(res.body).to.deep.include(
                         {
                             name: 'node name',
-                            description: 'node description'
+                            description: 'node description',
+                            hasEnabledNotifications: false
                         });
                     done()
                 });

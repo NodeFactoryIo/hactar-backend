@@ -7,10 +7,12 @@ export class NodeService {
         return await Node.create({url, token, address, userId, hasEnabledNotifications: true});
     }
 
-    public async addNodeAdditionalInfo(name: string, description: string, nodeId: number) {
+    public async addNodeAdditionalInfo(
+        name: string, description: string, hasEnabledNotifications: boolean, nodeId: number
+    ) {
         const node = await this.getNodeByPk(nodeId);
         if (node) {
-            const updatedNode = await Node.update({name, description},
+            const updatedNode = await Node.update({name, description, hasEnabledNotifications},
                 {
                     where: {
                         id: nodeId

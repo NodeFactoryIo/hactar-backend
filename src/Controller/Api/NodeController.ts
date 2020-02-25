@@ -5,6 +5,7 @@ import {NodeService} from "../../Services/NodeService";
 import logger from "../../Services/Logger";
 import {CreateNodeRequestSchema} from "./NodeControllerValidation";
 import {ServiceError} from "../../Services/ServiceError";
+import * as Joi from "@hapi/joi";
 
 export class NodeController {
 
@@ -30,9 +31,11 @@ export class NodeController {
 
     public async addNodeAdditionalInfo(req: Request, res: Response) {
         try {
-            const {name, description} = req.body;
+            const {name, description, hasEnabledNotifications} = req.body;
             const nodeId = res.locals.node.id;
-            const node = await this.nodeService.addNodeAdditionalInfo(name, description, nodeId);
+            const node = await this.nodeService.addNodeAdditionalInfo(
+                name, description, hasEnabledNotifications, nodeId
+            );
             res.status(200).json(node);
         } catch (e) {
             logger.error(`Error occurred on storing/updating node name/description in controller: ${e.message}`);
