@@ -11,9 +11,11 @@ describe("GeneralMinerInfoController", function () {
         // @ts-ignore
         generalMinerInfoStub.updateOrCreateGeneralMinerInfo.resolves({
             version: '1.0.1',
-            sectorSize: 100,
-            minerPower: 150,
-            totalPower: 300,
+            walletAddress: "test-wallet-address",
+            sectorSize: "100",
+            numberOfSectors: 4,
+            minerPower: "150",
+            totalPower: "300",
             nodeId: 100
         });
 
@@ -33,9 +35,11 @@ describe("GeneralMinerInfoController", function () {
                 await generalMinerInfoController.updateOrCreateGeneralMinerInfo({
                     body: {
                         version: '1.0.1',
-                        sectorSize: 100,
-                        minerPower: 150,
-                        totalPower: 300,
+                        walletAddress: "test-wallet-address",
+                        sectorSize: "100",
+                        numberOfSectors: 4,
+                        minerPower: "150",
+                        totalPower: "300",
                     }
                 } as Request, response)
             } catch (err) {
@@ -49,9 +53,11 @@ describe("GeneralMinerInfoController", function () {
         // @ts-ignore
         generalMinerInfoStub.fetchGeneralMinerInfo.resolves({
             version: '1.0.1',
-            sectorSize: 100,
-            minerPower: 150,
-            totalPower: 300,
+            walletAddress: "test-wallet-address",
+            sectorSize: "100",
+            numberOfSectors: 4,
+            minerPower: "150",
+            totalPower: "300",
             nodeId: 100
         });
 
