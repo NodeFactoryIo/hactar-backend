@@ -36,7 +36,8 @@ export class Node extends Model {
             },
             hasEnabledNotifications: {
                 type: DataTypes.BOOLEAN,
-                allowNull: false
+                allowNull: false,
+                defaultValue: true
             }
         } as ModelAttributes,
             {
