@@ -28,6 +28,7 @@ export class NodeBalanceService {
             return {
                 currentBalance: latestRecord,
                 updatedAt: balances[balances.length - 1].updatedAt,
+                balanceChange: earliestRecord.minus(latestRecord),
                 balanceChangePerc: (latestRecord.minus(earliestRecord))
                     .div(earliestRecord).multipliedBy(100).toFixed(2) + '%'
             }
