@@ -4,7 +4,7 @@ import {ServiceError} from "./ServiceError";
 export class NodeService {
 
     public async createNode(url: string, token: string, address: string, userId: number) {
-        return await Node.create({url, token, address, userId, hasEnabledNotifications: true});
+        return await Node.create({url, token, address, userId});
     }
 
     public async addNodeAdditionalInfo(
