@@ -11,8 +11,6 @@ before(async function () {
     await database.init();
     await app.start();
     await database.sequelize.sync({force: true});
-    // eslint-disable-next-line no-console
-    console.log("DB initi before test suit finished")
 });
 
 after(async function () {
