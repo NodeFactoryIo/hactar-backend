@@ -7,7 +7,7 @@ export const app: App = new App();
 
 before(async function () {
     this.timeout(10000);
-    logger.silent = true;
+    logger.silent = false;
     await database.init();
     await app.start();
     await database.sequelize.sync({force: true});
@@ -16,5 +16,5 @@ before(async function () {
 after(async function () {
     this.timeout(10000);
     await app.stop();
-    logger.silent = false;
+    logger.silent = true;
 });
