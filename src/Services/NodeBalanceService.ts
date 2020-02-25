@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js'
 import * as moment from "moment"
 import {Op} from "sequelize";
 import {NodeBalance} from "../Models/NodeBalance";
-import {ServiceError} from "./ServiceError";
 
 export class NodeBalanceService {
 
