@@ -15,8 +15,6 @@ describe("Node disk information controller - fetch disk information test", async
 
     before(async function () {
         const password = bcrypt.hashSync('password', 10);
-        // eslint-disable-next-line no-console
-        console.log("Before Authorization e2e test");
         // eslint-disable-next-line
         await User.create({id: 100, email: 'test@test.com', hash_password: `${password}`})
         await Node.create({
@@ -36,8 +34,6 @@ describe("Node disk information controller - fetch disk information test", async
 
     after(async () => {
         await database.sequelize.sync({force: true});
-        // eslint-disable-next-line no-console
-        console.log("After NodeDiskInformation e2e test")
     });
 
     it("Should return a filtered array (by month) of disk information for a certain node", (done) => {
