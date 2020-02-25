@@ -2,6 +2,7 @@ module.exports = {
     up: (queryInterface) => {
         return queryInterface.bulkInsert('GeneralMinerInfo', [{
             version: '1.0.1',
+            walletAddress: "t3cc7o3jzopnzh2rfivtuwbqn7xc3i34ng7sepmn2btfh4scod4a2ede3oiyhhwnlpqd2noxdasozwyh2wbjea",
             sectorSize: 5,
             numberOfSectors: 2,
             minerPower: 42534,
@@ -12,6 +13,7 @@ module.exports = {
         },
         {
             version: '1.1.1',
+            walletAddress: "t3cc7o3jzopnzh2rfivtuwbqn7xc3i34ng7sepmn2btfh4scod4a2ede3oiyhhwnlpqd2noxdasozwyh2wbjea",
             sectorSize: 5,
             numberOfSectors: 3,
             minerPower: 7685765,
@@ -22,6 +24,7 @@ module.exports = {
         },
         {
             version: '2.0.1',
+            walletAddress: "q2bc7o3jzopnzh2rfivtuwbqn7xc3i34ng7sepmn2btfh4scod4a2ede3oiyhhwnlpqd2noxdasozwyh2wbjea",
             sectorSize: 10,
             numberOfSectors: 1,
             minerPower: 45645745,
@@ -32,6 +35,7 @@ module.exports = {
         },
         {
             version: '2.1.1',
+            walletAddress: "q2bc7o3jzopnzh2rfivtuwbqn7xc3i34ng7sepmn2btfh4scod4a2ede3oiyhhwnlpqd2noxdasozwyh2wbjea",
             sectorSize: 10,
             numberOfSectors: 6,
             minerPower: 345768568,

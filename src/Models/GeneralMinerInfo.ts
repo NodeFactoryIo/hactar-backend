@@ -4,6 +4,7 @@ import {Node} from "./Node";
 export class GeneralMinerInfo extends Model {
 
     private version: string;
+    private walletAddress: string;
     private sectorSize: string;
     private numberOfSectors: number;
     private minerPower: string;
@@ -15,6 +16,10 @@ export class GeneralMinerInfo extends Model {
             version: {
                 type: DataTypes.STRING(10),
                 allowNull: false,
+            },
+            walletAddress: {
+                type: DataTypes.STRING,
+                allowNull: false
             },
             sectorSize: {
                 type: DataTypes.STRING,

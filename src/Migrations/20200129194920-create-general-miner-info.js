@@ -12,6 +12,9 @@ module.exports = {
             version: {
                 type: sequelize.STRING
             },
+            walletAddress: {
+                type: sequelize.STRING
+            },
             sectorSize: {
                 type: sequelize.BIGINT
             },
