@@ -34,7 +34,7 @@ export class NodeBalanceService {
         } else {
             return {
                 currentBalance: 0,
-                updatedAt: moment.utc().format("YYYY-MM-DD HH:MM:ssZZ"),
+                updatedAt: moment.utc(),
                 balanceChange: 0,
                 balanceChangePerc: 0 + '%'
             }
