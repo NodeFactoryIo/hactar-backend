@@ -7,7 +7,7 @@ module.exports = {
             userId: 1,
             createdAt: new Date('2018-10-24T12:33:21').toLocaleString(),
             updatedAt: new Date('2018-10-24T12:33:21').toLocaleString(),
-            notifications: true
+            hasEnabledNotifications: true
         },
         {
             url: 'https://mynode.com/9834',
@@ -16,7 +16,7 @@ module.exports = {
             userId: 1,
             createdAt: new Date('2019-05-20T20:34:33').toLocaleString(),
             updatedAt: new Date('2019-05-20T20:34:33').toLocaleString(),
-            notifications: true,
+            hasEnabledNotifications: true,
         },
         {
             url: 'https://mynode.com/7843',
@@ -25,7 +25,7 @@ module.exports = {
             userId: 2,
             createdAt: new Date('2018-01-04T12:51:35').toLocaleString(),
             updatedAt: new Date('2018-01-04T12:51:35').toLocaleString(),
-            notifications: true
+            hasEnabledNotifications: true
         },
         {
             url: 'https://mynode.com/483234',
@@ -34,7 +34,7 @@ module.exports = {
             userId: 2,
             createdAt: new Date('2019-06-27T20:17:45').toLocaleString(),
             updatedAt: new Date('2019-06-27T20:17:45').toLocaleString(),
-            notifications: true
+            hasEnabledNotifications: true
         },
         {
             url: 'https://mynode.com/6523',
@@ -43,7 +43,7 @@ module.exports = {
             userId: 3,
             createdAt: new Date('2019-01-04T12:51:35').toLocaleString(),
             updatedAt: new Date('2019-01-04T12:51:35').toLocaleString(),
-            notifications: false
+            hasEnabledNotifications: false
         },
         {
             url: 'https://mynode.com/76452',
@@ -52,7 +52,7 @@ module.exports = {
             userId: 3,
             createdAt: new Date('2019-04-27T20:17:45').toLocaleString(),
             updatedAt: new Date('2019-04-27T20:17:45').toLocaleString(),
-            notifications: false
+            hasEnabledNotifications: false
         },
         {
             url: 'https://mynode.com/9874321',
@@ -61,7 +61,7 @@ module.exports = {
             userId: 4,
             createdAt: new Date('2019-05-04T12:51:35').toLocaleString(),
             updatedAt: new Date('2019-05-04T12:51:35').toLocaleString(),
-            notifications: false
+            hasEnabledNotifications: false
         },
         {
             url: 'https://mynode.com/8722',
@@ -70,7 +70,7 @@ module.exports = {
             userId: 4,
             createdAt: new Date('2019-06-27T20:17:45').toLocaleString(),
             updatedAt: new Date('2019-06-27T20:17:45').toLocaleString(),
-            notifications: false
+            hasEnabledNotifications: false
         }], {});
     },
 

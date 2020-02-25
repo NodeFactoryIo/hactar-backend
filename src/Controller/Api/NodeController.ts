@@ -16,10 +16,10 @@ export class NodeController {
 
     public async createNode(req: ValidatedRequest<CreateNodeRequestSchema>, res: Response): Promise<any> {
         try {
-            const {token, nodeInfo, notifications} = req.body;
+            const {token, nodeInfo} = req.body;
             const userId = res.locals.userId;
             const result = await this.nodeService.createNode(
-                nodeInfo.url, token, nodeInfo.address, userId, notifications
+                nodeInfo.url, token, nodeInfo.address, userId
             );
             res.status(201).json(result);
         } catch (e) {

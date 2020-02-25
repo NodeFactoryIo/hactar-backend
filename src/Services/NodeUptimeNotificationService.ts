@@ -79,7 +79,7 @@ export class NodeUptimeNotificationService {
 
     private async sendUptimeNotification(uptime: NodeUptime): Promise<void> {
         const node = await this.nodeService.getNodeByPk(uptime.nodeId);
-        if (node != null && node.notifications) {
+        if (node != null && node.hasEnabledNotifications) {
             const user = await this.userService.getUserByPk(node.userId);
             if (user != null) {
                 logger.info(`Sending mail to:${user.email} for node:${node.id}::${node.address}`);
