@@ -3,13 +3,14 @@ import {GeneralMinerInfo} from "../Models/GeneralMinerInfo";
 export class GeneralMinerInfoService {
 
     public async updateOrCreateGeneralMinerInfo(
-        version: string, sectorSize: string, numberOfSectors: number,
+        version: string, walletAddress: string,
+        sectorSize: string, numberOfSectors: number,
         minerPower: string, totalPower: string, nodeId: number
     ) {
         const node = await this.fetchGeneralMinerInfo(nodeId);
         if (node) {
             const updatedNode = await GeneralMinerInfo.update(
-                {version, sectorSize, numberOfSectors, minerPower, totalPower, nodeId},
+                {version, walletAddress, sectorSize, numberOfSectors, minerPower, totalPower, nodeId},
                 {
                     where: {
                         nodeId
@@ -18,7 +19,9 @@ export class GeneralMinerInfoService {
                 });
             return await updatedNode[1][0]; // returns the updated object, without updates count
         }
-        return await GeneralMinerInfo.create({version, sectorSize, numberOfSectors, minerPower, totalPower, nodeId});
+        return await GeneralMinerInfo.create(
+            {version, walletAddress, sectorSize, numberOfSectors, minerPower, totalPower, nodeId}
+        );
     }
 
     public async fetchGeneralMinerInfo(nodeId: number) {
