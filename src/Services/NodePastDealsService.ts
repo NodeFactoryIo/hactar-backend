@@ -2,6 +2,11 @@ import {NodePastDeal} from "../Models/NodePastDeal";
 
 export class NodePastDealsService {
 
+    public async replacePastDealsForNode(pastDeals: NodePastDeal[], nodeId: number) {
+        await NodePastDeal.destroy({where: {nodeId}});
+        return await NodePastDeal.bulkCreate(pastDeals);
+    }
+
     public async updateOrCreatePastDeal(
         cid: string, state: number, size: string, provider: string, price: string, duration: number, nodeId: number) {
         const pastDeal = await NodePastDeal.findOne({
