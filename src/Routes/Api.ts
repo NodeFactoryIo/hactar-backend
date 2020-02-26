@@ -11,7 +11,10 @@ import {
 } from "../Controller/Api/NodeDiskInformationControllerValidation";
 import {UserValidationSchema} from "../Controller/Api/UserControllerValidation";
 import {CreateGeneralMinerInfoValidationSchema} from "../Controller/Api/GeneralMinerInfoControllerValidation";
-import {CreateMiningRewardsValidationSchema, FetchMiningRewardsValidationSchema} from "../Controller/Api/MiningRewardsControllerValidation";
+import {
+    CreateMiningRewardsValidationSchema,
+    FetchMiningRewardsValidationSchema
+} from "../Controller/Api/MiningRewardsControllerValidation";
 import {CreateNodeBalanceValidationSchema} from "../Controller/Api/NodeBalanceControllerValidation";
 import {CreateNodePastDealsValidationSchema} from "../Controller/Api/NodePastDealsControllerValidation";
 
