@@ -28,5 +28,5 @@ export interface FetchMiningRewardsRequestSchema extends ValidatedRequestSchema 
 }
 
 export const FetchMiningRewardsValidationSchema = Joi.object({
-    filter: Joi.string().required(),
+    filter: Joi.string().valid('day', 'week', 'month', 'year').required(),
 });
