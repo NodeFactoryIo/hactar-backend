@@ -20,3 +20,13 @@ export const CreateMiningRewardsValidationSchema = Joi.array().items(
         })
     })
 );
+
+export interface FetchMiningRewardsRequestSchema extends ValidatedRequestSchema {
+    [ContainerTypes.Query]: {
+        filter: string;
+    };
+}
+
+export const FetchMiningRewardsValidationSchema = Joi.object({
+    filter: Joi.string().valid('day', 'week', 'month', 'year').required(),
+});

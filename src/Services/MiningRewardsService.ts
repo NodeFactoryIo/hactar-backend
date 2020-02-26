@@ -1,8 +1,12 @@
-import {MiningReward} from "../Models/MiningReward";
+import logger from "./Logger";
+import * as moment from "moment";
+import {unitOfTime} from "moment";
+import {Op} from "sequelize";
+
 import config from "../Config/Config";
 import {Node} from "../Models/Node";
+import {MiningReward} from "../Models/MiningReward";
 import {MiningRewardInput} from "../Types/MiningRewardInputType";
-import logger from "./Logger";
 
 export class MiningRewardsService {
 
@@ -21,5 +25,19 @@ export class MiningRewardsService {
                 }
             }
         )
+    }
+
+    public async fetchMiningRewards(nodeId: number, filter: string) {
+        return await MiningReward.findAll({
+            raw: true,
+            where: {
+                nodeId,
+                updatedAt: {
+                    [Op.gte]:
+                        moment.utc().subtract(1, filter as unitOfTime.Base).format("YYYY-MM-DD HH:MM:ssZZ")
+                }
+            },
+            order: [['updatedAt', 'DESC']]
+        });
     }
 }
