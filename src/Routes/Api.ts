@@ -9,7 +9,7 @@ import {
     CreateNodeDiskInforamtionValidationSchema,
     FetchNodeDiskInforamtionValidationSchema,
 } from "../Controller/Api/NodeDiskInformationControllerValidation";
-import {UserValidationSchema} from "../Controller/Api/UserControllerValidation";
+import {UserValidationSchema, UpdateAccountValidationSchema} from "../Controller/Api/UserControllerValidation";
 import {CreateGeneralMinerInfoValidationSchema} from "../Controller/Api/GeneralMinerInfoControllerValidation";
 import {
     CreateMiningRewardsValidationSchema,
@@ -118,6 +118,11 @@ export function createApiRoutes(
         "/user/daemon/login",
         validator.body(UserValidationSchema),
         controllers.userController.loginUserDaemonApp.bind(controllers.userController));
+
+    router.put(
+        "/user/account",
+        [validator.body(UpdateAccountValidationSchema), AuthorizeUser],
+        controllers.userController.updateUserAccount.bind(controllers.userController));
 
     return router;
 }
