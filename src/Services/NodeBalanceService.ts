@@ -2,7 +2,6 @@ import BigNumber from 'bignumber.js'
 import * as moment from "moment"
 import {Op} from "sequelize";
 import {NodeBalance} from "../Models/NodeBalance";
-import {ServiceError} from "./ServiceError";
 
 export class NodeBalanceService {
 
@@ -28,10 +27,17 @@ export class NodeBalanceService {
             return {
                 currentBalance: latestRecord,
                 updatedAt: balances[balances.length - 1].updatedAt,
+                balanceChange: earliestRecord.minus(latestRecord),
                 balanceChangePerc: (latestRecord.minus(earliestRecord))
                     .div(earliestRecord).multipliedBy(100).toFixed(2) + '%'
             }
+        } else {
+            return {
+                currentBalance: 0,
+                updatedAt: moment.utc(),
+                balanceChange: 0,
+                balanceChangePerc: 0 + '%'
+            }
         }
-        throw new ServiceError(404, "No balance found.")
     }
 }
