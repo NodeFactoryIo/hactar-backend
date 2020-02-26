@@ -1,4 +1,4 @@
-FROM nodefactory/nodejs-ts-starter:latest
+FROM nodefactory/hactar-backend:latest
 
 RUN yarn run build
 
