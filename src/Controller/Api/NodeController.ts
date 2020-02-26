@@ -8,7 +8,7 @@ import {ServiceError} from "../../Services/ServiceError";
 
 export class NodeController {
 
-    private nodeService: NodeService
+    private nodeService: NodeService;
 
     constructor(nodeService: NodeService) {
         this.nodeService = nodeService;
@@ -18,7 +18,9 @@ export class NodeController {
         try {
             const {token, nodeInfo} = req.body;
             const userId = res.locals.userId;
-            const result = await this.nodeService.createNode(nodeInfo.url, token, nodeInfo.address, userId);
+            const result = await this.nodeService.createNode(
+                nodeInfo.url, token, nodeInfo.address, userId
+            );
             res.status(201).json(result);
         } catch (e) {
             logger.error(`Error occurred on creating node in controller: ${e}`);
@@ -28,9 +30,11 @@ export class NodeController {
 
     public async addNodeAdditionalInfo(req: Request, res: Response) {
         try {
-            const {name, description} = req.body;
+            const {name, description, hasEnabledNotifications} = req.body;
             const nodeId = res.locals.node.id;
-            const node = await this.nodeService.addNodeAdditionalInfo(name, description, nodeId);
+            const node = await this.nodeService.addNodeAdditionalInfo(
+                name, description, hasEnabledNotifications, nodeId
+            );
             res.status(200).json(node);
         } catch (e) {
             logger.error(`Error occurred on storing/updating node name/description in controller: ${e.message}`);

@@ -10,6 +10,7 @@ export interface CreateNodeRequestSchema extends ValidatedRequestSchema {
         };
         name: string;
         description: string;
+        hasEnabledNotifications: boolean;
     };
 }
 
@@ -19,6 +20,7 @@ export const CreateNodeValidationSchema = Joi.object({
         url: Joi.string().required(),
         address: Joi.string().required(),
     }),
+    hasEnabledNotifications: Joi.bool()
 });
 
 export const UpdateNodeValidationSchema = Joi.object({
@@ -27,5 +29,6 @@ export const UpdateNodeValidationSchema = Joi.object({
         address: Joi.string().required(),
     }),
     name: Joi.string(),
-    description: Joi.string()
+    description: Joi.string(),
+    hasEnabledNotifications: Joi.bool()
 });

@@ -41,7 +41,8 @@ describe("Node controller add/update additional node info tests", async () => {
                         address: 'some address'
                     },
                     name: 'node name',
-                    description: 'node description'
+                    description: 'node description',
+                    hasEnabledNotifications: false
                 })
                 .expect(200)
                 .end((err, res) => {
@@ -50,7 +51,8 @@ describe("Node controller add/update additional node info tests", async () => {
                     expect(res.body).to.deep.include(
                         {
                             name: 'node name',
-                            description: 'node description'
+                            description: 'node description',
+                            hasEnabledNotifications: false
                         });
                     done()
                 });
