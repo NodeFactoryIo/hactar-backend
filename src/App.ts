@@ -4,6 +4,7 @@ import helmet from "helmet";
 import http from "http";
 import morgan from "morgan";
 import {createValidator} from "express-joi-validation";
+import cors from "cors";
 
 import config from "./Config/Config";
 import {createApiRoutes} from "./Routes/Api";
@@ -54,6 +55,9 @@ export class App implements Service {
 
     private addInitialRoutes(): void {
         const router = Router();
+        if (config.env === "dev") {
+            router.use(cors() as any);
+        }
         router.get("/", (req: Request, res: Response) => {
             res.json({
                 message: "Welcome stranger!",
