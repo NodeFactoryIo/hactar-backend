@@ -1,3 +1,4 @@
+import * as bcrypt from "bcryptjs";
 import sinon from "sinon";
 import {expect} from "chai";
 import {Request, Response} from "express";
@@ -6,23 +7,19 @@ import {UserController} from "../../../src/Controller/Api/UserController";
 import logger from "../../../src/Services/Logger";
 
 describe("UserController", function () {
-
-    const userServiceStub = sinon.createStubInstance(UserService);
-
-    const userController = new UserController(
-        userServiceStub as unknown as UserService);
-
-    const response = {} as Response;
-
+    const password = bcrypt.hashSync('super secret password', 10);
     describe('POST /user/register', () => {
-
+        const userServiceStub = sinon.createStubInstance(UserService);
         // @ts-ignore
-        userServiceStub.registerUser.resolves({email: 'example@example.com', password: 'super secret password'});
+        userServiceStub.registerUser.resolves({email: 'example@example.com', password: password});
 
         it('should add new user to the database', async function () {
             try {
+                const userController = new UserController(
+                    userServiceStub as unknown as UserService);
+                const response = {} as Response;
                 response.json = sinon.spy((result) =>
-                    expect(result.password).to.be.equal('super secret password')) as any;
+                    expect(result.password).to.be.equal(password)) as any;
 
                 response.status = sinon.spy((result) => {
                     expect(result).to.equal(201)
@@ -43,11 +40,15 @@ describe("UserController", function () {
     });
 
     describe('POST /user/login', () => {
+        const userServiceStub = sinon.createStubInstance(UserService);
         // @ts-ignore
         userServiceStub.authenticateUser.resolves({"token": "test token"});
 
         it('should return JWT on existing valid email and password input', async function () {
             try {
+                const userController = new UserController(
+                    userServiceStub as unknown as UserService);
+                const response = {} as Response;
                 response.json = sinon.spy((result) =>
                     expect(result).to.have.property('token')) as any;
 
@@ -70,11 +71,15 @@ describe("UserController", function () {
     });
 
     describe('POST /user/daemon/login', () => {
+        const userServiceStub = sinon.createStubInstance(UserService);
         // @ts-ignore
         userServiceStub.authenticateUserDaemonApp.resolves({"token": "test token"});
 
         it('should return JWT on existing valid email and password input', async function () {
             try {
+                const userController = new UserController(
+                    userServiceStub as unknown as UserService);
+                const response = {} as Response;
                 response.json = sinon.spy((result) =>
                     expect(result).to.have.property('token')) as any;
 
