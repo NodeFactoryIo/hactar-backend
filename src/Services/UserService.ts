@@ -1,7 +1,6 @@
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import config from "../Config/Config";
-
 import {User} from "../Models/User";
 import {ServiceError} from "./ServiceError";
 
@@ -66,5 +65,24 @@ export class UserService {
                 break;
         }
         return options
+    }
+
+    public async updateAccount(userId: number, email: string, password: string) {
+        let updateParams: object;
+        if (password && email) {
+            updateParams = {email, 'hash_password': bcrypt.hashSync(password, 10)};
+        } else if (password) {
+            updateParams = {'hash_password': bcrypt.hashSync(password, 10)};
+        } else {
+            updateParams = {email}
+        }
+        const updatedUser = await User.update(updateParams,
+            {
+                where: {
+                    id: userId
+                },
+                returning: true,
+            })
+        return await updatedUser[1][0]; // returns the updated object, without updates count
     }
 }
