@@ -13,13 +13,7 @@ export enum AuthSource {
 export class UserService {
 
     public async registerUser(email: string, password: string) {
-        const user = await User.findOne({
-            raw: true,
-            where: {
-                email,
-            }
-        });
-
+        const user = await this.getUserByEmail(email);
         if (user) {
             throw new ServiceError(409, "There is already a user with this email address.");
         }
@@ -31,6 +25,15 @@ export class UserService {
         return await User.findByPk(userId);
     }
 
+    public async getUserByEmail(email: string) {
+        return await User.findOne({
+            raw: true,
+            where: {
+                email,
+            }
+        });
+    }
+
     public async authenticateUser(email: string, password: string) {
         return await this.authenticate(email, password, AuthSource.CLIENT)
     }
@@ -40,12 +43,7 @@ export class UserService {
     }
 
     private async authenticate(email: string, password: string, source: AuthSource) {
-        const user = await User.findOne({
-            raw: true,
-            where: {
-                email,
-            }
-        });
+        const user = await this.getUserByEmail(email);
         if (user) {
             const authenticatedUser = bcrypt.compareSync(password, user['hash_password']);
             if (authenticatedUser) {
