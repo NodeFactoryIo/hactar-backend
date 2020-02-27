@@ -4,6 +4,7 @@ import {ValidatedRequest} from "express-joi-validation";
 import {NodePastDealsService} from "../../Services/NodePastDealsService";
 import {CreateNodePastDealsRequestSchema} from "./NodePastDealsControllerValidation";
 import logger from "../../Services/Logger";
+import {NodePastDeal} from "../../Models/NodePastDealModel";
 
 export class NodePastDealsController {
 
@@ -17,10 +18,10 @@ export class NodePastDealsController {
         req: ValidatedRequest<CreateNodePastDealsRequestSchema>,
         res: Response) {
         try {
-            const {cid, state, size, provider, price, duration} = req.body;
+            const {pastDeals} = req.body;
             const nodeId = res.locals.node.id;
-            const result = await this.nodePastDealsService.updateOrCreatePastDeal(
-                cid, state, size, provider, price, duration, nodeId);
+            const pastDealsWithNodeId = pastDeals.map(o => ({...o, nodeId: nodeId})) as NodePastDeal[];
+            const result = await this.nodePastDealsService.replacePastDealsForNode(pastDealsWithNodeId, nodeId);
             res.status(200).json(result)
         } catch (e) {
             logger.error(`Error occurred on storing/updating node past deal in controller: ${e.message}`);

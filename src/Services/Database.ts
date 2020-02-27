@@ -13,7 +13,7 @@ import {GeneralMinerInfo} from "../Models/GeneralMinerInfo";
 import {MiningReward} from "../Models/MiningReward";
 import {NodeBalance} from "../Models/NodeBalance";
 import {NodeStatus} from "../Models/NodeStatus";
-import {NodePastDeal} from "../Models/NodePastDeal";
+import {NodePastDealModel} from "../Models/NodePastDealModel";
 
 export class Database {
 
@@ -114,7 +114,7 @@ export class Database {
         GeneralMinerInfo.initialize(this.sequelize);
         MiningReward.initialize(this.sequelize);
         NodeBalance.initialize(this.sequelize);
-        NodePastDeal.initialize(this.sequelize);
+        NodePastDealModel.initialize(this.sequelize);
         NodeStatus.initialize(this.sequelize);
     }
 }
