@@ -4,7 +4,7 @@ import {ValidatedRequest} from "express-joi-validation";
 import {NodePastDealsService} from "../../Services/NodePastDealsService";
 import {CreateNodePastDealsRequestSchema} from "./NodePastDealsControllerValidation";
 import logger from "../../Services/Logger";
-import {NodePastDeal, NodePastDealModel} from "../../Models/NodePastDealModel";
+import {NodePastDeal} from "../../Models/NodePastDealModel";
 
 export class NodePastDealsController {
 
