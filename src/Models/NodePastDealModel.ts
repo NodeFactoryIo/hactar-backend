@@ -1,15 +1,26 @@
 import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequelize";
 import {Node} from "./Node";
 
-export class NodePastDeal extends Model {
+export interface NodePastDeal {
+    cid: string;
+    state: number;
+    size: string;
+    provider: string;
+    price: string;
+    duration: number;
+    nodeId: number;
+}
 
-    private cid: string;
-    private state: number;
-    private size: string;
-    private provider: string;
-    private price: string;
-    private duration: string;
-    private nodeId: number;
+
+export class NodePastDealModel extends Model implements NodePastDeal  {
+
+    cid: string;
+    state: number;
+    size: string;
+    provider: string;
+    price: string;
+    duration: number;
+    nodeId: number;
 
     public static initialize(sequelize: Sequelize) {
         this.init({
@@ -44,6 +55,6 @@ export class NodePastDeal extends Model {
                 freezeTableName: true,
             } as InitOptions);
         this.belongsTo(Node, {foreignKey: "nodeId"});
-        Node.hasOne(NodePastDeal, {foreignKey: "nodeId"});
+        Node.hasOne(NodePastDealModel, {foreignKey: "nodeId"});
     }
 }

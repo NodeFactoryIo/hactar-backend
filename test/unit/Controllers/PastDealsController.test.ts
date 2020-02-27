@@ -4,7 +4,7 @@ import {Request, Response} from "express";
 import {NodePastDealsService} from "../../../src/Services/NodePastDealsService";
 import {NodePastDealsController} from "../../../src/Controller/Api/NodePastDealsController";
 import logger from "../../../src/Services/Logger";
-import {NodePastDeal} from "../../../src/Models/NodePastDeal";
+import {NodePastDealModel} from "../../../src/Models/NodePastDealModel";
 
 describe("NodePastDealsController", function () {
     describe('PUT /user/node/pastdeals', () => {
@@ -20,7 +20,7 @@ describe("NodePastDealsController", function () {
                 "price": "100000",
                 "duration": 1000,
                 "nodeId": 100,
-            } as unknown as NodePastDeal,
+            } as unknown as NodePastDealModel,
             {
                 "id": 2,
                 "cid": "cid2",
@@ -30,7 +30,7 @@ describe("NodePastDealsController", function () {
                 "price": "100000",
                 "duration": 1000,
                 "nodeId": 100,
-            } as unknown as NodePastDeal
+            } as unknown as NodePastDealModel
         ]);
 
         it('should store new node past deal to database', async function () {
