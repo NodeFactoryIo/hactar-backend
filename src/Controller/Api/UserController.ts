@@ -67,15 +67,19 @@ export class UserController {
 
     public async updateUserAccount(req: Request, res: Response) {
         try {
-            const {email, password} = req.body;
+            const userAttrs = req.body;
             const userId = res.locals.userId;
-            const result = await this.userService.updateAccount(userId, email, password);
+            const result = await this.userService.updateAccount(userAttrs, userId);
             if (result) {
                 res.status(200).json(result)
             }
         } catch (e) {
-            logger.error(`Error occurred on updating user email/password in controller: ${e.message}`);
-            res.status(500).json({error: "An unknown error occurred."});
+            if (e instanceof ServiceError) {
+                res.status(e.status).json({error: e.message});
+            } else {
+                logger.error(`Error occurred on updating user email/password in controller: ${e.message}`);
+                res.status(500).json({error: "An unknown error occurred."});
+            }
         }
     }
 }
