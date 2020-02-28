@@ -1,10 +1,16 @@
 import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequelize";
 
-export class User extends Model {
+export interface User {
+    id: number;
+    email: string;
+    hash_password: string;
 
-    public id: number;
-    public email: string;
-    public hash_password: string;
+}
+export class UserModel extends Model implements User {
+
+    id: number;
+    email: string;
+    hash_password: string;
 
     public static initialize(sequelize: Sequelize) {
         this.init({

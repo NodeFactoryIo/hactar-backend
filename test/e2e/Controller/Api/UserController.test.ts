@@ -7,14 +7,14 @@ import database from "../../../../src/Services/Database";
 import config from "../../../../src/Config/Config";
 import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcryptjs";
-import {User} from "../../../../src/Models/User";
+import {UserModel} from "../../../../src/Models/UserModel";
 
-describe("User controller - edit account", async () => {
+describe("UserModel controller - edit account", async () => {
 
     before(async function () {
         const password = bcrypt.hashSync('password', 10);
         // eslint-disable-next-line
-        await User.create({id: 100, email: 'test@test.com', hash_password: `${password}`})
+        await UserModel.create({id: 100, email: 'test@test.com', hash_password: `${password}`})
     });
 
     after(async () => {

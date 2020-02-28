@@ -1,10 +1,10 @@
 import config from "../Config/Config";
-import {User} from "../Models/User";
+import {UserModel} from "../Models/UserModel";
 import axios, {AxiosRequestConfig} from "axios"
 import logger from "./Logger";
 
 export class EmailService {
-    public async sendEmailNotification(user: User, params: any, templateId: string): Promise<void> {
+    public async sendEmailNotification(user: UserModel, params: any, templateId: string): Promise<void> {
         const sendEmailRequest: AxiosRequestConfig = {
             data: {
                 to: [{

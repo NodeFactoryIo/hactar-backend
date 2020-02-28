@@ -6,7 +6,7 @@ import {NodeService} from "../../../src/Services/NodeService";
 import {NodeStatusService} from "../../../src/Services/NodeStatusService";
 import sinon from "sinon";
 import {NodeUptime} from "../../../src/Models/NodeUptime";
-import {User} from "../../../src/Models/User";
+import {UserModel} from "../../../src/Models/UserModel";
 import config from "../../../src/Config/Config";
 import {Node} from "../../../src/Models/Node";
 import * as chai from "chai";
@@ -40,7 +40,7 @@ describe("NodeUptimeNotificationService", function () {
     const nodeUptimeWorking = {nodeId: testNodeId, isWorking: true} as NodeUptime;
     const nodeUptimeNotWorking = {nodeId: testNodeId, isWorking: false} as NodeUptime;
     // eslint-disable-next-line @typescript-eslint/camelcase
-    const testUser = {email: "user@email.com", id: 1, hash_password: "ps"} as User;
+    const testUser = {email: "user@email.com", id: 1, hash_password: "ps"} as UserModel;
     const testNode = {id: 1, userId: 1, address: "t0101", url: "mynodes.com/1", hasEnabledNotifications: true} as Node;
 
     let nodeUptimeNotificationService: NodeUptimeNotificationService;
