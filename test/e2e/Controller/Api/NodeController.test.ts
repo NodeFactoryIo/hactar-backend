@@ -7,7 +7,7 @@ import * as jwt from "jsonwebtoken";
 import config from "../../../../src/Config/Config";
 import {Node} from "../../../../src/Models/Node";
 import * as bcrypt from "bcryptjs";
-import {User} from "../../../../src/Models/User";
+import {UserModel} from "../../../../src/Models/UserModel";
 import database from "../../../../src/Services/Database";
 
 describe("Node controller add/update additional node info tests", async () => {
@@ -15,7 +15,7 @@ describe("Node controller add/update additional node info tests", async () => {
     before(async function () {
         const password = bcrypt.hashSync('password', 10);
         // eslint-disable-next-line
-        await User.create({id: 100, email: 'test@test.com', hash_password: `${password}`})
+        await UserModel.create({id: 100, email: 'test@test.com', hash_password: `${password}`})
         await Node.create({
             id: 2,
             url: 'some url',

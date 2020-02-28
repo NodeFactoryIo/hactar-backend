@@ -1,10 +1,10 @@
-import * as bcrypt from "bcryptjs";
 import sinon from "sinon";
 import {expect} from "chai";
 import {Request, Response} from "express";
 import {UserService} from "../../../src/Services/UserService";
 import {UserController} from "../../../src/Controller/Api/UserController";
 import logger from "../../../src/Services/Logger";
+import * as bcrypt from "bcryptjs";
 
 describe("UserController", function () {
     const password = bcrypt.hashSync('super secret password', 10);
@@ -92,6 +92,40 @@ describe("UserController", function () {
                     body: {
                         email: 'example@example.com',
                         password: 'secret password'
+                    }
+                } as Request, response)
+            } catch (err) {
+                logger.error('Unexpected error occurred: ${err.message}');
+                expect.fail(err);
+            }
+        });
+    });
+
+    describe('PUT /user/account', () => {
+        const userServiceStub = sinon.createStubInstance(UserService);
+        // @ts-ignore
+        userServiceStub.updateAccount.resolves({email: 'new.email@test.com', password: password});
+
+        it('should update email and password of the user', async function () {
+            try {
+                const userController = new UserController(
+                    userServiceStub as unknown as UserService);
+                const response = {} as Response;
+                response.locals = {userId: 5};
+                response.json = sinon.spy((result) => {
+                    expect(result.password).to.be.equal(password);
+                    expect(result.email).to.be.equal('new.email@test.com');
+                }) as any;
+
+                response.status = sinon.spy((result) => {
+                    expect(result).to.equal(200)
+                    return response;
+                }) as any;
+
+                await userController.updateUserAccount({
+                    body: {
+                        email: 'new.email@test.com',
+                        password: 'super secret password'
                     }
                 } as Request, response)
             } catch (err) {

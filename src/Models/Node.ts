@@ -1,5 +1,5 @@
 import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequelize";
-import {User} from "./User";
+import {UserModel} from "./UserModel";
 
 export class Node extends Model {
 
@@ -44,7 +44,7 @@ export class Node extends Model {
                 sequelize: sequelize,
                 tableName: "Nodes",
             } as InitOptions);
-        this.belongsTo(User, {foreignKey: "userId"});
-        User.hasMany(Node, {foreignKey: "userId"});
+        this.belongsTo(UserModel, {foreignKey: "userId"});
+        UserModel.hasMany(Node, {foreignKey: "userId"});
     }
 }

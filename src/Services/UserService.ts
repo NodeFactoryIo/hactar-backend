@@ -1,9 +1,9 @@
 import * as bcrypt from "bcryptjs";
 import * as jwt from "jsonwebtoken";
 import config from "../Config/Config";
-
-import {User} from "../Models/User";
+import {UserModel} from "../Models/UserModel";
 import {ServiceError} from "./ServiceError";
+import {UserAttrs} from "../Types/UserAttrsType";
 
 export enum AuthSource {
     CLIENT,
@@ -18,15 +18,15 @@ export class UserService {
             throw new ServiceError(409, "There is already a user with this email address.");
         }
         const hashPassword = bcrypt.hashSync(password, 10);
-        return await User.create({email, 'hash_password': hashPassword});
+        return await UserModel.create({email, 'hash_password': hashPassword});
     }
 
-    public async getUserByPk(userId: number): Promise<User | null> {
-        return await User.findByPk(userId);
+    public async getUserByPk(userId: number): Promise<UserModel | null> {
+        return await UserModel.findByPk(userId);
     }
 
     public async getUserByEmail(email: string) {
-        return await User.findOne({
+        return await UserModel.findOne({
             raw: true,
             where: {
                 email,
@@ -52,7 +52,7 @@ export class UserService {
             }
             throw new ServiceError(401, "Unauthorized user.");
         }
-        throw new ServiceError(404, "User not found.");
+        throw new ServiceError(404, "UserModel not found.");
     }
 
     private createJwtOptions(source: AuthSource): any {
@@ -66,5 +66,24 @@ export class UserService {
                 break;
         }
         return options
+    }
+
+    public async updateAccount(userAttrs: UserAttrs, userId: number) {
+        if (userAttrs.password) {
+            userAttrs.password = bcrypt.hashSync(userAttrs.password, 10);
+            // "renaming" password property to hash_password so it can be inserted into database
+            delete Object.assign(userAttrs, {'hash_password': userAttrs.password}).password;
+        }
+        if (userAttrs.email && await this.getUserByEmail(userAttrs.email)) {
+            throw new ServiceError(409, "There is already a user with this email address.");
+        }
+        const updatedUser = await UserModel.update(userAttrs,
+            {
+                where: {
+                    id: userId
+                },
+                returning: true,
+            })
+        return await updatedUser[1][0]; // returns the updated object, without updates count
     }
 }
