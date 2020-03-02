@@ -1,4 +1,5 @@
 import {NodePastDeal, NodePastDealModel} from "../Models/NodePastDealModel";
+import {Node} from "../Models/Node";
 
 export class NodePastDealsService {
 
@@ -27,5 +28,23 @@ export class NodePastDealsService {
             return await updatedPastDeal[1][0]; // returns the updated object, without updates count
         }
         return await NodePastDealModel.create({cid, state, size, provider, price, duration, nodeId});
+    }
+
+    public async fetchNodePastDeals(userId: number, from: number, to: number, orderBy: string) {
+        return await NodePastDealModel.findAll({
+            attributes: ['id', 'cid', 'state', 'size', 'provider',
+                'price', 'duration', 'createdAt', 'updatedAt'],
+            include: [{
+                attributes: [],
+                model: Node,
+                where: {
+                    userId
+                }
+            }],
+            raw: true,
+            limit: (to - from),
+            offset: from,
+            order: [['updatedAt', orderBy]]
+        })
     }
 }
