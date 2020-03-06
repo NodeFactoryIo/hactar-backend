@@ -18,7 +18,6 @@ export interface CreateNodePastDealsRequestSchema extends ValidatedRequestSchema
     };
 }
 
-
 export const CreateNodePastDealsValidationSchema = Joi.object({
     pastDeals: Joi.array().items(Joi.object({
         cid: Joi.string().required(),
@@ -32,4 +31,18 @@ export const CreateNodePastDealsValidationSchema = Joi.object({
         url: Joi.string().required(),
         address: Joi.string().required()
     })
+});
+
+export interface FetchNodePastDealsRequestSchema extends ValidatedRequestSchema {
+    [ContainerTypes.Query]: {
+        from: number;
+        to: number;
+        orderBy: string;
+    };
+}
+
+export const FetchNodePastDealsValidationSchema = Joi.object({
+    from: Joi.number().min(0).required(),
+    to: Joi.number().greater(Joi.ref('from')).required(),
+    orderBy: Joi.string().uppercase().valid('ASC', 'DESC').required()
 });

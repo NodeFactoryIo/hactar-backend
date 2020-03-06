@@ -16,7 +16,10 @@ import {
     FetchMiningRewardsValidationSchema
 } from "../Controller/Api/MiningRewardsControllerValidation";
 import {CreateNodeBalanceValidationSchema} from "../Controller/Api/NodeBalanceControllerValidation";
-import {CreateNodePastDealsValidationSchema} from "../Controller/Api/NodePastDealsControllerValidation";
+import {
+    CreateNodePastDealsValidationSchema,
+    FetchNodePastDealsValidationSchema
+} from "../Controller/Api/NodePastDealsControllerValidation";
 
 import {passNodeData} from "../Middleware/passingNodeData";
 import {AuthorizeUser} from "../Middleware/Authorization";
@@ -103,6 +106,11 @@ export function createApiRoutes(
         "/user/node/pastdeals",
         [validator.body(CreateNodePastDealsValidationSchema), passNodeData, AuthorizeUser],
         controllers.nodePastDealsController.updateOrCreatePastDeal.bind(controllers.nodePastDealsController));
+
+    router.get(
+        "/user/node/pastdeals/:nodeId",
+        [validator.query(FetchNodePastDealsValidationSchema), passNodeData, AuthorizeUser],
+        controllers.nodePastDealsController.fetchNodePastDeals.bind(controllers.nodePastDealsController));
 
     router.post(
         "/user/register",

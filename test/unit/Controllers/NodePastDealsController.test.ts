@@ -100,4 +100,59 @@ describe("NodePastDealsController", function () {
             }
         });
     });
+
+    describe('GET /user/node/pastdeals/:nodeId?limits=5&offset=0', () => {
+        const nodePastDealsServiceStub = sinon.createStubInstance(NodePastDealsService);
+        nodePastDealsServiceStub.fetchNodePastDeals.resolves([
+            {
+                "cid": "mof2iin023finm23imfp",
+                "state": 7,
+                "size": "35236547456",
+                "provider": "v913nrhvs08",
+                "price": "82",
+                "duration": 16,
+            } as unknown as NodePastDealModel,
+            {
+                "cid": "inef2iefn02f84f9uwbqd",
+                "state": 2,
+                "size": "345235424366",
+                "provider": "fm139fh91",
+                "price": "5",
+                "duration": 10,
+            } as unknown as NodePastDealModel
+        ]);
+
+        it('should return array of node past deals with pagination for the logged in user', async function () {
+            try {
+                const nodePastDealsController = new NodePastDealsController(
+                    nodePastDealsServiceStub as unknown as NodePastDealsService);
+                const response = {} as Response;
+                response.locals = {node: {id: 1}};
+                response.json = sinon.spy((result) => {
+                    expect(result).to.be.an("Array");
+                    expect(result[0]).to.have.ownProperty('cid');
+                    expect(result[0]).to.have.ownProperty('state');
+                    expect(result[0]).to.have.ownProperty('size');
+                    expect(result[0]).to.have.ownProperty('provider');
+                    expect(result[0]).to.have.ownProperty('price');
+                    expect(result[0]).to.have.ownProperty('duration');
+                }) as any;
+                response.status = sinon.spy((result) => {
+                    expect(result).to.equal(200)
+                    return response;
+                }) as any;
+
+                await nodePastDealsController.fetchNodePastDeals({
+                    query: {
+                        limits: 10,
+                        offset: 0,
+                        orderBy: "asc"
+                    }
+                } as Request, response)
+            } catch (err) {
+                logger.error('Unexpected error occured: ${err.message}');
+                expect.fail(err);
+            }
+        });
+    });
 });

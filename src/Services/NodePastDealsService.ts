@@ -28,4 +28,16 @@ export class NodePastDealsService {
         }
         return await NodePastDealModel.create({cid, state, size, provider, price, duration, nodeId});
     }
+
+    public async fetchNodePastDeals(nodeId: number, from: number, to: number, orderBy: string) {
+        return await NodePastDealModel.findAll({
+            raw: true,
+            where: {
+                nodeId
+            },
+            limit: (to - from),
+            offset: from,
+            order: [['updatedAt', orderBy]]
+        })
+    }
 }
