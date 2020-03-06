@@ -1,5 +1,4 @@
 import {NodePastDeal, NodePastDealModel} from "../Models/NodePastDealModel";
-import {Node} from "../Models/Node";
 
 export class NodePastDealsService {
 
