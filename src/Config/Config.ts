@@ -19,7 +19,6 @@ const config = Object.freeze({
     port: env.SERVER_PORT || 3000,
     jwtKey: process.env.JWT_KEY || "nodefactory",
     jwtExpiry: process.env.JWT_EXPIRY || '24h',
-    rewardAmount: process.env.REWARD_AMOUNT || 5,
     sendinblue: {
         apiKey: process.env.EMAIL_API_KEY,
         apiUrl: process.env.EMAIL_API_URL || "https://api.sendinblue.com/v3/smtp/email",
