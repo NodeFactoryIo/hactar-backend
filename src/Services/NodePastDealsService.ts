@@ -40,4 +40,12 @@ export class NodePastDealsService {
             order: [['updatedAt', orderBy]]
         })
     }
+
+    public async countRecords(nodeId: number) {
+        return await NodePastDealModel.count({
+            where: {
+                nodeId,
+            }
+        })
+    }
 }
