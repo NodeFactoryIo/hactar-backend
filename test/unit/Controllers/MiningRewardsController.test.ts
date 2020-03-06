@@ -47,6 +47,7 @@ describe("MiningRewardsController", function () {
                     body: [
                         {
                             "cid": "some cid",
+                            "reward": "5",
                             "nodeInfo": {
                                 "address": "address111",
                                 "url": "url111"
@@ -54,6 +55,7 @@ describe("MiningRewardsController", function () {
                         },
                         {
                             "cid": "some cid 2",
+                            "reward": "5",
                             "nodeInfo": {
                                 "address": "address222",
                                 "url": "url222"

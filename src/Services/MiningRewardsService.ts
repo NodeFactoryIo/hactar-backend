@@ -3,7 +3,6 @@ import * as moment from "moment";
 import {unitOfTime} from "moment";
 import {Op} from "sequelize";
 
-import config from "../Config/Config";
 import {Node} from "../Models/Node";
 import {MiningReward} from "../Models/MiningReward";
 import {MiningRewardInput} from "../Types/MiningRewardInputType";
@@ -15,7 +14,7 @@ export class MiningRewardsService {
             async (node: Node, index) => {
                 const nodeToSave = {
                     cid: rewards[index].cid,
-                    rewardAmount: config.rewardAmount,
+                    rewardAmount: rewards[index].reward,
                     nodeId: node.id,
                 };
                 try {
