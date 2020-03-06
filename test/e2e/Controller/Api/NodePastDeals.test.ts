@@ -45,11 +45,11 @@ describe("Node past deals controller - fetch past deals test", async () => {
 
         try {
             request(app.server)
-                .get("/api/user/node/pastdeals/1?from=0&to=10&orderBy=asc")
+                .get("/api/user/node/pastdeals/100?from=0&to=10&orderBy=asc")
                 .set('Authorization', token)
                 .send({
                     params: {
-                        nodeId: 1,
+                        nodeId: 100,
                     },
                     query: {
                         from: 0,

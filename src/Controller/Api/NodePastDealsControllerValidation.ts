@@ -42,7 +42,7 @@ export interface FetchNodePastDealsRequestSchema extends ValidatedRequestSchema 
 }
 
 export const FetchNodePastDealsValidationSchema = Joi.object({
-    from: Joi.number().required(),
-    to: Joi.number().required(),
+    from: Joi.number().min(0).required(),
+    to: Joi.number().greater(Joi.ref('from')).required(),
     orderBy: Joi.string().uppercase().valid('ASC', 'DESC').required()
 });

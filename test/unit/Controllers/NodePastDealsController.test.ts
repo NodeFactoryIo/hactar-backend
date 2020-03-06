@@ -127,7 +127,7 @@ describe("NodePastDealsController", function () {
                 const nodePastDealsController = new NodePastDealsController(
                     nodePastDealsServiceStub as unknown as NodePastDealsService);
                 const response = {} as Response;
-                response.locals = {userId: 1};
+                response.locals = {node: {id: 1}};
                 response.json = sinon.spy((result) => {
                     expect(result).to.be.an("Array");
                     expect(result[0]).to.have.ownProperty('cid');
@@ -145,7 +145,8 @@ describe("NodePastDealsController", function () {
                 await nodePastDealsController.fetchNodePastDeals({
                     query: {
                         limits: 10,
-                        offset: 0
+                        offset: 0,
+                        orderBy: "asc"
                     }
                 } as Request, response)
             } catch (err) {

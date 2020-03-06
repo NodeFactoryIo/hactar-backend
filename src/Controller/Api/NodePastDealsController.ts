@@ -31,9 +31,10 @@ export class NodePastDealsController {
 
     public async fetchNodePastDeals(req: ValidatedRequest<FetchNodePastDealsRequestSchema>, res: Response) {
         try {
-            const userId = res.locals.userId;
+            const {from, to, orderBy} = req.query;
+            const nodeId = res.locals.node.id;
             const result = await this.nodePastDealsService.fetchNodePastDeals(
-                userId, req.query.from, req.query.to, req.query.orderBy);
+                nodeId, from, to, orderBy);
             if (result) {
                 res.status(200).json(result)
             } else {
