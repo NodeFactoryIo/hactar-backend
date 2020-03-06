@@ -1,4 +1,4 @@
-import {Response} from "express";
+import {Response, Request} from "express";
 import {ValidatedRequest} from "express-joi-validation";
 
 import {NodePastDealsService} from "../../Services/NodePastDealsService";
@@ -42,6 +42,17 @@ export class NodePastDealsController {
             }
         } catch (e) {
             logger.error(`Error occurred on fetching node past deals in controller: ${e.message}`);
+            res.status(500).json({error: "An unknown error occurred."});
+        }
+    }
+
+    public async getRecordsCount(req: Request, res: Response): Promise<void> {
+        try {
+            const nodeId = res.locals.node.id;
+            const result = await this.nodePastDealsService.countRecords(nodeId);
+            res.status(200).json(result)
+        } catch (e) {
+            logger.error(`Error occurred on fetching past deals counts in controller: ${e.message}`);
             res.status(500).json({error: "An unknown error occurred."});
         }
     }

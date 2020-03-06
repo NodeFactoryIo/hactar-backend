@@ -112,6 +112,11 @@ export function createApiRoutes(
         [validator.query(FetchNodePastDealsValidationSchema), passNodeData, AuthorizeUser],
         controllers.nodePastDealsController.fetchNodePastDeals.bind(controllers.nodePastDealsController));
 
+    router.get(
+        "/user/node/pastdeals/:nodeId/count",
+        [passNodeData, AuthorizeUser],
+        controllers.nodePastDealsController.getRecordsCount.bind(controllers.nodePastDealsController));
+
     router.post(
         "/user/register",
         validator.body(UserValidationSchema),
