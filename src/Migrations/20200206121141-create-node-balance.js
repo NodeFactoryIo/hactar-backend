@@ -10,7 +10,7 @@ module.exports = {
                 type: sequelize.INTEGER
             },
             balance: {
-                type: sequelize.BIGINT
+                type: sequelize.STRING
             },
             nodeId: {
                 type: sequelize.INTEGER,
