@@ -47,16 +47,6 @@ export function createApiRoutes(
         controllers.nodeController.getAllUserNodesWithLatestDetails.bind(controllers.nodeController)
     );
 
-    router.put(
-        "/user/node/:nodeId",
-        [validator.body(UpdateNodeValidationSchema), AuthorizeUser],
-        controllers.nodeController.addNodeAdditionalInfo.bind(controllers.nodeController));
-
-    router.delete(
-        "/user/node/:nodeId",
-        [AuthorizeUser],
-        controllers.nodeController.deleteNode.bind(controllers.nodeController));
-
     router.post(
         "/user/node/diskinformation",
         [validator.body(CreateNodeDiskInforamtionValidationSchema), passNodeData, AuthorizeUser],
@@ -122,6 +112,16 @@ export function createApiRoutes(
         "/user/node/pastdeals/:nodeId/count",
         [passNodeData, AuthorizeUser],
         controllers.nodePastDealsController.getRecordsCount.bind(controllers.nodePastDealsController));
+
+    router.put(
+        "/user/node/:nodeId",
+        [validator.body(UpdateNodeValidationSchema), AuthorizeUser],
+        controllers.nodeController.addNodeAdditionalInfo.bind(controllers.nodeController));
+
+    router.delete(
+        "/user/node/:nodeId",
+        [AuthorizeUser],
+        controllers.nodeController.deleteNode.bind(controllers.nodeController));
 
     router.post(
         "/user/register",
