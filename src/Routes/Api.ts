@@ -42,13 +42,13 @@ export function createApiRoutes(
         controllers.nodeController.getAllUserNodes.bind(controllers.nodeController));
 
     router.put(
-        "/user/node",
-        [validator.body(UpdateNodeValidationSchema), passNodeData, AuthorizeUser],
+        "/user/node/:nodeId",
+        [validator.body(UpdateNodeValidationSchema), AuthorizeUser],
         controllers.nodeController.addNodeAdditionalInfo.bind(controllers.nodeController));
 
     router.delete(
         "/user/node/:nodeId",
-        [passNodeData, AuthorizeUser],
+        [AuthorizeUser],
         controllers.nodeController.deleteNode.bind(controllers.nodeController));
 
     router.post(

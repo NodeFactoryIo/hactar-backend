@@ -33,13 +33,9 @@ describe("Node controller add/update additional node info tests", async () => {
         const token = jwt.sign({id: 100}, config.jwtKey, {expiresIn: '1h'})
         try {
             request(app.server)
-                .put("/api/user/node")
+                .put("/api/user/node/2")
                 .set('Authorization', token)
                 .send({
-                    nodeInfo: {
-                        url: 'some url',
-                        address: 'some address'
-                    },
                     name: 'node name',
                     description: 'node description',
                     hasEnabledNotifications: false
@@ -56,7 +52,6 @@ describe("Node controller add/update additional node info tests", async () => {
                         });
                     done()
                 });
-
         } catch (err) {
             logger.error('Unexpected error occured: ${err.message}');
             expect.fail(err);
