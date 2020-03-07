@@ -22,7 +22,9 @@ export class Controllers {
     // controllers initialization
     constructor(services: Services) {
         this.userController = new UserController(services.userService);
-        this.nodeController = new NodeController(services.nodeService);
+        this.nodeController = new NodeController(
+            services.nodeService, services.nodeLatestDetailsService
+        );
         this.miningRewardsController = new MiningRewardsController(services.miningRewardsService);
         this.generalMinerInfoController = new GeneralMinerInfoController(services.generalMinerInfoService);
         this.nodeBalanceController = new NodeBalanceController(services.nodeBalanceService);

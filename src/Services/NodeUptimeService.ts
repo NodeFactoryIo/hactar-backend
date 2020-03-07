@@ -26,4 +26,14 @@ export class NodeUptimeService {
             order: [['updatedAt', 'DESC']]
         });
     }
+
+    public async fetchLatestNodeUptime(nodeId: number) {
+        return await NodeUptime.findOne({
+            raw: true,
+            where: {
+                nodeId,
+            },
+            order: [['updatedAt', 'DESC']]
+        })
+    }
 }

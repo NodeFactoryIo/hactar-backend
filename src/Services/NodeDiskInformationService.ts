@@ -26,4 +26,14 @@ export class NodeDiskInformationService {
             order: [['updatedAt', 'DESC']]
         });
     }
+
+    public async fetchLatestDiskInfo(nodeId: number): Promise<NodeDiskInformation|null> {
+        return await NodeDiskInformation.findOne({
+            raw: true,
+            where: {
+                nodeId,
+            },
+            order: [['updatedAt', 'DESC']]
+        })
+    }
 }

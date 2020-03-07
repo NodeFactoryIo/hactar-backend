@@ -5,13 +5,16 @@ import {NodeService} from "../../Services/NodeService";
 import logger from "../../Services/Logger";
 import {CreateNodeRequestSchema} from "./NodeControllerValidation";
 import {ServiceError} from "../../Services/ServiceError";
+import {NodeLatestDetailsService} from "../../Services/NodeLatestDetailsService";
 
 export class NodeController {
 
     private nodeService: NodeService;
+    private nodeLatestDetailsService: NodeLatestDetailsService;
 
-    constructor(nodeService: NodeService) {
+    constructor(nodeService: NodeService, nodeLatestDetailsService: NodeLatestDetailsService) {
         this.nodeService = nodeService;
+        this.nodeLatestDetailsService = nodeLatestDetailsService;
     }
 
     public async createNode(req: ValidatedRequest<CreateNodeRequestSchema>, res: Response): Promise<any> {
@@ -70,8 +73,19 @@ export class NodeController {
                 res.status(e.status).json({error: e.message});
             } else {
                 logger.error(`Error occurred on fetching user nodes in controller: ${e.message}`);
-                res.status(500).json({error: "An uknown error occurred."});
+                res.status(500).json({error: "An unknown error occurred."});
             }
+        }
+    }
+
+    public async getAllUserNodesWithLatestDetails(req: Request, res: Response) {
+        try {
+            const userId = res.locals.userId;
+            const nodesLatestDetails = await this.nodeLatestDetailsService.getNodesWithLatestDetails(userId);
+            res.status(200).json(nodesLatestDetails);
+        } catch (e) {
+            logger.error(`Error occurred on fetching user nodes with details in controller: ${e.message}`);
+            res.status(500).json({error: "An unknown error occurred."})
         }
     }
 }

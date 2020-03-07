@@ -3,8 +3,8 @@ import {Node} from "./Node";
 
 export class NodeDiskInformation extends Model {
 
-    private freeSpace: string;
-    private takenSpace: string;
+    public freeSpace: string;
+    public takenSpace: string;
 
     public static initialize(sequelize: Sequelize) {
         this.init({

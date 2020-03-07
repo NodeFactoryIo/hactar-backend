@@ -41,6 +41,12 @@ export function createApiRoutes(
         [passNodeData, AuthorizeUser],
         controllers.nodeController.getAllUserNodes.bind(controllers.nodeController));
 
+    router.get(
+        "/user/nodes/details",
+        [passNodeData, AuthorizeUser],
+        controllers.nodeController.getAllUserNodesWithLatestDetails.bind(controllers.nodeController)
+    );
+
     router.put(
         "/user/node/:nodeId",
         [validator.body(UpdateNodeValidationSchema), AuthorizeUser],
