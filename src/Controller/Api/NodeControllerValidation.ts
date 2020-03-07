@@ -24,10 +24,6 @@ export const CreateNodeValidationSchema = Joi.object({
 });
 
 export const UpdateNodeValidationSchema = Joi.object({
-    nodeInfo: Joi.object({
-        url: Joi.string().required(),
-        address: Joi.string().required(),
-    }),
     name: Joi.string(),
     description: Joi.string(),
     hasEnabledNotifications: Joi.bool()

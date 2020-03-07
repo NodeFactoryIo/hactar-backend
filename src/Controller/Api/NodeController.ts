@@ -30,8 +30,8 @@ export class NodeController {
 
     public async addNodeAdditionalInfo(req: Request, res: Response) {
         try {
+            const {nodeId} = req.params;
             const {name, description, hasEnabledNotifications} = req.body;
-            const nodeId = res.locals.node.id;
             const node = await this.nodeService.addNodeAdditionalInfo(
                 name, description, hasEnabledNotifications, nodeId
             );
