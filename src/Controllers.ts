@@ -23,7 +23,7 @@ export class Controllers {
     constructor(services: Services) {
         this.userController = new UserController(services.userService);
         this.nodeController = new NodeController(
-            services.nodeService, services.nodeUptimeService, services.nodeDiskInformationService
+            services.nodeService, services.nodeLatestDetailsService
         );
         this.miningRewardsController = new MiningRewardsController(services.miningRewardsService);
         this.generalMinerInfoController = new GeneralMinerInfoController(services.generalMinerInfoService);

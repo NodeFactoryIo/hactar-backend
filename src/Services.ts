@@ -12,6 +12,7 @@ import {EmailService} from "./Services/EmailService";
 import {SchedulingService, SchedulingTask} from "./Scheduler/SchedulingService";
 import {UptimeNotificationTask} from "./Scheduler/Tasks/UptimeNotificationTask";
 import config from "./Config/Config";
+import {NodeLatestDetailsService} from "./Services/NodeLatestDetailsService";
 
 export class Services {
 
@@ -27,6 +28,7 @@ export class Services {
     public nodeUptimeNotificationService: NodeUptimeNotificationService;
     public emailService: EmailService;
     public schedulingService: SchedulingService;
+    public nodeLatestDetailsService: NodeLatestDetailsService;
 
     // services initialization
     constructor() {
@@ -52,6 +54,11 @@ export class Services {
                 new UptimeNotificationTask(this.nodeUptimeNotificationService),
                 config.uptimeNotificationsRecurrenceRule
             )
+        );
+        this.nodeLatestDetailsService = new NodeLatestDetailsService(
+            this.nodeService,
+            this.nodeUptimeService,
+            this.nodeDiskInformationService
         );
     }
 }

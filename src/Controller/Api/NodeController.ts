@@ -5,25 +5,16 @@ import {NodeService} from "../../Services/NodeService";
 import logger from "../../Services/Logger";
 import {CreateNodeRequestSchema} from "./NodeControllerValidation";
 import {ServiceError} from "../../Services/ServiceError";
-import {NodeUptimeService} from "../../Services/NodeUptimeService";
-import {NodeDiskInformationService} from "../../Services/NodeDiskInformationService";
-import {NodeLatestDetailsType} from "../../Types/NodeLatestDetailsType";
+import {NodeLatestDetailsService} from "../../Services/NodeLatestDetailsService";
 
 export class NodeController {
 
     private nodeService: NodeService;
-    private nodeUptimeService: NodeUptimeService;
-    private nodeDiskInformationService: NodeDiskInformationService;
+    private nodeLatestDetailsService: NodeLatestDetailsService;
 
-
-    constructor(
-        nodeService: NodeService,
-        nodeUptimeService: NodeUptimeService,
-        nodeDiskInformationService: NodeDiskInformationService)
-    {
+    constructor(nodeService: NodeService, nodeLatestDetailsService: NodeLatestDetailsService) {
         this.nodeService = nodeService;
-        this.nodeUptimeService = nodeUptimeService;
-        this.nodeDiskInformationService = nodeDiskInformationService;
+        this.nodeLatestDetailsService = nodeLatestDetailsService;
     }
 
     public async createNode(req: ValidatedRequest<CreateNodeRequestSchema>, res: Response): Promise<any> {
@@ -90,17 +81,7 @@ export class NodeController {
     public async getAllUserNodesWithLatestDetails(req: Request, res: Response) {
         try {
             const userId = res.locals.userId;
-            const nodes = await this.nodeService.getAllNodes(userId);
-            const nodesLatestDetails: NodeLatestDetailsType[] = [];
-            for (let i = 0;i<nodes.length;i++) {
-                const latestNodeUptime = await this.nodeUptimeService.fetchLatestNodeUptime(nodes[i].id);
-                const latestDiskInfo = await this.nodeDiskInformationService.fetchLatestDiskInfo(nodes[i].id);
-                nodesLatestDetails.push({
-                    node: nodes[i],
-                    latestUptime: latestNodeUptime,
-                    latestDiskInformation: latestDiskInfo
-                })
-            }
+            const nodesLatestDetails = await this.nodeLatestDetailsService.getNodesWithLatestDetails(userId);
             res.status(200).json(nodesLatestDetails);
         } catch (e) {
             logger.error(`Error occurred on fetching user nodes with details in controller: ${e.message}`);
