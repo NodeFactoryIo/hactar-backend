@@ -119,4 +119,30 @@ describe("UserModel controller - edit account", async () => {
             done();
         }
     });
+
+    it("Should return user account data", (done) => {
+        const token = jwt.sign({id: 100}, config.jwtKey, {expiresIn: '24h'})
+
+        try {
+            request(app.server)
+                .get("/api/user/account")
+                .set('Authorization', token)
+                .send({})
+                .expect(200)
+                .end((err, res) => {
+                    expect(res).to.exist;
+                    expect(err).to.not.exist;
+                    expect(res.body).to.deep.include({
+                        "id": 100,
+                        "email": "new.email@test.com",
+                    });
+                    done();
+                });
+
+        } catch (err) {
+            logger.error('Unexpected error occured: ${err.message}');
+            expect.fail(err);
+            done();
+        }
+    });
 });
