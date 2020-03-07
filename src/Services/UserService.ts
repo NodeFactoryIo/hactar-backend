@@ -86,4 +86,13 @@ export class UserService {
             })
         return await updatedUser[1][0]; // returns the updated object, without updates count
     }
+
+    public async fetchUserAccount(userId: number) {
+        return await UserModel.findOne({
+            raw: true,
+            where: {
+                id: userId
+            }
+        })
+    }
 }
