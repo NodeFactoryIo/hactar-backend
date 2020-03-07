@@ -1,4 +1,4 @@
-import {Request, Response, RequestHandler} from "express";
+import {Request, Response} from "express";
 import {ValidatedRequest} from "express-joi-validation";
 
 import logger from "../../Services/Logger";
