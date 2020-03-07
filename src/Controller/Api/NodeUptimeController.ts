@@ -23,7 +23,7 @@ export class NodeUptimeController {
             await this.nodeUptimeNotificationService.processNodeUptime(nodeUptime);
             res.status(201).json(nodeUptime);
         } catch (e) {
-            logger.error(`Error occured on storing node uptime in contoroller: ${e}`);
+            logger.error(`Error occurred on storing node uptime in contoroller: ${e}`);
             res.status(500).json({error: "An unknown error occurred."})
         }
     }
@@ -34,7 +34,7 @@ export class NodeUptimeController {
             const result = await this.nodeUptimeService.fetchNodeUptime(nodeId, req.query.filter);
             res.status(200).json(result);
         } catch (e) {
-            logger.error(`Error occured on fetching node uptime in controller: ${e}`);
+            logger.error(`Error occurred on fetching node uptime in controller: ${e}`);
             res.status(500).json({error: "An unknown error occured."})
         }
     }
