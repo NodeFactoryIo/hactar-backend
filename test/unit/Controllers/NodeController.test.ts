@@ -5,16 +5,13 @@ import {NodeService} from "../../../src/Services/NodeService";
 import {NodeController} from "../../../src/Controller/Api/NodeController";
 import logger from "../../../src/Services/Logger";
 import {Node} from "../../../src/Models/Node";
-import {NodeUptimeService} from "../../../src/Services/NodeUptimeService";
-import {NodeDiskInformation} from "../../../src/Models/NodeDiskInformation";
-import {NodeDiskInformationService} from "../../../src/Services/NodeDiskInformationService";
-import {NodeUptime} from "../../../src/Models/NodeUptime";
+import {NodeLatestDetailsService} from "../../../src/Services/NodeLatestDetailsService";
+import {NodeLatestDetailsType} from "../../../src/Types/NodeLatestDetailsType";
 
 describe("NodeController", function () {
     describe('POST /user/node', () => {
         const nodeServiceStub = sinon.createStubInstance(NodeService);
-        const nodeUptimeServiceStub = sinon.createStubInstance(NodeUptimeService);
-        const nodeDiskInformationServiceStub = sinon.createStubInstance(NodeDiskInformation);
+        const nodeLatestDetailsService = sinon.createStubInstance(NodeLatestDetailsService);
 
         // @ts-ignore
         nodeServiceStub.createNode.resolves({url: 'some url', token: 'some token', address: 'some address'});
@@ -23,8 +20,7 @@ describe("NodeController", function () {
             try {
                 const nodeController = new NodeController(
                     nodeServiceStub as unknown as NodeService,
-                    nodeUptimeServiceStub as unknown as NodeUptimeService,
-                    nodeDiskInformationServiceStub as unknown as NodeDiskInformationService
+                    nodeLatestDetailsService as unknown as NodeLatestDetailsService
                 );
                 const response = {} as Response;
                 response.locals = {userId: 100}
@@ -53,8 +49,7 @@ describe("NodeController", function () {
 
     describe('PUT /user/node', () => {
         const nodeServiceStub = sinon.createStubInstance(NodeService);
-        const nodeUptimeServiceStub = sinon.createStubInstance(NodeUptimeService);
-        const nodeDiskInformationServiceStub = sinon.createStubInstance(NodeDiskInformation);
+        const nodeLatestDetailsService = sinon.createStubInstance(NodeLatestDetailsService);
 
         // @ts-ignore
         nodeServiceStub.addNodeAdditionalInfo.resolves({
@@ -69,8 +64,7 @@ describe("NodeController", function () {
             try {
                 const nodeController = new NodeController(
                     nodeServiceStub as unknown as NodeService,
-                    nodeUptimeServiceStub as unknown as NodeUptimeService,
-                    nodeDiskInformationServiceStub as unknown as NodeDiskInformationService
+                    nodeLatestDetailsService as unknown as NodeLatestDetailsService
                 );
                 const response = {} as Response;
                 response.locals = {node: {id: 100}}
@@ -103,8 +97,7 @@ describe("NodeController", function () {
 
     describe('DELETE /user/node/:nodeId', () => {
         const nodeServiceStub = sinon.createStubInstance(NodeService);
-        const nodeUptimeServiceStub = sinon.createStubInstance(NodeUptimeService);
-        const nodeDiskInformationServiceStub = sinon.createStubInstance(NodeDiskInformation);
+        const nodeLatestDetailsService = sinon.createStubInstance(NodeLatestDetailsService);
 
         nodeServiceStub.deleteNode.resolves(1);
         // @ts-ignore
@@ -114,8 +107,7 @@ describe("NodeController", function () {
             try {
                 const nodeController = new NodeController(
                     nodeServiceStub as unknown as NodeService,
-                    nodeUptimeServiceStub as unknown as NodeUptimeService,
-                    nodeDiskInformationServiceStub as unknown as NodeDiskInformationService
+                    nodeLatestDetailsService as unknown as NodeLatestDetailsService
                 );
                 const response = {} as Response;
                 response.json = sinon.spy((result) => {
@@ -147,8 +139,7 @@ describe("NodeController", function () {
 
     describe('GET /node/user', () => {
         const nodeServiceStub = sinon.createStubInstance(NodeService);
-        const nodeUptimeServiceStub = sinon.createStubInstance(NodeUptimeService);
-        const nodeDiskInformationServiceStub = sinon.createStubInstance(NodeDiskInformation);
+        const nodeLatestDetailsService = sinon.createStubInstance(NodeLatestDetailsService);
 
         nodeServiceStub.getAllNodes.resolves([
             {
@@ -166,8 +157,7 @@ describe("NodeController", function () {
             try {
                 const nodeController = new NodeController(
                     nodeServiceStub as unknown as NodeService,
-                    nodeUptimeServiceStub as unknown as NodeUptimeService,
-                    nodeDiskInformationServiceStub as unknown as NodeDiskInformationService
+                    nodeLatestDetailsService as unknown as NodeLatestDetailsService
                 );
                 const response = {} as Response;
                 response.locals = {userId: {id: 1}};
@@ -193,8 +183,7 @@ describe("NodeController", function () {
 
     describe('GET /user/nodes/details', () => {
         const nodeServiceStub = sinon.createStubInstance(NodeService);
-        const nodeUptimeServiceStub = sinon.createStubInstance(NodeUptimeService);
-        const nodeDiskInformationServiceStub = sinon.createStubInstance(NodeDiskInformationService);
+        const nodeLatestDetailsService = sinon.createStubInstance(NodeLatestDetailsService);
 
         nodeServiceStub.getAllNodes.resolves([
             {
@@ -211,34 +200,26 @@ describe("NodeController", function () {
             } as unknown as Node
         ]);
 
-        nodeUptimeServiceStub.fetchLatestNodeUptime.withArgs(1).resolves({
-            id: 1,
-            nodeId: 1,
-            isWorking: true
-        } as NodeUptime);
-        nodeUptimeServiceStub.fetchLatestNodeUptime.withArgs(2).resolves({
-            id: 2,
-            nodeId: 2,
-            isWorking: false
-        } as NodeUptime);
-
-        nodeDiskInformationServiceStub.fetchLatestDiskInfo.withArgs(1).resolves({
-            freeSpace: "1000",
-            takenSpace: "45000"
-        } as NodeDiskInformation);
-        nodeDiskInformationServiceStub.fetchLatestDiskInfo.withArgs(2).resolves({
-            freeSpace: "10000",
-            takenSpace: "500"
-        } as NodeDiskInformation);
+        nodeLatestDetailsService.getNodesWithLatestDetails.withArgs(1).resolves([
+            {
+                node: {},
+                latestDiskInformation: {},
+                latestUptime: {}
+            } as NodeLatestDetailsType,
+            {
+                node: {},
+                latestUptime: {},
+                latestDiskInformation: {}
+            } as NodeLatestDetailsType
+        ]);
 
         it('should return array of nodes belonging to the user with additional information', function () {
             const nodeController = new NodeController(
                 nodeServiceStub as unknown as NodeService,
-                nodeUptimeServiceStub as unknown as NodeUptimeService,
-                nodeDiskInformationServiceStub as unknown as NodeDiskInformationService
+                nodeLatestDetailsService as unknown as NodeLatestDetailsService
             );
             const response = {} as Response;
-            response.locals = {userId: {id: 1}};
+            response.locals = {userId: 1};
 
             response.json = sinon.spy((result) => {
                 expect(result).to.be.an('Array').and.to.have.lengthOf(2);
@@ -255,11 +236,8 @@ describe("NodeController", function () {
                 return response;
             }) as any;
 
-            nodeController.getAllUserNodesWithLatestDetails({
-                body: {
-                    userId: 1
-                }} as Request,
-            response
+            nodeController.getAllUserNodesWithLatestDetails(
+                {} as Request, response
             )
         });
     })
