@@ -138,6 +138,11 @@ export function createApiRoutes(
         validator.body(UserValidationSchema),
         controllers.userController.loginUserDaemonApp.bind(controllers.userController));
 
+    router.get(
+        "/user/account",
+        [AuthorizeUser],
+        controllers.userController.fetchUserAccount.bind(controllers.userController));
+
     router.put(
         "/user/account",
         [validator.body(UpdateAccountValidationSchema), AuthorizeUser],
