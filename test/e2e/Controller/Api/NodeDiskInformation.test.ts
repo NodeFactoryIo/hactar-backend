@@ -37,7 +37,8 @@ describe("Node disk information controller - fetch disk information test", async
         await database.sequelize.sync({force: true});
     });
 
-    it("Should return a filtered array (by month) of disk information for a certain node", (done) => {
+    // eslint-disable-next-line max-len
+    it("Should return a filtered array (by month - one last record in the day for each day) of disk information for a certain node", (done) => {
         const token = jwt.sign({id: 100}, config.jwtKey, {expiresIn: '24h'})
 
         try {
