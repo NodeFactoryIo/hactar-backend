@@ -55,25 +55,23 @@ describe("NodeController", function () {
             try {
                 const nodeController = new NodeController(nodeServiceStub as unknown as NodeService);
                 const response = {} as Response;
-                response.locals = {node: {id: 100}}
                 response.json = sinon.spy((result) => {
                     expect(result.name).to.be.equal("node name");
                     expect(result.description).to.be.equal("node description")
                 }) as any;
 
                 response.status = sinon.spy((result) => {
-                    expect(result).to.equal(200)
+                    expect(result).to.equal(200);
                     return response;
                 }) as any;
 
                 await nodeController.addNodeAdditionalInfo({
                     body: {
-                        nodeInfo: {
-                            url: 'some url',
-                            address: 'some address'
-                        },
                         name: 'node name',
                         description: 'node description'
+                    },
+                    params: {
+                        nodeId: 100
                     }
                 } as Request, response)
             } catch (err) {
