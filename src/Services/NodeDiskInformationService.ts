@@ -1,6 +1,5 @@
-import * as moment from "moment";
-import {unitOfTime} from "moment";
-import {Op} from "sequelize";
+import database from "../Services/Database";
+import {QueryTypes} from "sequelize";
 import {NodeDiskInformation} from "../Models/NodeDiskInformation";
 
 export class NodeDiskInformationService {
@@ -14,16 +13,24 @@ export class NodeDiskInformationService {
     }
 
     public async fetchDiskInfo(nodeId: number, filter: string) {
-        return await NodeDiskInformation.findAll({
-            raw: true,
-            where: {
-                nodeId,
-                updatedAt: {
-                    [Op.gte]:
-                        moment.utc().subtract(1, filter as unitOfTime.Base).format("YYYY-MM-DD HH:MM:ssZZ")
-                }
-            },
-            order: [['updatedAt', 'DESC']]
-        });
+        return await database.runQuery<NodeDiskInformation>(
+            `select *
+            from "NodeDiskInformation"
+                where(date_trunc(:period, "updatedAt"), "updatedAt") in
+                (select date_trunc(:period, "updatedAt"), max("updatedAt")
+            from "NodeDiskInformation"
+            where "nodeId" = :nodeId
+            group by date_trunc(:period, "updatedAt")
+                )
+            and "updatedAt" >= now() - interval :filter
+            order by "updatedAt" desc;`,
+            {
+                replacements: {
+                    filter: `1 ${filter}`,
+                    nodeId: nodeId,
+                    period: filter == "day" ? "hour" : "day"
+                },
+                type: QueryTypes.SELECT
+            });
     }
 }
