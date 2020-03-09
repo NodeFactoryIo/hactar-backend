@@ -86,7 +86,7 @@ export class NodeUptimeNotificationService {
                 if (config.env != "dev") {
                     await this.emailService.sendEmailNotification(
                         user,
-                        {NODE: node.address + node.url},
+                        {NODE: `${node.name} - ${node.url}`},
                         config.sendinblue.nodeUptimeNotifEmailTemplateId
                     );
                 }
