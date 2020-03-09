@@ -15,7 +15,7 @@ export interface CreateMiningRewardsRequestSchema extends ValidatedRequestSchema
 export const CreateMiningRewardsValidationSchema = Joi.array().items(
     Joi.object({
         cid: Joi.string().required(),
-        reward: Joi.string().required(),
+        reward: Joi.string().allow("").required(),
         nodeInfo: Joi.object({
             address: Joi.string().required(),
             url: Joi.string().required()
