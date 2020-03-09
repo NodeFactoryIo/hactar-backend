@@ -134,4 +134,35 @@ describe("UserController", function () {
             }
         });
     });
+
+    describe('GET /user/account', () => {
+        const userServiceStub = sinon.createStubInstance(UserService);
+        // @ts-ignore
+        userServiceStub.fetchUserAccount.resolves({email: 'email@test.com', password: password});
+
+        it('should update email and password of the user', async function () {
+            try {
+                const userController = new UserController(
+                    userServiceStub as unknown as UserService);
+                const response = {} as Response;
+                response.locals = {userId: 5};
+                response.json = sinon.spy((result) => {
+                    expect(result.password).to.be.equal(password);
+                    expect(result.email).to.be.equal('email@test.com');
+                }) as any;
+
+                response.status = sinon.spy((result) => {
+                    expect(result).to.equal(200)
+                    return response;
+                }) as any;
+
+                await userController.fetchUserAccount({
+                    body: {}
+                } as Request, response)
+            } catch (err) {
+                logger.error('Unexpected error occurred: ${err.message}');
+                expect.fail(err);
+            }
+        });
+    });
 });

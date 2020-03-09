@@ -82,4 +82,15 @@ export class UserController {
             }
         }
     }
+
+    public async fetchUserAccount(req: Request, res: Response) {
+        try {
+            const userId = res.locals.userId;
+            const result = await this.userService.fetchUserAccount(userId);
+            res.status(200).json(result)
+        } catch (e) {
+            logger.error(`Error occurred on fetching user account data in controller: ${e.message}`);
+            res.status(500).json({error: "An unknown error occurred."});
+        }
+    }
 }

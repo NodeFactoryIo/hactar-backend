@@ -52,7 +52,7 @@ export class UserService {
             }
             throw new ServiceError(401, "Unauthorized user.");
         }
-        throw new ServiceError(404, "UserModel not found.");
+        throw new ServiceError(404, "User not found.");
     }
 
     private createJwtOptions(source: AuthSource): any {
@@ -85,5 +85,14 @@ export class UserService {
                 returning: true,
             })
         return await updatedUser[1][0]; // returns the updated object, without updates count
+    }
+
+    public async fetchUserAccount(userId: number) {
+        return await UserModel.findOne({
+            raw: true,
+            where: {
+                id: userId
+            }
+        })
     }
 }
