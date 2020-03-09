@@ -160,7 +160,6 @@ describe("UserController", function () {
                     body: {}
                 } as Request, response)
             } catch (err) {
-                console.log('aaaaa', err)
                 logger.error('Unexpected error occurred: ${err.message}');
                 expect.fail(err);
             }
