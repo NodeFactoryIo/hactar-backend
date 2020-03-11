@@ -1,9 +1,10 @@
 import {expect} from "chai";
-import {createSandbox, SinonSandbox, SinonStub} from "sinon";
-import {NodeDiskInformationService} from "../../../src/Services/NodeDiskInformationService";
-import logger from "../../../src/Services/Logger";
-import {NodeDiskInformation} from "../../../src/Models/NodeDiskInformation";
 import sinon from "sinon";
+import {createSandbox, SinonSandbox, SinonStub} from "sinon";
+import logger from "../../../src/Services/Logger";
+import {NodeDiskInformationService} from "../../../src/Services/NodeDiskInformationService";
+import {NodeDiskInformation} from "../../../src/Models/NodeDiskInformation";
+import database from "../../../src/Services/Database";
 
 describe("NodeDiskInformation", function () {
 
@@ -14,7 +15,7 @@ describe("NodeDiskInformation", function () {
     beforeEach(function () {
         sandbox = createSandbox();
         nodeDiskInformationService = new NodeDiskInformationService();
-        nodeDiskInformationFindStub = sinon.stub(NodeDiskInformation, "findAll");
+        nodeDiskInformationFindStub = sinon.stub(database, "runQuery");
     });
 
     afterEach(function () {
