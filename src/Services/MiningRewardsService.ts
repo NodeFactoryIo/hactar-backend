@@ -1,6 +1,6 @@
 import logger from "./Logger";
 import datebase from "./Database";
-import {QueryTypes} from "sequelize";
+import {filtersSelectQuery} from "../Utils/filterSelectQueryConfig";
 
 import {Node} from "../Models/Node";
 import {MiningReward} from "../Models/MiningReward";
@@ -33,14 +33,6 @@ export class MiningRewardsService {
             and "updatedAt" >= now() - interval :filter
             group by date_trunc(:period, "updatedAt")
             order by "timePeriod" desc;`,
-            {
-                replacements: {
-                    filter: `1 ${filter}`,
-                    nodeId: nodeId,
-                    period: filter == "day" ? "hour" : "day"
-                },
-                type: QueryTypes.SELECT,
-
-            });
+            filtersSelectQuery(nodeId, filter));
     }
 }
