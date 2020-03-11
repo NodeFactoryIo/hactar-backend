@@ -2,6 +2,7 @@ import {expect} from "chai";
 import {createSandbox, SinonSandbox} from "sinon";
 import logger from "../../../src/Services/Logger";
 import sinon from "sinon";
+import database from "../../../src/Services/Database";
 import {MiningRewardsService} from "../../../src/Services/MiningRewardsService";
 import {MiningReward} from "../../../src/Models/MiningReward";
 
@@ -14,7 +15,7 @@ describe("MiningRewards", function () {
     beforeEach(function () {
         sandbox = createSandbox();
         miningRewardsService = new MiningRewardsService();
-        miningRewardsFindStub = sinon.stub(MiningReward, "findAll");
+        miningRewardsFindStub = sinon.stub(database, "runQuery");
     });
 
     afterEach(function () {
