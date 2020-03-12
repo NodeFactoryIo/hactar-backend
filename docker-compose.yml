@@ -1,7 +1,9 @@
-version: "3"
+version: "3.4"
 services:
   backend:
-    build: .
+    build:
+      context: .
+      target: dev
     command: sh -c "yarn run dev"
     image: nodefactory/hactar-backend:${IMAGE_TAG:-latest}
     container_name: "${BACKEND_CONTAINER_NAME:-hactar-backend}"
