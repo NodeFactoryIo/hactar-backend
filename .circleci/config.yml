@@ -3,12 +3,11 @@ jobs:
   build:
     working_directory: ~/app
     machine:
-      image: circleci/classic:latest
+      image: circleci/node:lts
     steps:
     - checkout
     - run: chown -R $USER:$USER ~/app
     - setup_remote_docker:
-        docker_layer_caching: true
         version: 18.09.3
     - restore_cache:
         keys:
