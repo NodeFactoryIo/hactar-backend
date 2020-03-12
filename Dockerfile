@@ -20,9 +20,9 @@ FROM node:12.13-alpine as production
 
 WORKDIR /app
 
-COPY --from=0 /usr/app/dist/src /app
-COPY --from=0 /usr/app/package.json /app/
-COPY --from=0 /usr/app/yarn.lock /app/
+COPY --from=dev /usr/app/dist/src /app
+COPY --from=dev /usr/app/package.json /app/
+COPY --from=dev /usr/app/yarn.lock /app/
 
 RUN yarn install --frozen-lockfile --production && yarn cache clean
 
