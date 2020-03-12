@@ -59,31 +59,8 @@ jobs:
         root: ./
         paths:
         - ./image.tar
-  deploy:
-    working_directory: ~/app
-    machine:
-      image: circleci/classic:latest
-    steps:
-    - checkout
-    - attach_workspace:
-        at: ./
-    - run:
-        name: Load Docker images
-        command: |
-          set +o pipefail
-          docker load -i ./image.tar || true
-    - run:
-        name: Build production image
-        command: docker build -t final -f Dockerfile.production .
 workflows:
   version: 2
   build-deploy:
     jobs:
-    - build
-    - deploy:
-        requires:
-        - build
-        filters:
-          branches:
-            only:
-            - master
+      - build
