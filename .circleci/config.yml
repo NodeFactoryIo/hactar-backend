@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/app
     machine:
-      image: circleci/node:lts
+      image: ubuntu-1604:201903-01
     steps:
     - checkout
     - run: chown -R $USER:$USER ~/app
