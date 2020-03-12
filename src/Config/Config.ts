@@ -9,6 +9,7 @@ const config = Object.freeze({
         define: {
             underscored: true,
         },
+        ssl: !!process.env.DB_SSL || false,
         dialect: process.env.DB_DIALECT || "postgres",
         host: process.env.DB_HOST || "db",
         password: process.env.DB_PASSWORD || "nodefactory",
