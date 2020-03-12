@@ -14,7 +14,7 @@ export class MiningReward extends Model {
                 allowNull: false,
             },
             rewardAmount: {
-                type: DataTypes.STRING,
+                type: DataTypes.DECIMAL(32),
                 allowNull: false,
             },
         } as ModelAttributes,

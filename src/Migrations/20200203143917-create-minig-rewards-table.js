@@ -13,7 +13,7 @@ module.exports = {
                 type: sequelize.STRING
             },
             rewardAmount: {
-                type: sequelize.STRING
+                type: sequelize.NUMERIC(32)
             },
             nodeId: {
                 type: sequelize.INTEGER,

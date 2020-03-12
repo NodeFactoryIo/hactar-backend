@@ -1,7 +1,6 @@
 import logger from "./Logger";
-import * as moment from "moment";
-import {unitOfTime} from "moment";
-import {Op} from "sequelize";
+import datebase from "./Database";
+import {filtersSelectQuery} from "../Utils/filterSelectQueryConfig";
 
 import {Node} from "../Models/Node";
 import {MiningReward} from "../Models/MiningReward";
@@ -27,16 +26,13 @@ export class MiningRewardsService {
     }
 
     public async fetchMiningRewards(nodeId: number, filter: string) {
-        return await MiningReward.findAll({
-            raw: true,
-            where: {
-                nodeId,
-                updatedAt: {
-                    [Op.gte]:
-                        moment.utc().subtract(1, filter as unitOfTime.Base).format("YYYY-MM-DD HH:MM:ssZZ")
-                }
-            },
-            order: [['updatedAt', 'DESC']]
-        });
+        return await datebase.runQuery<MiningReward>(
+            `select date_trunc(:period, "updatedAt") "timePeriod", sum("rewardAmount") "rewardSum"
+            from "MiningRewards"
+            where "nodeId" = :nodeId
+            and "updatedAt" >= now() - interval :filter
+            group by date_trunc(:period, "updatedAt")
+            order by "timePeriod" desc;`,
+            filtersSelectQuery(nodeId, filter));
     }
 }
