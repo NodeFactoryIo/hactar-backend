@@ -18,7 +18,7 @@
     "prebuild": "yarn run clean && yarn run init",
     "build": "tsc --incremental --sourceMap --outDir dist",
     "compile": "tsc",
-    "pretest": "yarn compile && yarn lint",
+    "pretest": "yarn lint",
     "test:unit": "NODE_ENV=test nyc mocha -r dotenv/config -r ts-node/register \"test/unit/**/*.ts\"",
     "test": "yarn run test:unit & yarn run test:e2e",
     "test:e2e": "SERVER_PORT=0 mocha --timeout 30000 -r ts-node/register -r dotenv/config \"test/e2e/**/*.ts\"",
