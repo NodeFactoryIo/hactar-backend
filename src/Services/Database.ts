@@ -29,6 +29,7 @@ export class Database {
                 password: config.db.password,
                 dialect: config.db.dialect,
                 host: config.db.host,
+                ssl: config.db.ssl,
                 logging: sql => logger.debug(sql),
                 native: false,
                 pool: {
@@ -75,7 +76,7 @@ export class Database {
         // eslint-disable-next-line no-constant-condition
         while (true) {
             try {
-                logger.info(`Connecting to database at ${config.db.host}:3306`);
+                logger.info(`Connecting to database at ${config.db.host}:${config.db.port}`);
                 await this.sequelize.authenticate();
                 logger.info("Database connection has been established successfully.");
                 break;
