@@ -29,6 +29,7 @@ export class Database {
                 password: config.db.password,
                 dialect: config.db.dialect,
                 host: config.db.host,
+                port: config.db.port,
                 ssl: config.db.ssl,
                 logging: sql => logger.debug(sql),
                 native: false,
