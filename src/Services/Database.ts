@@ -32,7 +32,7 @@ export class Database {
                 port: config.db.port,
                 ssl: config.db.ssl,
                 logging: sql => logger.debug(sql),
-                native: false,
+                native: config.db.ssl,
                 pool: {
                     acquire: 30000,
                     idle: 10000,
