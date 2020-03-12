@@ -1,4 +1,4 @@
-FROM node:12.13-alpine
+FROM node:12.13-alpine as dev
 
 WORKDIR /usr/app
 
@@ -15,3 +15,15 @@ RUN yarn run compile
 RUN chown -R node: .
 
 USER node
+
+FROM node:12.13-alpine as production
+
+WORKDIR /app
+
+COPY --from=0 /usr/app/dist/src /app
+COPY --from=0 /usr/app/package.json /app/
+COPY --from=0 /usr/app/yarn.lock /app/
+
+RUN yarn install --frozen-lockfile --production && yarn cache clean
+
+CMD ["node", "index.js"]
