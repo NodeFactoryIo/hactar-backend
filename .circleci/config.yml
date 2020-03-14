@@ -42,7 +42,7 @@ jobs:
     - run:
         name: Send test results to Coveralls
         command: |
-          docker run --env-file .coveralls.env nodefactory/hactar-backend:${CIRCLE_SHA1} sh -c "yarn run coverage && yarn run coveralls"
+          docker run --env-file .coveralls.env nodefactory/hactar-backend:${CIRCLE_SHA1} sh -c "yarn run test:unit && yarn run coveralls"
 #    - run:
 #        name: Run e2e tests
 #        command: docker-compose run -e NODE_ENV=test --rm backend yarn run test:e2e

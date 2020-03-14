@@ -1,5 +1,7 @@
 FROM node:12.13-alpine as dev
 
+RUN apk update && apk add --no-cache libpq postgresql-dev g++ make python && rm -rf /var/cache/apk/*
+
 WORKDIR /usr/app
 
 # Install node dependencies - done in a separate step so Docker can cache it.
@@ -12,17 +14,19 @@ COPY . .
 
 RUN yarn run build
 
-RUN chown -R node: .
-
-USER node
-
 FROM node:12.13-alpine as production
+
+RUN apk update && apk add --no-cache libpq postgresql-dev g++ make python && rm -rf /var/cache/apk/*
 
 WORKDIR /app
 
 COPY --from=dev /usr/app/dist/src /app
 COPY --from=dev /usr/app/package.json /app/
 COPY --from=dev /usr/app/yarn.lock /app/
+
+RUN chown -R node: .
+
+USER node
 
 RUN yarn install --frozen-lockfile --production && yarn cache clean
 
