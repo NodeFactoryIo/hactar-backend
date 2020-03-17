@@ -57,7 +57,12 @@ export class App implements Service {
         const router = Router();
         if (config.env === "dev") {
             router.use(cors() as any);
+        } else {
+            router.use(cors({
+                origin: "https://analytics.hactar.app"
+            }) as any);
         }
+
         router.get("/", (req: Request, res: Response) => {
             res.json({
                 message: "Welcome stranger!",
