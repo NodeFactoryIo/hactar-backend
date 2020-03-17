@@ -16,6 +16,7 @@ const config = Object.freeze({
         port: process.env.DB_PORT || 5432,
         user: process.env.DB_USER || "nodefactory",
     },
+    origin: process.env.ORIGIN || "https://analytics.hactar.app",
     env: process.env.NODE_ENV || "dev",
     port: env.SERVER_PORT || 3000,
     jwtKey: process.env.JWT_KEY || "nodefactory",
