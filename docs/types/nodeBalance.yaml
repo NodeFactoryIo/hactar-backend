@@ -1,0 +1,35 @@
+schemas:
+  NodeBalance:
+    type: object
+    required:
+      - balance
+      - nodeInfo
+    properties:
+      balance:
+        type: string
+      nodeInfo:
+        type: object
+        required:
+          - address
+          - url
+        properties:
+          address:
+            type: string
+          url:
+            type: string
+responses:
+  NodeBalance:
+    type: object
+    properties:
+      id:
+        type: integer
+      balance:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+      nodeId:
+        type: integer

@@ -1,0 +1,32 @@
+schemas:
+  NodeUptime:
+    type: object
+    properties:
+      id:
+        type: integer
+      isWorking:
+        type: boolean
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+      nodeId:
+        type: integer
+responses:
+  NodeUptime:
+    type: object
+    properties:
+      id:
+        type: integer
+      isWorking:
+        type: boolean
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+      nodeId:
+        type: integer
