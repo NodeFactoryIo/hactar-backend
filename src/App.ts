@@ -59,7 +59,7 @@ export class App implements Service {
             router.use(cors() as any);
         } else {
             router.use(cors({
-                origin: "https://analytics.hactar.app"
+                origin: config.origin,
             }) as any);
         }
 
