@@ -28,12 +28,12 @@ services:
     image: swaggerapi/swagger-ui
     container_name: "swagger_docs"
     environment:
-      BASE_URL: /api/swagger
+      BASE_URL: "${SWAGGER_DOCS_URL:-/api/swagger}"
       SWAGGER_JSON: /swagger.yaml
     volumes:
-      - "./swagger.yaml:/swagger.yaml"
+      - "./docs/swagger.yaml:/swagger.yaml"
     ports:
-      - "8080:8080"
+      - ${SWAGGER_DOCS_PORT:-8080}:8080
 volumes:
   node_modules:
   postgres:
