@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/app
     machine:
-      image: circleci/classic:latest
+      image: ubuntu-1604:201903-01
     steps:
     - checkout
     - run: chown -R $USER:$USER ~/app
@@ -42,7 +42,7 @@ jobs:
     - run:
         name: Send test results to Coveralls
         command: |
-          docker run --env-file .coveralls.env nodefactory/hactar-backend:${CIRCLE_SHA1} sh -c "yarn run coverage && yarn run coveralls"
+          docker run --env-file .coveralls.env nodefactory/hactar-backend:${CIRCLE_SHA1} sh -c "yarn run test:unit && yarn run coveralls"
 #    - run:
 #        name: Run e2e tests
 #        command: docker-compose run -e NODE_ENV=test --rm backend yarn run test:e2e
@@ -59,31 +59,8 @@ jobs:
         root: ./
         paths:
         - ./image.tar
-  deploy:
-    working_directory: ~/app
-    machine:
-      image: circleci/classic:latest
-    steps:
-    - checkout
-    - attach_workspace:
-        at: ./
-    - run:
-        name: Load Docker images
-        command: |
-          set +o pipefail
-          docker load -i ./image.tar || true
-    - run:
-        name: Build production image
-        command: docker build -t final -f Dockerfile.production .
 workflows:
   version: 2
   build-deploy:
     jobs:
-    - build
-    - deploy:
-        requires:
-        - build
-        filters:
-          branches:
-            only:
-            - master
+      - build
