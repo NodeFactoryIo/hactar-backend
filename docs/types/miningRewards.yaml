@@ -8,8 +8,6 @@ schemas:
     properties:
       cid:
         type: string
-      reward:
-        type: string
       nodeInfo:
         type: object
         required:
@@ -24,17 +22,8 @@ responses:
   MiningRewards:
     type: object
     properties:
-      id:
-        type: integer
-      cid:
-        type: string
-      reward:
-        type: string
-      createdAt:
+      timePeriod:
         type: string
         format: date-time
-      updatedAt:
+      rewardSum:
         type: string
-        format: date-time
-      nodeId:
-        type: integer

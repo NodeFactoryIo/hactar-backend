@@ -40,7 +40,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/responses/Node'
+                type: array
+                items:
+                  $ref: '#/components/responses/Node'
         '403':
           $ref: '#/components/responses/UnauthorizedUser'
         '500':
@@ -49,7 +51,7 @@ paths:
     get:
       tags:
         - Node
-      summary: Get all current user nodes with details
+      summary: Get all current user nodes with latest details
       description: ''
       responses:
         '200':

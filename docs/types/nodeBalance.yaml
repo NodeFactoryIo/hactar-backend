@@ -21,15 +21,12 @@ responses:
   NodeBalance:
     type: object
     properties:
-      id:
-        type: integer
-      balance:
+      currentBalance:
         type: string
-      createdAt:
-        type: string
-        format: date-time
       updatedAt:
         type: string
         format: date-time
-      nodeId:
+      balanceChange:
         type: integer
+      balanceChangePerc:
+        type: string
