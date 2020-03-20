@@ -29,9 +29,10 @@ services:
     container_name: "swagger_docs"
     environment:
       BASE_URL: "${SWAGGER_DOCS_URL:-/api/swagger}"
-      SWAGGER_JSON: /swagger.yaml
+      SWAGGER_JSON: /tmp/swagger.yaml
     volumes:
-      - "./docs/swagger.yaml:/swagger.yaml"
+      - "./docs:/tmp"
+      - "./docs/types:/usr/share/nginx/html/types"
     ports:
       - ${SWAGGER_DOCS_PORT:-8080}:8080
 volumes:
