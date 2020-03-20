@@ -1,8 +1,6 @@
-import * as moment from "moment";
-import {unitOfTime} from "moment";
-import {Op} from "sequelize";
-
+import database from "../Services/Database";
 import {NodeUptime} from "../Models/NodeUptime";
+import {filtersSelectQuery} from "../Utils/filterSelectQueryConfig";
 
 export class NodeUptimeService {
 
@@ -14,17 +12,19 @@ export class NodeUptimeService {
     }
 
     public async fetchNodeUptime(nodeId: number, filter: string) {
-        return await NodeUptime.findAll({
-            raw: true,
-            where: {
-                nodeId,
-                updatedAt: {
-                    [Op.gte]:
-                        moment.utc().subtract(1, filter as unitOfTime.Base).format("YYYY-MM-DD HH:MM:ssZZ")
-                }
-            },
-            order: [['updatedAt', 'DESC']]
-        });
+        return await database.runQuery<NodeUptime>(
+            `select *
+            from "NodeUptime"
+                where(date_trunc(:period, "updatedAt"), "updatedAt") in
+                (select date_trunc(:period, "updatedAt"), max("updatedAt")
+            from "NodeUptime"
+            where "nodeId" = :nodeId
+            group by date_trunc(:period, "updatedAt")
+                )
+            and "updatedAt" >= now() - interval :filter
+            order by "updatedAt" desc;`,
+            filtersSelectQuery(nodeId, filter));
+
     }
 
     public async fetchLatestNodeUptime(nodeId: number) {

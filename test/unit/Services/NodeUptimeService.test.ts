@@ -4,6 +4,7 @@ import {NodeUptimeService} from "../../../src/Services/NodeUptimeService";
 import logger from "../../../src/Services/Logger";
 import {NodeUptime} from "../../../src/Models/NodeUptime";
 import sinon from "sinon";
+import database from "../../../src/Services/Database";
 
 describe("NodeUptime", function () {
 
@@ -14,7 +15,7 @@ describe("NodeUptime", function () {
     beforeEach(function () {
         sandbox = createSandbox();
         nodeUptimeService = new NodeUptimeService();
-        nodeUptimeFindStub = sinon.stub(NodeUptime, "findAll");
+        nodeUptimeFindStub = sinon.stub(database, "runQuery");
     });
 
     afterEach(function () {
