@@ -1,11 +1,11 @@
-openapi: "3.0.2"
+openapi: 3.0.2
 info:
-  description: Node.js backend application for Hactar (Filecoin tool for mining analysis)
+  description: Node.js API for Hactar (Filecoin tool for mining analysis)
   version: 1.0.0
   title: Hactar backend
   license:
-    name: "Apache 2.0"
-    url: "https:/www.apache.org/licenses/LICENSE-2.0.html"
+    name: Apache 2.0
+    url: 'https:/www.apache.org/licenses/LICENSE-2.0.html'
 paths:
   /user/node:
     post:
@@ -22,12 +22,14 @@ paths:
             $ref: '#/components/schemas/Node'
       responses:
         '201':
-          schema:
-            $ref: '#/components/responses/Node'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Node'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
+          $ref: '#/components/responses/UnknownError'
     get:
       tags:
         - Node
@@ -35,12 +37,14 @@ paths:
       description: ''
       responses:
         '200':
-          schema:
-            $ref: '#/components/responses/Node'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Node'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
+          $ref: '#/components/responses/UnknownError'
   /user/nodes/details:
     get:
       tags:
@@ -49,20 +53,22 @@ paths:
       description: ''
       responses:
         '200':
-          schema:
-            type: object
-            properties:
-              node:
-                $ref: '#/components/responses/Node'
-              latestUptime:
-                $ref: '#/components/responses/NodeUptime'
-              latestDiskInformation:
-                $ref: '#/components/responses/NodeDiskInformation'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  node:
+                    $ref: '#/components/responses/Node'
+                  latestUptime:
+                    $ref: '#/components/responses/NodeUptime'
+                  latestDiskInformation:
+                    $ref: '#/components/responses/NodeDiskInformation'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
-  '/user/node/{nodeId}':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/{nodeId}:
     put:
       tags:
         - Node
@@ -76,12 +82,14 @@ paths:
           type: integer
       responses:
         '200':
-          schema:
-            $ref: '#/components/responses/Node'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Node'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
+          $ref: '#/components/responses/UnknownError'
     delete:
       tags:
         - Node
@@ -95,12 +103,14 @@ paths:
           type: integer
       responses:
         '200':
-          schema:
-            $ref: '#/components/responses/Node'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Node'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
+          $ref: '#/components/responses/UnknownError'
   /user/node/diskinformation:
     post:
       tags:
@@ -116,13 +126,15 @@ paths:
             $ref: '#/components/schemas/NodeDiskInformation'
       responses:
         '201':
-          schema:
-            $ref: '#/components/responses/NodeDiskInformation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodeDiskInformation'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
-  '/user/node/diskinformation/{nodeId}?filter={period}':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/diskinformation/{nodeId}?filter={period}:
     get:
       tags:
         - Node disk information
@@ -134,10 +146,8 @@ paths:
           description: ID of the node to fetch data
           required: true
           type: integer
-          schema:
-            $ref: '#/components/schemas/NodeDiskInformation'
         - in: query
-          name: filter
+          name: period
           description: 'Returns results - hourly for day, daily for other filters'
           required: true
           items:
@@ -149,12 +159,14 @@ paths:
               - year
       responses:
         '200':
-          schema:
-            $ref: '#/components/responses/NodeDiskInformation'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodeDiskInformation'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
+          $ref: '#/components/responses/UnknownError'
   /user/node/uptime:
     post:
       tags:
@@ -170,13 +182,15 @@ paths:
             $ref: '#/components/schemas/NodeUptime'
       responses:
         '201':
-          schema:
-            $ref: '#/components/responses/NodeUptime'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodeUptime'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
-  '/user/node/uptime/{nodeId}?filter={period}':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/uptime/{nodeId}?filter={period}:
     get:
       tags:
         - Node uptime
@@ -188,10 +202,8 @@ paths:
           description: ID of the node to fetch data
           required: true
           type: integer
-          schema:
-            $ref: '#/components/schemas/NodeUptime'
         - in: query
-          name: filter
+          name: period
           description: 'Returns results - hourly for day, daily for other filters'
           required: true
           items:
@@ -203,12 +215,14 @@ paths:
               - year
       responses:
         '200':
-          schema:
-            $ref: '#/components/responses/NodeUptime'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodeUptime'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
+          $ref: '#/components/responses/UnknownError'
   /user/node/generalminerinfo:
     put:
       tags:
@@ -224,13 +238,15 @@ paths:
             $ref: '#/components/schemas/GeneralMinerInfo'
       responses:
         '200':
-          schema:
-            $ref: '#/components/responses/GeneralMinerInfo'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralMinerInfo'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
-  '/user/node/generalminerinfo/{nodeId}':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/generalminerinfo/{nodeId}:
     get:
       tags:
         - Node general miner info
@@ -242,16 +258,16 @@ paths:
           description: ID of the node to fetch data
           required: true
           type: integer
-          schema:
-            $ref: '#/components/schemas/GeneralMinerInfo'
       responses:
         '200':
-          schema:
-            $ref: '#/components/responses/GeneralMinerInfo'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralMinerInfo'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
+          $ref: '#/components/responses/UnknownError'
   /user/node/miningrewards:
     post:
       tags:
@@ -267,13 +283,15 @@ paths:
             $ref: '#/components/schemas/MiningRewards'
       responses:
         '201':
-          schema:
-            $ref: '#/components/responses/MiningRewards'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/MiningRewards'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
-  '/user/node/miningrewards/{nodeId}?filter={period}':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/miningrewards/{nodeId}?filter={period}:
     get:
       tags:
         - Node mining rewards
@@ -285,10 +303,8 @@ paths:
           description: ID of the node to fetch data
           required: true
           type: integer
-          schema:
-            $ref: '#/components/schemas/MiningRewards'
         - in: query
-          name: filter
+          name: period
           description: 'Returns results - hourly for day, daily for other filters'
           required: true
           items:
@@ -300,12 +316,14 @@ paths:
               - year
       responses:
         '200':
-          schema:
-            $ref: '#/components/responses/MiningRewards'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/MiningRewards'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
+          $ref: '#/components/responses/UnknownError'
   /user/node/balance:
     post:
       tags:
@@ -321,13 +339,15 @@ paths:
             $ref: '#/components/schemas/NodeBalance'
       responses:
         '201':
-          schema:
-            $ref: '#/components/responses/NodeBalance'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodeBalance'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
-  '/user/node/balance/{nodeId}':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/balance/{nodeId}:
     get:
       tags:
         - Node balance
@@ -339,16 +359,16 @@ paths:
           description: ID of the node to fetch data
           required: true
           type: integer
-          schema:
-            $ref: '#/components/schemas/NodeBalance'
       responses:
         '200':
-          schema:
-            $ref: '#/components/responses/NodeBalance'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodeBalance'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
+          $ref: '#/components/responses/UnknownError'
   /user/node/pastdeals:
     put:
       tags:
@@ -364,13 +384,15 @@ paths:
             $ref: '#/components/schemas/NodePastDeals'
       responses:
         '200':
-          schema:
-            $ref: '#/components/responses/NodePastDeals'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodePastDeals'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
-  '/user/node/pastdeals/{nodeId}?from={integer}&to={integer}&orderBy={order}':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/pastdeals/{nodeId}?from={integer}&to={integer}&orderBy={order}:
     get:
       tags:
         - Node past deals
@@ -382,8 +404,6 @@ paths:
           description: ID of the node to fetch data
           required: true
           type: integer
-          schema:
-            $ref: '#/components/schemas/NodePastDeals'
         - in: query
           name: from
           description: Returns results - starting number
@@ -405,13 +425,15 @@ paths:
               - desc
       responses:
         '200':
-          schema:
-            $ref: '#/components/responses/NodePastDeals'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodePastDeals'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
-  '/user/node/pastdeals/{nodeId}/count':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/pastdeals/{nodeId}/count:
     get:
       tags:
         - Node past deals
@@ -422,16 +444,16 @@ paths:
           name: Node past deals
           description: Get count of past deals of a node
           required: true
-          schema:
-            $ref: '#/components/schemas/NodePastDeals'
       responses:
         '200':
-          schema:
-            $ref: '#/components/responses/NodePastDeals'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodePastDeals'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
+          $ref: '#/components/responses/UnknownError'
   /user/register:
     post:
       tags:
@@ -447,10 +469,12 @@ paths:
             $ref: '#/components/schemas/User'
       responses:
         '201':
-          schema:
-            $ref: '#/components/responses/User'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/User'
         '500':
-            $ref: '#/components/responses/UnknownError'
+          $ref: '#/components/responses/UnknownError'
   /user/login:
     post:
       tags:
@@ -463,19 +487,18 @@ paths:
           description: Returns JWT for the user
           required: true
           schema:
-            type: object
-            properties:
-              token:
-                type: string
+            $ref: '#/components/schemas/User'
       responses:
         '200':
-          schema:
-            type: object
-            properties:
-              token:
-                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
         '500':
-            $ref: '#/components/responses/UnknownError'
+          $ref: '#/components/responses/UnknownError'
   /user/daemon/login:
     post:
       tags:
@@ -488,19 +511,18 @@ paths:
           description: Returns JWT for the user
           required: true
           schema:
-            type: object
-            properties:
-              token:
-                type: string
+            $ref: '#/components/schemas/User'
       responses:
         '200':
-          schema:
-            type: object
-            properties:
-              token:
-                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
         '500':
-            $ref: '#/components/responses/UnknownError'
+          $ref: '#/components/responses/UnknownError'
   /user/account:
     get:
       tags:
@@ -509,12 +531,14 @@ paths:
       description: ''
       responses:
         '200':
-          schema:
-            $ref: '#/components/responses/User'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/User'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
+          $ref: '#/components/responses/UnknownError'
     put:
       tags:
         - User
@@ -522,13 +546,14 @@ paths:
       description: Returns user object with updated attributes
       responses:
         '200':
-          schema:
-            $ref: '#/components/responses/User'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/User'
         '403':
-            $ref: '#/components/responses/UnauthorizedUser'
+          $ref: '#/components/responses/UnauthorizedUser'
         '500':
-            $ref: '#/components/responses/UnknownError'
-
+          $ref: '#/components/responses/UnknownError'
 components:
   schemas:
     GeneralMinerInfo:
@@ -567,6 +592,6 @@ components:
       $ref: './types/user.yaml#/responses/User'
 
     UnauthorizedUser:
-      $ref: './types/http.yaml#/responses/UnauthorizedUser'
+      description: Unauthorized user.
     UnknownError:
-      $ref: './types/http.yaml#/responses/UnknownError'
+      description: An unknown error occurred.

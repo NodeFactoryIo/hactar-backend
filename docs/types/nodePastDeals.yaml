@@ -1,58 +1,68 @@
 schemas:
   NodePastDeals:
     type: object
+    required:
+      - pastDeals
+      - nodeInfo
     properties:
-      id:
-        type: integer
       pastDeals:
+        type: array
+        items:
+          type: object
+          required:
+            - cid
+            - state
+            - provider
+            - price
+            - duration
+          properties:
+            cid:
+              type: string
+            state:
+              type: number
+            size:
+              type: string
+            provider:
+              type: string
+            price:
+              type: string
+            duration:
+              type: number
+      nodeInfo:
         type: object
+        required:
+          - address
+          - url
         properties:
-          cid:
+          address:
             type: string
-          state:
-            type: number
-          size:
+          url:
             type: string
-          provider:
-            type: string
-          price:
-            type: string
-          duration:
-            type: number
-          createdAt:
-            type: string
-            format: date-time
-          updatedAt:
-            type: string
-            format: date-time
-          nodeId:
-            type: integer
 responses:
   NodePastDeals:
-    type: object
-    properties:
-      id:
-        type: integer
-      pastDeals:
-        type: object
-        properties:
-          cid:
-            type: string
-          state:
-            type: number
-          size:
-            type: string
-          provider:
-            type: string
-          price:
-            type: string
-          duration:
-            type: number
-          createdAt:
-            type: string
-            format: date-time
-          updatedAt:
-            type: string
-            format: date-time
-          nodeId:
-            type: integer
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+        cid:
+          type: string
+        state:
+          type: number
+        size:
+          type: string
+        provider:
+          type: string
+        price:
+          type: string
+        duration:
+          type: number
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        nodeId:
+          type: integer

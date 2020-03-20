@@ -3,11 +3,11 @@ schemas:
     type: object
     required:
       - email
-      - hash_password
+      - password
     properties:
       email:
         type: string
-      hash_password:
+      password:
         type: string
 responses:
   User:
