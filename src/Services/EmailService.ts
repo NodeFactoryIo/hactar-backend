@@ -14,7 +14,7 @@ export class EmailService {
                 params,
                 sender:{
                     name: "Hactar",
-                    email: "info@nodefactory.io"
+                    email: "hactar@nodefactory.io"
                 },
                 subject: "Your Filecoin node is down",
             },
