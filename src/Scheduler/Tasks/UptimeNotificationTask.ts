@@ -14,9 +14,13 @@ export class UptimeNotificationTask implements Task {
     }
 
     async start(): Promise<void> {
+        logger.info("Starting UptimeNotification task...");
         const nodes = await this.findAllNotWorkingNodes();
         if (nodes != null) {
+            logger.info(`Found ${nodes.length} number of nodes that are not working.`);
             nodes.forEach(nodeUptime => this.uptimeNotificationService.processNodeUptime(nodeUptime));
+        } else {
+            logger.warn("findAllNotWorkingNodes returned null.");
         }
     }
 
