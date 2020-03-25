@@ -32,7 +32,7 @@ Run `npx task --help` to see all available commands and their description.
 
 ## Documentation
 
-The documentation can be accessed on `app-url:docs-port/docs-url`
+The documentation can be accessed on `app-url:${SWAGGER_DOCS_PORT}/${SWAGGER_DOCS_URL}`
 
 > e.g. _http://localhost:8080/api/swagger/_
 
