@@ -603,3 +603,12 @@ components:
       description: Unauthorized user.
     UnknownError:
       description: An unknown error occurred.
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
