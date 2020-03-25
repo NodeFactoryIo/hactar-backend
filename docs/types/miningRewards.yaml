@@ -1,0 +1,29 @@
+schemas:
+  MiningRewards:
+    type: object
+    required:
+      - cid
+      - reward
+      - nodeInfo
+    properties:
+      cid:
+        type: string
+      nodeInfo:
+        type: object
+        required:
+          - address
+          - url
+        properties:
+          address:
+            type: string
+          url:
+            type: string
+responses:
+  MiningRewards:
+    type: object
+    properties:
+      timePeriod:
+        type: string
+        format: date-time
+      rewardSum:
+        type: string

@@ -1,0 +1,60 @@
+schemas:
+    GeneralMinerInfo:
+      type: object
+      required:
+        - version
+        - walletAddress
+        - sectorSize
+        - numberOfSectors
+        - minerPower
+        - totalPower
+        - nodeInfo
+      properties:
+        version:
+          type: string
+        walletAddress:
+          type: string
+        sectorSize:
+          type: string
+        numberOfSectors:
+          type: number
+        minerPower:
+          type: string
+        totalPower:
+          type: string
+        nodeInfo:
+          type: object
+          required:
+            - address
+            - url
+          properties:
+            address:
+              type: string
+            url:
+              type: string
+responses:
+  GeneralMinerInfo:
+    type: object
+    properties:
+      id:
+        type: integer
+      version:
+        type: string
+      walletAddress:
+        type: string
+      sectorSize:
+        type: string
+      numberOfSectors:
+        type: number
+      minerPower:
+        type: string
+      totalPower:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+      nodeId:
+        type: integer

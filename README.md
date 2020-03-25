@@ -16,7 +16,7 @@ Following software is required to be installed to use this repo:
 
 ### Usage
 
-Make sure to run `yarn install` before first build or 
+Make sure to run `yarn install` before first build or
 each time you change dependencies in package.json.
 
 On first use of this repo, run `npx task build` which will
@@ -28,6 +28,16 @@ Run `npx task --help` to see all available commands and their description.
 ### Notice
 * make sure you update yarn.lock before building
 * use sequelize-cli local to generate migrations (because of timestamp)
+
+
+## Documentation
+
+The documentation can be accessed on `app-url:${SWAGGER_DOCS_PORT}/${SWAGGER_DOCS_URL}`
+
+> e.g. _http://localhost:8080/api/swagger/_
+
+- default docs url: `/api/swagger`
+- default docs port: `8080`
 
 
 ## License

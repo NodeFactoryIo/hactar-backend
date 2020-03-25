@@ -1,0 +1,68 @@
+schemas:
+  NodePastDeals:
+    type: object
+    required:
+      - pastDeals
+      - nodeInfo
+    properties:
+      pastDeals:
+        type: array
+        items:
+          type: object
+          required:
+            - cid
+            - state
+            - provider
+            - price
+            - duration
+          properties:
+            cid:
+              type: string
+            state:
+              type: number
+            size:
+              type: string
+            provider:
+              type: string
+            price:
+              type: string
+            duration:
+              type: number
+      nodeInfo:
+        type: object
+        required:
+          - address
+          - url
+        properties:
+          address:
+            type: string
+          url:
+            type: string
+responses:
+  NodePastDeals:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: integer
+        cid:
+          type: string
+        state:
+          type: number
+        size:
+          type: string
+        provider:
+          type: string
+        price:
+          type: string
+        duration:
+          type: number
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        nodeId:
+          type: integer

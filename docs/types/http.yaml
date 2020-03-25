@@ -1,0 +1,5 @@
+responses:
+  UnauthorizedUser:
+    description: "Unauthorized user."
+  UnknownError:
+    description: An unknown error occurred.

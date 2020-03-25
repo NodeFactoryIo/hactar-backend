@@ -1,0 +1,40 @@
+schemas:
+  NodeDiskInformation:
+    type: object
+    required:
+      - freeSpace
+      - takenSpace
+      - nodeInfo
+    properties:
+      freeSpace:
+        type: string
+      takenSpace:
+        type: string
+      nodeInfo:
+        type: object
+        required:
+          - address
+          - url
+        properties:
+          address:
+            type: string
+          url:
+            type: string
+responses:
+  NodeDiskInformation:
+    type: object
+    properties:
+      id:
+        type: integer
+      freeSpace:
+        type: string
+      takenSpace:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+      nodeId:
+        type: integer

@@ -1,0 +1,626 @@
+openapi: 3.0.2
+info:
+  description: Node.js API for Hactar (Filecoin tool for mining analysis)
+  version: 1.0.0
+  title: Hactar backend
+  license:
+    name: Apache 2.0
+    url: 'https:/www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  - url: "{server_url}"
+    variables:
+      server_url:
+        description: "Hactar api url"
+        default: "http://api.hactar.app/api"
+paths:
+  /user/node:
+    post:
+      tags:
+        - Node
+      summary: Add a new node
+      description: ''
+      requestBody:
+        description: Node object to be added to the database
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Node'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Node'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+    get:
+      tags:
+        - Node
+      summary: Get all current user nodes
+      description: ''
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/responses/Node'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/nodes/details:
+    get:
+      tags:
+        - Node
+      summary: Get all current user nodes with latest details
+      description: ''
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  node:
+                    $ref: '#/components/responses/Node'
+                  latestUptime:
+                    $ref: '#/components/responses/NodeUptime'
+                  latestDiskInformation:
+                    $ref: '#/components/responses/NodeDiskInformation'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/{nodeId}:
+    put:
+      tags:
+        - Node
+      summary: Create/update node name/description
+      description: Returns updated node
+      parameters:
+        - in: path
+          name: nodeId
+          description: ID of the node to update
+          required: true
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                hasEnabledNotifications:
+                  type: boolean
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Node'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+    delete:
+      tags:
+        - Node
+      summary: Delete node
+      description: Returns deleted node
+      parameters:
+        - in: path
+          name: nodeId
+          description: ID of the node to delete
+          required: true
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/Node'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/diskinformation:
+    post:
+      tags:
+        - Node disk information
+      summary: Add new node disk information
+      description: ''
+      requestBody:
+        description: Node disk information object to be added to the database
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NodeDiskInformation'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodeDiskInformation'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/diskinformation/{nodeId}?filter={period}:
+    get:
+      tags:
+        - Node disk information
+      summary: Get all disk information of a node
+      description: ''
+      parameters:
+        - in: path
+          name: nodeId
+          description: ID of the node to fetch data
+          required: true
+          type: integer
+        - in: query
+          name: period
+          description: 'Returns results - hourly for day, daily for other filters'
+          required: true
+          items:
+            type: string
+            enum:
+              - day
+              - week
+              - month
+              - year
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodeDiskInformation'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/uptime:
+    post:
+      tags:
+        - Node uptime
+      summary: Add new node uptime
+      description: ''
+      requestBody:
+        description: Node uptime object to be added to the database
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NodeUptime'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodeUptime'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/uptime/{nodeId}?filter={period}:
+    get:
+      tags:
+        - Node uptime
+      summary: Get all uptime of a node
+      description: ''
+      parameters:
+        - in: path
+          name: nodeId
+          description: ID of the node to fetch data
+          required: true
+          type: integer
+        - in: query
+          name: period
+          description: 'Returns results - hourly for day, daily for other filters'
+          required: true
+          items:
+            type: string
+            enum:
+              - day
+              - week
+              - month
+              - year
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodeUptime'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/generalminerinfo:
+    put:
+      tags:
+        - Node general miner info
+      summary: Add new general miner info
+      description: ''
+      parameters:
+        - in: body
+          name: General miner info
+          description: General miner info object to be added to the database
+          required: true
+          schema:
+            $ref: '#/components/schemas/GeneralMinerInfo'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralMinerInfo'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/generalminerinfo/{nodeId}:
+    get:
+      tags:
+        - Node general miner info
+      summary: Get general miner info of a node
+      description: ''
+      parameters:
+        - in: path
+          name: nodeId
+          description: ID of the node to fetch data
+          required: true
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/GeneralMinerInfo'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/miningrewards:
+    post:
+      tags:
+        - Node mining rewards
+      summary: Add new mining rewards
+      description: ''
+      requestBody:
+        description: Mining reward object (or array of) to be added to the database
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MiningRewards'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/MiningRewards'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/miningrewards/{nodeId}?filter={period}:
+    get:
+      tags:
+        - Node mining rewards
+      summary: Get all mining rewards of a node
+      description: ''
+      parameters:
+        - in: path
+          name: nodeId
+          description: ID of the node to fetch data
+          required: true
+          type: integer
+        - in: query
+          name: period
+          description: 'Returns results - hourly for day, daily for other filters'
+          required: true
+          items:
+            type: string
+            enum:
+              - day
+              - week
+              - month
+              - year
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/MiningRewards'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/balance:
+    post:
+      tags:
+        - Node balance
+      summary: Add new node balance
+      description: ''
+      requestBody:
+        description: Node balance object to be added to the database
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NodeBalance'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodeBalance'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/balance/{nodeId}:
+    get:
+      tags:
+        - Node balance
+      summary: Get balance of a node
+      description: ''
+      parameters:
+        - in: path
+          name: nodeId
+          description: ID of the node to fetch data
+          required: true
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodeBalance'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/pastdeals:
+    put:
+      tags:
+        - Node past deals
+      summary: Add new node past deals
+      description: ''
+      parameters:
+        - in: body
+          name: Node past deals
+          description: Node past deals object (or array of) to be added to the database
+          required: true
+          schema:
+            $ref: '#/components/schemas/NodePastDeals'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodePastDeals'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/pastdeals/{nodeId}?from={integer}&to={integer}&orderBy={order}:
+    get:
+      tags:
+        - Node past deals
+      summary: Get all past deals of a node
+      description: ''
+      parameters:
+        - in: path
+          name: nodeId
+          description: ID of the node to fetch data
+          required: true
+          type: integer
+        - in: query
+          name: from
+          description: Returns results - starting number
+          required: true
+          type: unsigned integer
+        - in: query
+          name: to
+          description: Returns results - ending number
+          required: true
+          type: unsigned integer
+        - in: query
+          name: orderBy
+          description: Returns results ascending or descending
+          required: true
+          items:
+            type: string
+            enum:
+              - asc
+              - desc
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodePastDeals'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/node/pastdeals/{nodeId}/count:
+    get:
+      tags:
+        - Node past deals
+      summary: Get node past deals count
+      description: ''
+      parameters:
+        - in: path
+          name: Node past deals
+          description: Get count of past deals of a node
+          required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/NodePastDeals'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/register:
+    post:
+      tags:
+        - User
+      summary: Add a new user
+      description: ''
+      requestBody:
+        description: User object to be added to the database
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/User'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/login:
+    post:
+      tags:
+        - User
+      summary: Login existing user via client app
+      description: ''
+      requestBody:
+        description: Returns JWT for the user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/daemon/login:
+    post:
+      tags:
+        - User
+      summary: Login existing user via daemon app
+      description: ''
+      requestBody:
+        description: Returns JWT for the user
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+        '500':
+          $ref: '#/components/responses/UnknownError'
+  /user/account:
+    get:
+      tags:
+        - User
+      summary: Get current user account information
+      description: ''
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/User'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+    put:
+      tags:
+        - User
+      summary: Update user attributes
+      description: Returns user object with updated attributes
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/responses/User'
+        '403':
+          $ref: '#/components/responses/UnauthorizedUser'
+        '500':
+          $ref: '#/components/responses/UnknownError'
+components:
+  schemas:
+    GeneralMinerInfo:
+      $ref: './types/generalMinerInfo.yaml#/schemas/GeneralMinerInfo'
+    MiningRewards:
+      $ref: './types/miningRewards.yaml#/schemas/MiningRewards'
+    NodeBalance:
+      $ref: './types/nodeBalance.yaml#/schemas/NodeBalance'
+    Node:
+      $ref: './types/node.yaml#/schemas/Node'
+    NodeDiskInformation:
+      $ref: './types/nodeDiskInformation.yaml#/schemas/NodeDiskInformation'
+    NodePastDeals:
+      $ref: './types/nodePastDeals.yaml#/schemas/NodePastDeals'
+    NodeUptime:
+      $ref: './types/nodeUptime.yaml#/schemas/NodeUptime'
+    User:
+      $ref: './types/user.yaml#/schemas/User'
+
+  responses:
+    GeneralMinerInfo:
+      $ref: './types/generalMinerInfo.yaml#/responses/GeneralMinerInfo'
+    MiningRewards:
+      $ref: './types/miningRewards.yaml#/responses/MiningRewards'
+    NodeBalance:
+      $ref: './types/nodeBalance.yaml#/responses/NodeBalance'
+    Node:
+      $ref: './types/node.yaml#/responses/Node'
+    NodeDiskInformation:
+      $ref: './types/nodeDiskInformation.yaml#/responses/NodeDiskInformation'
+    NodePastDeals:
+      $ref: './types/nodePastDeals.yaml#/responses/NodePastDeals'
+    NodeUptime:
+      $ref: './types/nodeUptime.yaml#/responses/NodeUptime'
+    User:
+      $ref: './types/user.yaml#/responses/User'
+
+    UnauthorizedUser:
+      description: Unauthorized user.
+    UnknownError:
+      description: An unknown error occurred.
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []

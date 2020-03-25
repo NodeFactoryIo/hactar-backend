@@ -26,7 +26,18 @@ services:
     - POSTGRES_DB=${DB_NAME:-nodefactory}
     ports:
     - ${DB_LOCAL_PORT:-9999}:5432
+  swagger:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger_docs"
+    environment:
+      BASE_URL: "${SWAGGER_DOCS_URL:-/api/swagger}"
+      SWAGGER_JSON: /opt/swagger.yaml
+    volumes:
+      - "./docs:/opt"
+      - "./docs/types:/usr/share/nginx/html/types"
+    ports:
+      - ${SWAGGER_DOCS_PORT:-8080}:8080
 volumes:
   node_modules:
   postgres:
-
+  swagger_docs:

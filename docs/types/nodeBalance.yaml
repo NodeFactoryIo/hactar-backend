@@ -1,0 +1,32 @@
+schemas:
+  NodeBalance:
+    type: object
+    required:
+      - balance
+      - nodeInfo
+    properties:
+      balance:
+        type: string
+      nodeInfo:
+        type: object
+        required:
+          - address
+          - url
+        properties:
+          address:
+            type: string
+          url:
+            type: string
+responses:
+  NodeBalance:
+    type: object
+    properties:
+      currentBalance:
+        type: string
+      updatedAt:
+        type: string
+        format: date-time
+      balanceChange:
+        type: integer
+      balanceChangePerc:
+        type: string

@@ -1,0 +1,47 @@
+schemas:
+  Node:
+    type: object
+    required:
+      - token
+      - nodeInfo
+    properties:
+      token:
+        type: integer
+      nodeInfo:
+        type: object
+        required:
+          - address
+          - url
+        properties:
+          address:
+            type: string
+          url:
+            type: string
+      name:
+        type: string
+      description:
+        type: string
+      hasEnabledNotifications:
+        type: boolean
+responses:
+  Node:
+    type: object
+    properties:
+      id:
+        type: integer
+      token:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      hasEnabledNotifications:
+        type: boolean
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
+      userId:
+        type: integer

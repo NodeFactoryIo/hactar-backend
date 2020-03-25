@@ -1,0 +1,27 @@
+schemas:
+  User:
+    type: object
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+responses:
+  User:
+    type: object
+    properties:
+      id:
+        type: integer
+      email:
+        type: string
+      hash_password:
+        type: string
+      createdAt:
+        type: string
+        format: date-time
+      updatedAt:
+        type: string
+        format: date-time
