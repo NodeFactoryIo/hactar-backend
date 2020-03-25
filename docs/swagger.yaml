@@ -6,6 +6,12 @@ info:
   license:
     name: Apache 2.0
     url: 'https:/www.apache.org/licenses/LICENSE-2.0.html'
+servers:
+  - url: "{server_url}"
+    variables:
+      server_url:
+        description: "Hactar api url"
+        default: "http://api.hactar.app/api"
 paths:
   /user/node:
     post:
