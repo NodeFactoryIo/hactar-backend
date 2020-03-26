@@ -22,7 +22,7 @@ export class NodeUptimeService {
             group by date_trunc(:period, "updatedAt")
                 )
             and "updatedAt" >= now() - interval :filter
-            order by "updatedAt" desc;`,
+            order by "updatedAt" asc;`,
             filtersSelectQuery(nodeId, filter));
 
     }
