@@ -27,6 +27,6 @@ responses:
         type: string
         format: date-time
       balanceChange:
-        type: integer
+        type: string
       balanceChangePerc:
         type: string
