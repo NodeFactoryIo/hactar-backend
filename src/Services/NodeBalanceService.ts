@@ -32,12 +32,13 @@ export class NodeBalanceService {
                     .div(earliestRecord).multipliedBy(100).toFixed(2) + '%'
             }
         } else {
-            return {
-                currentBalance: 0,
-                updatedAt: moment.utc(),
-                balanceChange: 0,
-                balanceChangePerc: 0 + '%'
-            }
+            return await NodeBalance.findOne({
+                raw: true,
+                where: {
+                    nodeId
+                },
+                order: [['updatedAt', 'DESC']],
+            });
         }
     }
 }
