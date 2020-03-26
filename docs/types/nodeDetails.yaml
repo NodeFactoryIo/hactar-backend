@@ -1,0 +1,10 @@
+responses:
+  NodeDetails:
+    allOf:
+      - $ref: './node.yaml#/responses/Node'
+      - type: object
+        properties:
+          latestUptime:
+           $ref: './nodeUptime.yaml#/responses/NodeUptime'
+          latestDiskInformation:
+           $ref: './NodeDiskInformation.yaml#/responses/NodeDiskInformation'
