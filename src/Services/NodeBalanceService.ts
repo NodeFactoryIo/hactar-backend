@@ -27,16 +27,32 @@ export class NodeBalanceService {
             return {
                 currentBalance: latestRecord,
                 updatedAt: balances[balances.length - 1].updatedAt,
-                balanceChange: earliestRecord.minus(latestRecord),
+                balanceChange: latestRecord.minus(earliestRecord),
                 balanceChangePerc: (latestRecord.minus(earliestRecord))
                     .div(earliestRecord).multipliedBy(100).toFixed(2) + '%'
             }
         } else {
-            return {
-                currentBalance: 0,
-                updatedAt: moment.utc(),
-                balanceChange: 0,
-                balanceChangePerc: 0 + '%'
+            const balance = await NodeBalance.findOne({
+                raw: true,
+                where: {
+                    nodeId
+                },
+                order: [['updatedAt', 'DESC']],
+            });
+            if (balance) {
+                return {
+                    currentBalance: balance?.balance,
+                    updatedAt: balance?.updatedAt,
+                    balanceChange: "0",
+                    balanceChangePerc: "0.00%"
+                }
+            } else {
+                return {
+                    currentBalance: "0",
+                    updatedAt: moment.utc(),
+                    balanceChange: "0",
+                    balanceChangePerc: "0.00%"
+                }
             }
         }
     }
