@@ -53,25 +53,20 @@ paths:
           $ref: '#/components/responses/UnauthorizedUser'
         '500':
           $ref: '#/components/responses/UnknownError'
-  /user/nodes/details:
+  /user/node/details:
     get:
       tags:
         - Node
-      summary: Get all current user nodes with latest details
+      summary: Get all current user nodes with latest details (uptime and disk space)
       description: ''
       responses:
         '200':
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  node:
-                    $ref: '#/components/responses/Node'
-                  latestUptime:
-                    $ref: '#/components/responses/NodeUptime'
-                  latestDiskInformation:
-                    $ref: '#/components/responses/NodeDiskInformation'
+                type: array
+                items:
+                 $ref: '#/components/responses/NodeDetails'
         '403':
           $ref: '#/components/responses/UnauthorizedUser'
         '500':
@@ -602,6 +597,8 @@ components:
       $ref: './types/nodeBalance.yaml#/responses/NodeBalance'
     Node:
       $ref: './types/node.yaml#/responses/Node'
+    NodeDetails:
+      $ref: './types/nodeDetails.yaml#/responses/NodeDetails'
     NodeDiskInformation:
       $ref: './types/nodeDiskInformation.yaml#/responses/NodeDiskInformation'
     NodePastDeals:

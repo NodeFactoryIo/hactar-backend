@@ -1,7 +1,17 @@
 import {DataTypes, InitOptions, Model, ModelAttributes, Sequelize} from "sequelize";
 import {UserModel} from "./UserModel";
 
-export class Node extends Model {
+export interface INode {
+    id: number;
+    url: string;
+    token: string;
+    address: string;
+    name: string;
+    description?: string;
+    hasEnabledNotifications: boolean;
+}
+
+export class Node extends Model implements INode {
 
     public id: number;
     public url: string;
