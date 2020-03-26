@@ -4,9 +4,9 @@ import {Request, Response} from "express";
 import {NodeService} from "../../../src/Services/NodeService";
 import {NodeController} from "../../../src/Controller/Api/NodeController";
 import logger from "../../../src/Services/Logger";
-import {Node} from "../../../src/Models/Node";
+import {INode, Node} from "../../../src/Models/Node";
 import {NodeLatestDetailsService} from "../../../src/Services/NodeLatestDetailsService";
-import {NodeLatestDetailsType} from "../../../src/Types/NodeLatestDetailsType";
+import {INodeLatestDetails} from "../../../src/Types/NodeLatestDetailsType";
 
 describe("NodeController", function () {
     describe('POST /user/node', () => {
@@ -182,36 +182,38 @@ describe("NodeController", function () {
     describe('GET /user/nodes/details', () => {
         const nodeServiceStub = sinon.createStubInstance(NodeService);
         const nodeLatestDetailsService = sinon.createStubInstance(NodeLatestDetailsService);
+        const node1: INode = {
+            "id": 1,
+            "url": "url111",
+            "token": "token111",
+            "address": "address111",
+            "name": "Node1",
+            "hasEnabledNotifications": false,
+        };
+        const node2: INode = {
+            "id": 2,
+            "url": "url222",
+            "token": "token222",
+            "address": "address222",
+            "name": "Node2",
+            "hasEnabledNotifications": false,
+        };
 
-        nodeServiceStub.getAllNodes.resolves([
-            {
-                "id": 1,
-                "url": "url111",
-                "token": "token111",
-                "address": "address111",
-            } as unknown as Node,
-            {
-                "id": 2,
-                "url": "url222",
-                "token": "token222",
-                "address": "address222",
-            } as unknown as Node
-        ]);
-
+        nodeServiceStub.getAllNodes.resolves([node1, node2]);
         nodeLatestDetailsService.getNodesWithLatestDetails.withArgs(1).resolves([
             {
-                node: {},
+                ...node1,
                 latestDiskInformation: {},
                 latestUptime: {}
-            } as NodeLatestDetailsType,
+            } as INodeLatestDetails,
             {
-                node: {},
+                ...node2,
                 latestUptime: {},
                 latestDiskInformation: {}
-            } as NodeLatestDetailsType
+            } as INodeLatestDetails
         ]);
 
-        it('should return array of nodes belonging to the user with additional information', function () {
+        it('should return array of nodes belonging to the user with additional information', async function () {
             const nodeController = new NodeController(
                 nodeServiceStub as unknown as NodeService,
                 nodeLatestDetailsService as unknown as NodeLatestDetailsService
@@ -221,10 +223,12 @@ describe("NodeController", function () {
 
             response.json = sinon.spy((result) => {
                 expect(result).to.be.an('Array').and.to.have.lengthOf(2);
-                expect(result[0]).to.have.property("node");
+                expect(result[0]).to.have.property("name");
+                expect(result[0]).to.have.property("id");
                 expect(result[0]).to.have.property("latestUptime");
                 expect(result[0]).to.have.property("latestDiskInformation");
-                expect(result[1]).to.have.property("node");
+                expect(result[1]).to.have.property("name");
+                expect(result[1]).to.have.property("id");
                 expect(result[1]).to.have.property("latestUptime");
                 expect(result[1]).to.have.property("latestDiskInformation");
             }) as any;
@@ -234,9 +238,7 @@ describe("NodeController", function () {
                 return response;
             }) as any;
 
-            nodeController.getAllUserNodesWithLatestDetails(
-                {} as Request, response
-            )
+            await nodeController.getAllUserNodesWithLatestDetails({} as Request, response);
         });
     })
 });

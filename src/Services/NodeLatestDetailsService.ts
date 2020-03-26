@@ -1,4 +1,4 @@
-import {NodeLatestDetailsType} from "../Types/NodeLatestDetailsType";
+import {INodeLatestDetails} from "../Types/NodeLatestDetailsType";
 import {NodeService} from "./NodeService";
 import {NodeUptimeService} from "./NodeUptimeService";
 import {NodeDiskInformationService} from "./NodeDiskInformationService";
@@ -20,16 +20,17 @@ export class NodeLatestDetailsService {
         this.nodeDiskInformationService = nodeDiskInformationService;
     }
 
-    public async getNodesWithLatestDetails(userId: number): Promise<NodeLatestDetailsType[]> {
+    public async getNodesWithLatestDetails(userId: number): Promise<INodeLatestDetails[]> {
         const nodes = await this.nodeService.getAllNodes(userId);
-        const nodesLatestDetails: NodeLatestDetailsType[] = [];
-        for (let i = 0;i<nodes.length;i++) {
+        const nodesLatestDetails: INodeLatestDetails[] = [];
+
+        for (let i = 0; i < nodes.length; i++) {
             const [latestNodeUptime, latestDiskInfo] = await Promise.all([
                 this.nodeUptimeService.fetchLatestNodeUptime(nodes[i].id),
                 this.nodeDiskInformationService.fetchLatestDiskInfo(nodes[i].id)
             ]);
             nodesLatestDetails.push({
-                node: nodes[i],
+                ...nodes[i],
                 latestUptime: latestNodeUptime,
                 latestDiskInformation: latestDiskInfo
             })

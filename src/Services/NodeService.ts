@@ -1,4 +1,4 @@
-import {Node} from "../Models/Node";
+import {INode, Node} from "../Models/Node";
 import {ServiceError} from "./ServiceError";
 
 export class NodeService {
@@ -44,7 +44,7 @@ export class NodeService {
         })
     }
 
-    public async getAllNodes(userId: number) {
+    public async getAllNodes(userId: number): Promise<INode[]> {
         return await Node.findAll({
             raw: true,
             where: {
