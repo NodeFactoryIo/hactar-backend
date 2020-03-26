@@ -179,7 +179,7 @@ describe("NodeController", function () {
         });
     });
 
-    describe('GET /user/nodes/details', () => {
+    describe('GET /user/node/details', () => {
         const nodeServiceStub = sinon.createStubInstance(NodeService);
         const nodeLatestDetailsService = sinon.createStubInstance(NodeLatestDetailsService);
         const node1: INode = {

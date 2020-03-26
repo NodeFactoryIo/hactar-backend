@@ -42,7 +42,7 @@ export function createApiRoutes(
         controllers.nodeController.getAllUserNodes.bind(controllers.nodeController));
 
     router.get(
-        "/user/nodes/details",
+        "/user/node/details",
         [passNodeData, AuthorizeUser],
         controllers.nodeController.getAllUserNodesWithLatestDetails.bind(controllers.nodeController)
     );
