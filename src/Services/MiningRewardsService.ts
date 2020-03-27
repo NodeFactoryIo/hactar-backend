@@ -32,7 +32,7 @@ export class MiningRewardsService {
             where "nodeId" = :nodeId
             and "updatedAt" >= now() - interval :filter
             group by date_trunc(:period, "updatedAt")
-            order by "timePeriod" desc;`,
+            order by "timePeriod" asc;`,
             filtersSelectQuery(nodeId, filter));
     }
 }
