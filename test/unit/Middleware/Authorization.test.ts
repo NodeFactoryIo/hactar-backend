@@ -60,7 +60,7 @@ describe("Authorization middleware", function () {
             const response = {} as Response;
             response.json = sinon.spy((result) => {
                 if (result) {
-                    expect(result).to.have.property('error')
+                    expect(result).to.have.property('message')
                     return response;
                 }
             }) as any;
@@ -97,7 +97,7 @@ describe("Authorization middleware", function () {
             const response = {} as Response;
             response.json = sinon.spy((result) => {
                 if (result) {
-                    expect(result).to.have.property('error')
+                    expect(result).to.have.property('message')
                     return response;
                 }
             }) as any;
