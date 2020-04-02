@@ -14,7 +14,7 @@ export async function AuthorizeUser(
     try {
         let token = (req.headers.authorization || req.headers.Authorization) as string;
         if (!token) {
-            throw new ServiceError(400, 'Bad request.')
+            throw new ServiceError(403, 'Unauthorized user.')
         }
         else {
             if (token.startsWith('Bearer ')) {
