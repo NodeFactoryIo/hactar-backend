@@ -2,7 +2,6 @@ import express from "express";
 import config from "../Config/Config";
 import * as jwt from "jsonwebtoken";
 import {JwtPayload} from "../Types/JwtPayloadType";
-import logger from "../Services/Logger";
 import {ServiceError} from "../Services/ServiceError";
 
 
@@ -28,7 +27,6 @@ export async function AuthorizeUser(
         res.locals.userId = authorizedUser.id;
         next();
     } catch (e) {
-        logger.error(`${e.name}: ${e.message}`);
-        res.status(403).json({error: 'Unauthorized user.'})
+        res.status(403).json({message: 'Unauthorized user.'})
     }
 }
