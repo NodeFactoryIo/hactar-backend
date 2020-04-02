@@ -13,10 +13,13 @@ export async function AuthorizeUser(
 ) {
     try {
         let token = (req.headers.authorization || req.headers.Authorization) as string;
-        if (token?.startsWith('Bearer ')) {
-            token = token.slice(7, token.length).trimLeft();
-        } else {
+        if (!token) {
             throw new ServiceError(400, 'Bad request.')
+        }
+        else {
+            if (token.startsWith('Bearer ')) {
+                token = token.slice(7, token.length).trimLeft();
+            }
         }
         const authorizedUser = await jwt.verify(token, config.jwtKey) as JwtPayload;
         if (res.locals.node && authorizedUser.id !== res.locals.node['userId']) {
