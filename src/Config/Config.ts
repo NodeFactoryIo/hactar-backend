@@ -28,7 +28,12 @@ const config = Object.freeze({
         retryCount: process.env.EMAIL_RETRY_COUNT || 3
     },
     // cron like definition (every hour by default)
-    uptimeNotificationsRecurrenceRule: process.env.UPTIME_NOTIF_RECURRENCE || "0 * * * *"
+    uptimeNotificationsRecurrenceRule: process.env.UPTIME_NOTIF_RECURRENCE || "0 * * * *",
+    elasticsearch: {
+        url: process.env.ELASTIC_LOG_URL || "http://localhost",
+        port: process.env.ELASTIC_LOG_PORT || 9200,
+        level: process.env.ELASTIC_LOG_LEVEL || "info"
+    }
 });
 
 export default config;
