@@ -25,7 +25,9 @@ export class App implements Service {
     constructor() {
         this.express = express();
         // add before route middleware's here
-        this.express.use(morgan("short", {stream: morganLogger}) as RequestHandler);
+        if (config.env == "dev") {
+            this.express.use(morgan("short", {stream: morganLogger}) as RequestHandler);
+        }
         this.express.use(bodyParser.json());
         this.express.use(helmet() as RequestHandler);
         // add after route middleware's here
