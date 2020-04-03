@@ -2,7 +2,6 @@ import express from "express";
 import config from "../Config/Config";
 import * as jwt from "jsonwebtoken";
 import {JwtPayload} from "../Types/JwtPayloadType";
-import logger from "../Services/Logger";
 import {ServiceError} from "../Services/ServiceError";
 
 
@@ -13,8 +12,13 @@ export async function AuthorizeUser(
 ) {
     try {
         let token = (req.headers.authorization || req.headers.Authorization) as string;
-        if (token.startsWith('Bearer ')) {
-            token = token.slice(7, token.length).trimLeft();
+        if (!token) {
+            throw new ServiceError(403, 'Unauthorized user.')
+        }
+        else {
+            if (token.startsWith('Bearer ')) {
+                token = token.slice(7, token.length).trimLeft();
+            }
         }
         const authorizedUser = await jwt.verify(token, config.jwtKey) as JwtPayload;
         if (res.locals.node && authorizedUser.id !== res.locals.node['userId']) {
@@ -23,7 +27,6 @@ export async function AuthorizeUser(
         res.locals.userId = authorizedUser.id;
         next();
     } catch (e) {
-        logger.error(`${e.name}: ${e.message}`);
-        res.status(403).json({error: 'Unauthorized user.'})
+        res.status(403).json({message: 'Unauthorized user.'})
     }
 }
