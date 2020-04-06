@@ -29,7 +29,7 @@ export class Node extends Model implements INode {
                 allowNull: false,
             },
             token: {
-                type: DataTypes.STRING(128),
+                type: DataTypes.STRING(150),
                 allowNull: false,
             },
             address: {
@@ -41,7 +41,7 @@ export class Node extends Model implements INode {
                 allowNull: true
             },
             description: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: true
             },
             hasEnabledNotifications: {

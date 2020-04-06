@@ -10,7 +10,7 @@ module.exports = {
                 type: sequelize.INTEGER
             },
             version: {
-                type: sequelize.STRING
+                type: sequelize.STRING(25)
             },
             walletAddress: {
                 type: sequelize.STRING
