@@ -1,5 +1,5 @@
 import winston from "winston";
-import {ElasticsearchTransport, LogData} from "winston-elasticsearch"
+import ElasticsearchTransport, {LogData} from "winston-elasticsearch"
 import {ClientOptions} from "@elastic/elasticsearch"
 
 import config from "../Config/Config";
@@ -26,13 +26,14 @@ const esTransportOpts = {
         }
     },
     clientOpts: {
-        host: `${config.elasticsearch.url}:${config.elasticsearch.port}`,
+        node: `${config.elasticsearch.url}:${config.elasticsearch.port}`,
         log: `${config.elasticsearch.level}`
     } as ClientOptions,
 };
 
 if (config.env != "dev") {
-    logger.add(new ElasticsearchTransport(esTransportOpts));
+    // eslint-disable-next-line
+    logger.add(new (<any>ElasticsearchTransport)(esTransportOpts));
 }
 
 export default logger;
