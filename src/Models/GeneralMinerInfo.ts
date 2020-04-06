@@ -14,7 +14,7 @@ export class GeneralMinerInfo extends Model {
     public static initialize(sequelize: Sequelize) {
         this.init({
             version: {
-                type: DataTypes.STRING(10),
+                type: DataTypes.STRING(25),
                 allowNull: false,
             },
             walletAddress: {
@@ -22,7 +22,7 @@ export class GeneralMinerInfo extends Model {
                 allowNull: false
             },
             sectorSize: {
-                type: DataTypes.STRING,
+                type: DataTypes.BIGINT,
                 allowNull: false,
             },
             numberOfSectors: {
@@ -30,11 +30,11 @@ export class GeneralMinerInfo extends Model {
                 allowNull: false
             },
             minerPower: {
-                type: DataTypes.STRING,
+                type: DataTypes.BIGINT,
                 allowNull: false,
             },
             totalPower: {
-                type: DataTypes.STRING,
+                type: DataTypes.BIGINT,
                 allowNull: false,
             },
         } as ModelAttributes,
