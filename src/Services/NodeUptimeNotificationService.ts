@@ -103,7 +103,7 @@ export class NodeUptimeNotificationService {
                 logger.info(`Sending mail to: ${user.email} for node: ${node.id}::${node.address}`);
                 if (config.env != "dev") {
                     logger.info(`Going to send email to ${user.id}.`);
-                    const nodeName = node.name ? node.name : '';
+                    const nodeName = node.name ? node.name : node.id;
                     await this.emailService.sendEmailNotification(
                         user,
                         {NODE: `${nodeName} - ${node.url}`},
