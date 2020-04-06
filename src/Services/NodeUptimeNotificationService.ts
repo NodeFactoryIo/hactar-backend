@@ -78,7 +78,7 @@ export class NodeUptimeNotificationService {
         if (oldNodeStatus.isReported != newNodeStatus.isReported
             || oldNodeStatus.isUp != newNodeStatus.isUp) {
             logger.info(`Found node ID ${nodeUptime.nodeId} that has old status` +
-            `[isReported: ${oldNodeStatus.isReported}, isUp: ${oldNodeStatus}].`);
+                `[isReported: ${oldNodeStatus.isReported}, isUp: ${oldNodeStatus}].`);
 
             await this.nodeStatusService.updateNodeStatus(
                 nodeUptime.nodeId,
@@ -103,9 +103,10 @@ export class NodeUptimeNotificationService {
                 logger.info(`Sending mail to: ${user.email} for node: ${node.id}::${node.address}`);
                 if (config.env != "dev") {
                     logger.info(`Going to send email to ${user.id}.`);
+                    const nodeName = node.name ? node.name : node.id;
                     await this.emailService.sendEmailNotification(
                         user,
-                        {NODE: `${node.name} - ${node.url}`},
+                        {NODE: `${nodeName} - ${node.url}`},
                         config.sendinblue.nodeUptimeNotifEmailTemplateId
                     );
                     logger.info(`Email sent to to ${user.id}.`);
