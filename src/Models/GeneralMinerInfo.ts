@@ -14,7 +14,7 @@ export class GeneralMinerInfo extends Model {
     public static initialize(sequelize: Sequelize) {
         this.init({
             version: {
-                type: DataTypes.STRING(25),
+                type: DataTypes.STRING,
                 allowNull: false,
             },
             walletAddress: {

@@ -25,15 +25,15 @@ export class Node extends Model implements INode {
     public static initialize(sequelize: Sequelize) {
         this.init({
             url: {
-                type: DataTypes.STRING(128),
+                type: DataTypes.STRING,
                 allowNull: false,
             },
             token: {
-                type: DataTypes.STRING(150),
+                type: DataTypes.STRING,
                 allowNull: false,
             },
             address: {
-                type: DataTypes.STRING(128),
+                type: DataTypes.STRING,
                 allowNull: false,
             },
             name: {

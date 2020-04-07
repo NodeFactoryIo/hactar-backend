@@ -10,13 +10,13 @@ module.exports = {
                 type: sequelize.INTEGER
             },
             url: {
-                type: sequelize.STRING(128)
+                type: sequelize.STRING
             },
             token: {
-                type: sequelize.STRING(150)
+                type: sequelize.STRING
             },
             address: {
-                type: sequelize.STRING(128)
+                type: sequelize.STRING
             },
             userId: {
                 type: sequelize.INTEGER,
