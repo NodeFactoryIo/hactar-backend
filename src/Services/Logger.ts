@@ -1,17 +1,39 @@
 import winston from "winston";
+import ElasticsearchTransport, {LogData} from "winston-elasticsearch"
+import {ClientOptions} from "@elastic/elasticsearch"
+
+import config from "../Config/Config";
 
 const logger = winston.createLogger({
-    format: winston.format.combine(
-        winston.format.colorize(),
-        winston.format.timestamp(),
-        winston.format.json(),
-    ),
     level: "info",
+    transports: new winston.transports.Console({
+        format: winston.format.combine(
+            winston.format.timestamp({
+                format: 'YYYY-MM-DD HH:mm:ss'
+            }),
+            winston.format.printf(info => `${info.timestamp} | ${info.level} | ${info.message}`),
+        ),
+    }),
 });
 
-logger.add(new winston.transports.Console({
-    format: winston.format.simple(),
-}));
+const esTransportOpts = {
+    level: 'info',
+    transformer: (logData: LogData) => {
+        return {
+            "@timestamp": (new Date()).toLocaleString(),
+            severity: logData.level,
+            message: logData.message
+        }
+    },
+    clientOpts: {
+        node: `${config.elasticsearch.url}:${config.elasticsearch.port}`,
+        log: `${config.elasticsearch.level}`
+    } as ClientOptions,
+};
+
+if (config.env == "production" && config.logging.es === "enabled") {
+    logger.add(new (ElasticsearchTransport as any)(esTransportOpts));
+}
 
 export default logger;
 
