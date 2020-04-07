@@ -9,11 +9,11 @@ export class NodeDiskInformation extends Model {
     public static initialize(sequelize: Sequelize) {
         this.init({
             freeSpace: {
-                type: DataTypes.BIGINT,
+                type: DataTypes.STRING,
                 allowNull: false,
             },
             takenSpace: {
-                type: DataTypes.BIGINT,
+                type: DataTypes.STRING,
                 allowNull: false,
             },
         } as ModelAttributes,

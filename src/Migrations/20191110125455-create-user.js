@@ -13,7 +13,7 @@ module.exports = {
                 type: sequelize.STRING
             },
             hash_password: {
-                type: sequelize.STRING(128)
+                type: sequelize.STRING
             },
             createdAt: {
                 allowNull: false,
