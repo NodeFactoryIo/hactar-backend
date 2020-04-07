@@ -31,9 +31,8 @@ const esTransportOpts = {
     } as ClientOptions,
 };
 
-if (config.env != "dev") {
-    // eslint-disable-next-line
-    logger.add(new (<any>ElasticsearchTransport)(esTransportOpts));
+if (config.env == "prod") {
+    logger.add(new (ElasticsearchTransport as any)(esTransportOpts));
 }
 
 export default logger;
