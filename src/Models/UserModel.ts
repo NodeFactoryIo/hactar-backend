@@ -21,7 +21,7 @@ export class UserModel extends Model implements User {
             },
             // eslint-disable-next-line
             hash_password: {
-                type: DataTypes.STRING(128),
+                type: DataTypes.STRING,
                 allowNull: false,
             },
         } as ModelAttributes,
