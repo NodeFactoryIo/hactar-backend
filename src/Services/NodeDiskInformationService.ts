@@ -1,5 +1,5 @@
 import database from "../Services/Database";
-import {QueryTypes} from "sequelize";
+import {filtersSelectQuery} from "../Utils/filterSelectQueryConfig";
 import {NodeDiskInformation} from "../Models/NodeDiskInformation";
 
 export class NodeDiskInformationService {
@@ -24,17 +24,10 @@ export class NodeDiskInformationService {
                 )
             and "updatedAt" >= now() - interval :filter
             order by "updatedAt" desc;`,
-            {
-                replacements: {
-                    filter: `1 ${filter}`,
-                    nodeId: nodeId,
-                    period: filter == "day" ? "hour" : "day"
-                },
-                type: QueryTypes.SELECT
-            });
+            filtersSelectQuery(nodeId, filter));
     }
 
-    public async fetchLatestDiskInfo(nodeId: number): Promise<NodeDiskInformation|null> {
+    public async fetchLatestDiskInfo(nodeId: number): Promise<NodeDiskInformation | null> {
         return await NodeDiskInformation.findOne({
             raw: true,
             where: {
