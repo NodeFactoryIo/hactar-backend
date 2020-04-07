@@ -33,6 +33,9 @@ const config = Object.freeze({
         url: process.env.ELASTIC_LOG_URL || "http://localhost",
         port: process.env.ELASTIC_LOG_PORT || 9200,
         level: process.env.ELASTIC_LOG_LEVEL || "info"
+    },
+    logging: {
+        es: process.env.ELASTIC_LOGGING || "disabled"
     }
 });
 

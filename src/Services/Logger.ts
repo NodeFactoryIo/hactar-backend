@@ -31,7 +31,7 @@ const esTransportOpts = {
     } as ClientOptions,
 };
 
-if (config.env == "prod") {
+if (config.env == "production" && config.logging.es.enabled) {
     logger.add(new (ElasticsearchTransport as any)(esTransportOpts));
 }
 
