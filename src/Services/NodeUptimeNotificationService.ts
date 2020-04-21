@@ -78,7 +78,7 @@ export class NodeUptimeNotificationService {
         if (oldNodeStatus.isReported != newNodeStatus.isReported
             || oldNodeStatus.isUp != newNodeStatus.isUp) {
             logger.info(`Found node ID ${nodeUptime.nodeId} that has old status` +
-                `[isReported: ${oldNodeStatus.isReported}, isUp: ${oldNodeStatus.isNewRecord}].`);
+                `[isReported: ${oldNodeStatus.isReported}, isUp: ${oldNodeStatus.isUp}].`);
 
             await this.nodeStatusService.updateNodeStatus(
                 nodeUptime.nodeId,
