@@ -7,6 +7,9 @@ export class NodeUptime extends Model {
     public isWorking: boolean;
     public nodeId: number;
 
+    // Virtual property returned from query
+    public foundDown?: boolean;
+
     public static initialize(sequelize: Sequelize) {
         this.init({
             isWorking: {
