@@ -24,12 +24,16 @@ export class UptimeNotificationTask implements Task {
         }
     }
 
+    // TODO: Should possibly optimize with excluding reported downtimes
     private async findAllNotWorkingNodes(): Promise<NodeUptime[] | null> {
         try {
             // select, from table of latest uptime records for each node,
             // entries that are older than 1 hour or are entries in last hour that reported node is down
             return await database.runQuery<NodeUptime>(
-                `select NU.*
+                `select "id", "isWorking", "createdAt", "updatedAt", Nu."nodeId",
+                        case WHEN ("isWorking" = true and "updatedAt" > now() - interval '59 minutes') then false
+                        else true
+                end as "foundDown"
                 from (
                     select "nodeId", max("createdAt") as "lastUptimeReported"
                     from "NodeUptime"
@@ -38,8 +42,8 @@ export class UptimeNotificationTask implements Task {
                 left outer join "NodeUptime" NU on
                     NU."nodeId" = latest_uptimes."nodeId" and
                     NU."createdAt" = "lastUptimeReported"
-                where "lastUptimeReported" < now() - interval '1 hour' or
-                      ("lastUptimeReported" > now() - interval '1 hour' and NU."isWorking" = false);`,
+                where "lastUptimeReported" < now() - interval '59 minutes' or
+                    ("lastUptimeReported" > now() - interval '1 hour' and NU."isWorking" = false);`,
                 {type: QueryTypes.SELECT})
         } catch (e) {
             logger.error("Failed to find not working nodes in database", e)

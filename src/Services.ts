@@ -46,7 +46,8 @@ export class Services {
             this.emailService,
             this.userService,
             this.nodeService,
-            this.nodeStatusService
+            this.nodeStatusService,
+            this.nodeUptimeService,
         );
         // define scheduled tasks
         this.schedulingService = new SchedulingService(

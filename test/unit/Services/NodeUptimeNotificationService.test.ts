@@ -13,6 +13,7 @@ import * as chai from "chai";
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 import sinonChai = require('sinon-chai');
 import {NodeStatus} from "../../../src/Models/NodeStatus";
+import {NodeUptimeService} from "../../../src/Services/NodeUptimeService";
 
 chai.should();
 chai.use(sinonChai);
@@ -59,6 +60,9 @@ describe("NodeUptimeNotificationService", function () {
         getNodeByPkStub = sinon.stub(nodeService, "getNodeByPk");
         getNodeByPkStub.returns(testNode);
 
+        const nodeUptimeService = new NodeUptimeService();
+        sinon.stub(nodeUptimeService, "createNodeUptime").resolves();
+
         nodeStatusService = new NodeStatusService();
         updateNodeStatusStub = sinon.stub(nodeStatusService, "updateNodeStatus");
         createNodeStatusStub = sinon.stub(nodeStatusService, "storeNodeStatus");
@@ -68,7 +72,8 @@ describe("NodeUptimeNotificationService", function () {
             emailService,
             userService,
             nodeService,
-            nodeStatusService
+            nodeStatusService,
+            nodeUptimeService,
         )
     });
 

@@ -6,6 +6,7 @@ import {NodeService} from "./NodeService";
 import {NodeStatusService} from "./NodeStatusService";
 import config from "../Config/Config";
 import {NodeStatus} from "../Models/NodeStatus";
+import {NodeUptimeService} from "./NodeUptimeService";
 
 export class NodeUptimeNotificationService {
 
@@ -13,45 +14,56 @@ export class NodeUptimeNotificationService {
     private userService: UserService;
     private nodeService: NodeService;
     private nodeStatusService: NodeStatusService;
+    private nodeUptimeService: NodeUptimeService;
 
     constructor(
         emailService: EmailService,
         userService: UserService,
         nodeService: NodeService,
-        nodeStatusService: NodeStatusService
+        nodeStatusService: NodeStatusService,
+        nodeUptimeService: NodeUptimeService
     ) {
         this.emailService = emailService;
         this.userService = userService;
         this.nodeService = nodeService;
-        this.nodeStatusService = nodeStatusService
+        this.nodeStatusService = nodeStatusService;
+        this.nodeUptimeService = nodeUptimeService;
     }
 
     public async processNodeUptime(nodeUptime: NodeUptime): Promise<void> {
         logger.info(`Processing node uptime for node ID ${nodeUptime.nodeId}`);
         // check if node status already created for node
         const currentNodeStatus = await this.nodeStatusService.getNodeStatusByNodeId(nodeUptime.nodeId);
-        const newNodeStatus = {nodeId: nodeUptime.nodeId, isUp: nodeUptime.isWorking, isReported: true} as NodeStatus;
+        const newNodeStatus = {
+            nodeId: nodeUptime.nodeId,
+            isUp: nodeUptime.foundDown ? false : nodeUptime.isWorking,
+            isReported: true
+        } as NodeStatus;
         if (currentNodeStatus != null) {
-            logger.info(`Updating existing status to ${newNodeStatus.isUp} for node ID ${nodeUptime.nodeId}`);
             await this.updateExistingNodeStatus(nodeUptime, newNodeStatus, currentNodeStatus);
         } else {
             logger.info(`Creating new status (${newNodeStatus.isUp}) for node ID ${nodeUptime.nodeId}`);
             await this.createNewNodeStatus(nodeUptime, newNodeStatus);
+        }
+
+        if (nodeUptime.foundDown && (currentNodeStatus && !currentNodeStatus.isReported || !currentNodeStatus)) {
+            logger.info("Creating new record for node uptime with status offline.");
+            await this.nodeUptimeService.createNodeUptime(false, nodeUptime.nodeId);
         }
     }
 
     private async createNewNodeStatus(nodeUptime: NodeUptime, newNodeStatus: NodeStatus): Promise<void> {
         // create new node status entry
         await this.nodeStatusService.storeNodeStatus(
-            nodeUptime.nodeId,
-            nodeUptime.isWorking,
+            newNodeStatus.nodeId,
+            newNodeStatus.isUp,
             true
         );
 
-        logger.info(`Stored new node status (${nodeUptime.isWorking}) for node ${nodeUptime.nodeId}.`);
+        logger.info(`Stored new node status (${newNodeStatus.isUp}) for node ${newNodeStatus.nodeId}.`);
         // send notification if node is down
         if (!newNodeStatus.isUp) {
-            logger.info(`Sending uptime notification for node ID ${nodeUptime.nodeId}`);
+            logger.info(`Sending uptime notification for node ID ${newNodeStatus.nodeId}`);
             await this.sendUptimeNotification(nodeUptime);
         }
     }
@@ -62,7 +74,7 @@ export class NodeUptimeNotificationService {
         oldNodeStatus: NodeStatus,
     ): Promise<void> {
         // if reported node is down
-        if (!nodeUptime.isWorking) {
+        if (!newNodeStatus.isUp) {
             logger.info(`Node ID ${nodeUptime.nodeId} is down.`);
             // send email notification if current node was up until now or was down but report wasn't sent
             if (oldNodeStatus.isUp) {
@@ -78,7 +90,7 @@ export class NodeUptimeNotificationService {
         if (oldNodeStatus.isReported != newNodeStatus.isReported
             || oldNodeStatus.isUp != newNodeStatus.isUp) {
             logger.info(`Found node ID ${nodeUptime.nodeId} that has old status` +
-                `[isReported: ${oldNodeStatus.isReported}, isUp: ${oldNodeStatus.isNewRecord}].`);
+                `[isReported: ${oldNodeStatus.isReported}, isUp: ${oldNodeStatus.isUp}].`);
 
             await this.nodeStatusService.updateNodeStatus(
                 nodeUptime.nodeId,
